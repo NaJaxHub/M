@@ -8210,32 +8210,6 @@ local AutoFarmChest = A:Section("Auto Farm Chest","Left")
 
 AutoFarmChest:Label("-「 Auto Farm Chest 」-")
 
-AutoFarmChest:Toggle("Auto Farm Chest Bug !",false,function(a)
-	getgenv().AutoFarmChestBug = a
-	if a == false then
-		wait()
-		L_3_func(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-		wait()
-	end
-end)
-
-spawn(function()
-	while wait() do 
-		if getgenv().AutoFarmChestBug then
-			repeat wait()
-				for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
-					if v.Name == "Chest1" then --17500
-						v.HumanoidRootPart.CanCollide = false 
-						v.Humanoid:ChangeState(12)
-						v.HumanoidRootPart.Size = Vector3.new(80,80,80)
-						v.HumanoidRootPart.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
-					end
-				end
-			until not getgenv().AutoFarmChestBug
-		end
-	end
-end)
-
 AutoFarmChest:Toggle("Auto Farm Chest New !",_G.Settings.Main["TweenChest"],function(a)
 	_G.Settings.Main["TweenChest"] = a
 	getgenv().Auto_Farm_Chest = a
@@ -8255,6 +8229,9 @@ end)
 			elseif v.Name == "Chest2" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
 				_G.Chest_100 = v
 				return
+			elseif v.Name == "Chest3" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
+				_G.Chest_100 = v
+				return
 			end
 		end
 	end
@@ -8264,6 +8241,9 @@ end)
 				_G.Chest_500 = v
 				return
 			elseif v.Name == "Chest2" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then
+				_G.Chest_500 = v
+				return
+			elseif v.Name == "Chest3" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then
 				_G.Chest_500 = v
 				return
 			end
@@ -8277,6 +8257,9 @@ end)
 			elseif v.Name == "Chest2" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1000 then
 				_G.Chest_1000 = v
 				return
+			elseif v.Name == "Chest3" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1000 then
+				_G.Chest_1000 = v
+				return
 			end
 		end
 	end
@@ -8286,6 +8269,9 @@ end)
 				_G.Chest_1500 = v
 				return
 			elseif v.Name == "Chest2" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500 then
+				_G.Chest_1500 = v
+				return
+			elseif v.Name == "Chest3" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1500 then
 				_G.Chest_1500 = v
 				return
 			end
@@ -8299,6 +8285,9 @@ end)
 			elseif v.Name == "Chest2" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 2000 then
 				_G.Chest_2000 = v
 				return
+			elseif v.Name == "Chest3" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 2000 then
+				_G.Chest_2000 = v
+				return
 			end
 		end
 	end
@@ -8308,6 +8297,9 @@ end)
 				_G.Chest_2500 = v
 				return
 			elseif v.Name == "Chest2" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 2500 then
+				_G.Chest_2500 = v
+				return
+			elseif v.Name == "Chest3" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 2500 then
 				_G.Chest_2500 = v
 				return
 			end
@@ -8321,6 +8313,9 @@ end)
 			elseif v.Name == "Chest2" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3500 then
 				_G.Chest_3500 = v
 				return
+			elseif v.Name == "Chest3" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3500 then
+				_G.Chest_3500 = v
+				return
 			end
 		end
 	end
@@ -8330,6 +8325,9 @@ end)
 				_G.Chest_4500 = v
 				return
 			elseif v.Name == "Chest2" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 4500 then
+				_G.Chest_4500 = v
+				return
+			elseif v.Name == "Chest3" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 4500 then
 				_G.Chest_4500 = v
 				return
 			end
@@ -8343,6 +8341,9 @@ end)
 			elseif v.Name == "Chest2" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5500 then
 				_G.Chest_5500 = v
 				return
+			elseif v.Name == "Chest3" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5500 then
+				_G.Chest_5500 = v
+				return
 			end
 		end
 	end
@@ -8352,6 +8353,9 @@ end)
 				_G.Chest_6500 = v
 				return
 			elseif v.Name == "Chest2" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 6500 then
+				_G.Chest_6500 = v
+				return
+			elseif v.Name == "Chest3" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 6500 then
 				_G.Chest_6500 = v
 				return
 			end
@@ -8365,6 +8369,9 @@ end)
 			elseif v.Name == "Chest2" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 7500 then
 				_G.Chest_7500 = v
 				return
+			elseif v.Name == "Chest3" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 7500 then
+				_G.Chest_7500 = v
+				return
 			end
 		end
 	end
@@ -8374,6 +8381,9 @@ end)
 				_G.Chest_9500 = v
 				return
 			elseif v.Name == "Chest2" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 9500 then
+				_G.Chest_9500 = v
+				return
+			elseif v.Name == "Chest3" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 9500 then
 				_G.Chest_9500 = v
 				return
 			end
@@ -8387,6 +8397,9 @@ end)
 			elseif v.Name == "Chest2" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10500 then
 				_G.Chest_10500 = v
 				return
+			elseif v.Name == "Chest3" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10500 then
+				_G.Chest_10500 = v
+				return
 			end
 		end
 	end
@@ -8396,6 +8409,9 @@ end)
 				_G.Chest_12500 = v
 				return
 			elseif v.Name == "Chest2" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 12500 then
+				_G.Chest_12500 = v
+				return
+			elseif v.Name == "Chest3" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 12500 then
 				_G.Chest_12500 = v
 				return
 			end
@@ -8409,6 +8425,9 @@ end)
 			elseif v.Name == "Chest2" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 15500 then
 				_G.Chest_15500 = v
 				return
+			elseif v.Name == "Chest3" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 15500 then
+				_G.Chest_15500 = v
+				return
 			end
 		end
 	end
@@ -8420,9 +8439,14 @@ end)
 			elseif v.Name == "Chest2" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 17500 then
 				_G.Chest_17500 = v
 				return
+			elseif v.Name == "Chest3" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 17500 then
+				_G.Chest_17500 = v
+				return
 			end
 		end
 	end
+
+
 
 			spawn(function()
 				while wait() do 
@@ -8593,7 +8617,11 @@ AutoFarmChest:Toggle("White Screen for Auto Farm Chest",_G.Settings.Main["FarmCh
 	getgenv().FarmChestWhite = value
 	SaveSettings()
 end)
-
+AutoFarmChest:Toggle("[] รีตัว Bug",_G.Settings.Main["Chest1"],function(value)
+	_G.Settings.Main["Chest1"] = value
+	getgenv().ChestCharacter = value
+	SaveSettings()
+end)
 AutoFarmChest:Toggle("[]for Main Chest 1",_G.Settings.Main["Chest1"],function(value)
 	_G.Settings.Main["Chest1"] = value
 	getgenv().Chest1 = value
@@ -8623,13 +8651,68 @@ spawn(function()
 		end)
 	end
 end)
+game:GetService("RunService").Heartbeat:Connect(function()
+	pcall(function()
+		if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
+			if getgenv().ChestFarm then
+				if getgenv().ChestCharacter then
+				if getgenv().Chest1 then
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Chest1.CFrame * CFrame.new(0,0,0)
+				end
+				end
+			end
+		end
+	end)
+end)
+
+game:GetService("RunService").Heartbeat:Connect(function()
+	pcall(function()
+		if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
+			if getgenv().ChestFarm then
+				if getgenv().ChestCharacter then
+				if getgenv().Chest2 then
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Chest2.CFrame * CFrame.new(0,0,0)
+				end
+				end
+			end
+		end
+	end)
+end)
+
+game:GetService("RunService").Heartbeat:Connect(function()
+	pcall(function()
+		if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
+			if getgenv().ChestFarm then
+				if getgenv().ChestCharacter then
+				if getgenv().Chest3 then
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Chest3.CFrame * CFrame.new(0,0,0)
+				end
+				end
+			end
+		end
+	end)
+end)
+game:GetService("RunService").Heartbeat:Connect(function()
+	pcall(function()
+		if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
+			if getgenv().ChestCharacter then
+			if getgenv().ChestFarm then
+				game.Players.LocalPlayer.Character.Humanoid.Health = 0
+				wait(.1)
+			end
+			end
+		end
+	end)
+end)
+
+--
 
 game:GetService("RunService").Heartbeat:Connect(function()
 	pcall(function()
 		if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
 			if getgenv().ChestFarm then
 				if getgenv().Chest1 then
-					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Chest1.CFrame * CFrame.new(0,0,0)
+					L_3_func(game:GetService("Workspace").Chest1.CFrame * CFrame.new(0,0,0))
 				end
 			end
 		end
@@ -8641,7 +8724,7 @@ game:GetService("RunService").Heartbeat:Connect(function()
 		if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
 			if getgenv().ChestFarm then
 				if getgenv().Chest2 then
-					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Chest2.CFrame * CFrame.new(0,0,0)
+					L_3_func(game:GetService("Workspace").Chest2.CFrame * CFrame.new(0,0,0))
 				end
 			end
 		end
@@ -8653,21 +8736,8 @@ game:GetService("RunService").Heartbeat:Connect(function()
 		if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
 			if getgenv().ChestFarm then
 				if getgenv().Chest3 then
-					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Chest3.CFrame * CFrame.new(0,0,0)
+					L_3_func(game:GetService("Workspace").Chest3.CFrame * CFrame.new(0,0,0))
 				end
-			end
-		end
-	end)
-end)
-
-game:GetService("RunService").Heartbeat:Connect(function()
-	pcall(function()
-		if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
-			if getgenv().ChestFarm then
-				game.Players.LocalPlayer.Character.Humanoid.Health = 0
-				wait(1)
-				BTP(_G.Chest_100.CFrame)
-				wait(.2)
 			end
 		end
 	end)
