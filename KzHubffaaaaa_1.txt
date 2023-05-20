@@ -8221,11 +8221,6 @@ AutoFarmChest:Toggle("Auto Farm Chest New !",_G.Settings.Main["TweenChest"],func
 	end
 end)
 
-if _G.Chest_Lock == nil then
-	_G.Chest_Lock = 50
-end
-
-if getgenv().Auto_Farm_Chest then
 	function Chest_100()
 		for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
 			if v.Name == "Chest1" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
@@ -8402,7 +8397,6 @@ if getgenv().Auto_Farm_Chest then
 			end
 		end
 	end
-end
 
 spawn(function()
 	while wait() do 
