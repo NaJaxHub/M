@@ -8448,109 +8448,109 @@ end)
 
 
 
-			spawn(function()
-				while wait() do 
-					if getgenv().Auto_Farm_Chest then
-						_G.Chest_100 = nil
-						_G.Chest_500 = nil
-						_G.Chest_1000 = nil
-						_G.Chest_1500 = nil
-						_G.Chest_2000 = nil
-						_G.Chest_2500 = nil
-						_G.Chest_3500 = nil
-						_G.Chest_4500 = nil
-						_G.Chest_5500 = nil
-						_G.Chest_6500 = nil
-						_G.Chest_7500 = nil
-						_G.Chest_9500 = nil
-						_G.Chest_10500 = nil
-						_G.Chest_12500 = nil
-						_G.Chest_15500 = nil
-						_G.Chest_17500 = nil
-						Chest_100()
-						Chest_500()
-						Chest_1000()
-						Chest_1500()
-						Chest_2000()
-						Chest_2500()
-						Chest_3500()
-						Chest_4500()
-						Chest_5500()
-						Chest_6500()
-						Chest_7500()
-						Chest_9500()
-						Chest_10500()
-						Chest_12500()
-						Chest_15500()
-						Chest_17500()
-						if _G.Chest_100 ~= nil then
-							repeat wait(.3)
-								L_3_func(_G.Chest_100.CFrame)
-							until not _G.Chest_100.Parent or not getgenv().Auto_Farm_Chest
-						elseif _G.Chest_500 ~= nil then
-							repeat wait(.3)
-								L_3_func(_G.Chest_500.CFrame)
-							until not _G.Chest_500.Parent or not getgenv().Auto_Farm_Chest
-						elseif _G.Chest_1000 ~= nil then
-							repeat wait(.3)
-								L_3_func(_G.Chest_1000.CFrame)
-							until not _G.Chest_1000.Parent or not getgenv().Auto_Farm_Chest
-						elseif _G.Chest_1500 ~= nil then
-							repeat wait(.3)
-								L_3_func(_G.Chest_1500.CFrame)
-							until not _G.Chest_1500.Parent or not getgenv().Auto_Farm_Chest
-						elseif _G.Chest_2000 ~= nil then
-							repeat wait(.3)
-								L_3_func(_G.Chest_2000.CFrame)
-							until not _G.Chest_2000.Parent or not getgenv().Auto_Farm_Chest
-						elseif _G.Chest_2500 ~= nil then
-							repeat wait(.3)
-								L_3_func(_G.Chest_2500.CFrame)
-							until not _G.Chest_2500.Parent or not getgenv().Auto_Farm_Chest
-						elseif _G.Chest_3500 ~= nil then
-							repeat wait(.3)
-								L_3_func(_G.Chest_3500.CFrame)
-							until not _G.Chest_3500.Parent or not getgenv().Auto_Farm_Chest
-						elseif _G.Chest_4500 ~= nil then
-							repeat wait(.3)
-								L_3_func(_G.Chest_4500.CFrame)
-							until not _G.Chest_4500.Parent or not getgenv().Auto_Farm_Chest
-						elseif _G.Chest_5500 ~= nil then
-							repeat wait(.3)
-								L_3_func(_G.Chest_5500.CFrame)
-							until not _G.Chest_5500.Parent or not getgenv().Auto_Farm_Chest
-						elseif _G.Chest_6500 ~= nil then
-							repeat wait(.3)
-								L_3_func(_G.Chest_6500.CFrame)
-							until not _G.Chest_6500.Parent or not getgenv().Auto_Farm_Chest
-						elseif _G.Chest_7500 ~= nil then
-							repeat wait(.3)
-								L_3_func(_G.Chest_7500.CFrame)
-							until not _G.Chest_7500.Parent or not getgenv().Auto_Farm_Chest
-						elseif _G.Chest_9500 ~= nil then
-							repeat wait(.3)
-								L_3_func(_G.Chest_9500.CFrame)
-							until not _G.Chest_9500.Parent or not getgenv().Auto_Farm_Chest
-						elseif _G.Chest_10500 ~= nil then
-							repeat wait(.3)
-								L_3_func(_G.Chest_10500.CFrame)
-							until not _G.Chest_10500.Parent or not getgenv().Auto_Farm_Chest
-						elseif _G.Chest_12500 ~= nil then
-							repeat wait(.3)
-								L_3_func(_G.Chest_12500.CFrame)
-							until not _G.Chest_12500.Parent or not getgenv().Auto_Farm_Chest
-						elseif _G.Chest_15500 ~= nil then
-							repeat wait(.3)
-								L_3_func(_G.Chest_15500.CFrame)
-							until not _G.Chest_15500.Parent or not getgenv().Auto_Farm_Chest
-						elseif _G.Chest_17500 ~= nil then
-							repeat wait(.3)
-								L_3_func(_G.Chest_17500.CFrame)
-							until not _G.Chest_17500.Parent or not getgenv().Auto_Farm_Chest
-						end
-					end
+	spawn(function()
+		while wait() do 
+			if getgenv().Auto_Farm_Chest then
+				_G.Chest_100 = nil
+				_G.Chest_500 = nil
+				_G.Chest_1000 = nil
+				_G.Chest_1500 = nil
+				_G.Chest_2000 = nil
+				_G.Chest_2500 = nil
+				_G.Chest_3500 = nil
+				_G.Chest_4500 = nil
+				_G.Chest_5500 = nil
+				_G.Chest_6500 = nil
+				_G.Chest_7500 = nil
+				_G.Chest_9500 = nil
+				_G.Chest_10500 = nil
+				_G.Chest_12500 = nil
+				_G.Chest_15500 = nil
+				_G.Chest_17500 = nil
+				Chest_100()
+				Chest_500()
+				Chest_1000()
+				Chest_1500()
+				Chest_2000()
+				Chest_2500()
+				Chest_3500()
+				Chest_4500()
+				Chest_5500()
+				Chest_6500()
+				Chest_7500()
+				Chest_9500()
+				Chest_10500()
+				Chest_12500()
+				Chest_15500()
+				Chest_17500()
+				if _G.Chest_100 ~= nil then
+					repeat wait(.3)
+						L_3_func(_G.Chest_100.CFrame)
+					until not _G.Chest_100.Parent or not getgenv().Auto_Farm_Chest
+				elseif _G.Chest_500 ~= nil then
+					repeat wait(.3)
+						L_3_func(_G.Chest_500.CFrame)
+					until not _G.Chest_500.Parent or not getgenv().Auto_Farm_Chest
+				elseif _G.Chest_1000 ~= nil then
+					repeat wait(.3)
+						L_3_func(_G.Chest_1000.CFrame)
+					until not _G.Chest_1000.Parent or not getgenv().Auto_Farm_Chest
+				elseif _G.Chest_1500 ~= nil then
+					repeat wait(.3)
+						L_3_func(_G.Chest_1500.CFrame)
+					until not _G.Chest_1500.Parent or not getgenv().Auto_Farm_Chest
+				elseif _G.Chest_2000 ~= nil then
+					repeat wait(.3)
+						L_3_func(_G.Chest_2000.CFrame)
+					until not _G.Chest_2000.Parent or not getgenv().Auto_Farm_Chest
+				elseif _G.Chest_2500 ~= nil then
+					repeat wait(.3)
+						L_3_func(_G.Chest_2500.CFrame)
+					until not _G.Chest_2500.Parent or not getgenv().Auto_Farm_Chest
+				elseif _G.Chest_3500 ~= nil then
+					repeat wait(.3)
+						L_3_func(_G.Chest_3500.CFrame)
+					until not _G.Chest_3500.Parent or not getgenv().Auto_Farm_Chest
+				elseif _G.Chest_4500 ~= nil then
+					repeat wait(.3)
+						L_3_func(_G.Chest_4500.CFrame)
+					until not _G.Chest_4500.Parent or not getgenv().Auto_Farm_Chest
+				elseif _G.Chest_5500 ~= nil then
+					repeat wait(.3)
+						L_3_func(_G.Chest_5500.CFrame)
+					until not _G.Chest_5500.Parent or not getgenv().Auto_Farm_Chest
+				elseif _G.Chest_6500 ~= nil then
+					repeat wait(.3)
+						L_3_func(_G.Chest_6500.CFrame)
+					until not _G.Chest_6500.Parent or not getgenv().Auto_Farm_Chest
+				elseif _G.Chest_7500 ~= nil then
+					repeat wait(.3)
+						L_3_func(_G.Chest_7500.CFrame)
+					until not _G.Chest_7500.Parent or not getgenv().Auto_Farm_Chest
+				elseif _G.Chest_9500 ~= nil then
+					repeat wait(.3)
+						L_3_func(_G.Chest_9500.CFrame)
+					until not _G.Chest_9500.Parent or not getgenv().Auto_Farm_Chest
+				elseif _G.Chest_10500 ~= nil then
+					repeat wait(.3)
+						L_3_func(_G.Chest_10500.CFrame)
+					until not _G.Chest_10500.Parent or not getgenv().Auto_Farm_Chest
+				elseif _G.Chest_12500 ~= nil then
+					repeat wait(.3)
+						L_3_func(_G.Chest_12500.CFrame)
+					until not _G.Chest_12500.Parent or not getgenv().Auto_Farm_Chest
+				elseif _G.Chest_15500 ~= nil then
+					repeat wait(.3)
+						L_3_func(_G.Chest_15500.CFrame)
+					until not _G.Chest_15500.Parent or not getgenv().Auto_Farm_Chest
+				elseif _G.Chest_17500 ~= nil then
+					repeat wait(.3)
+						L_3_func(_G.Chest_17500.CFrame)
+					until not _G.Chest_17500.Parent or not getgenv().Auto_Farm_Chest
 				end
-			end)
+			end
+		end
+	end)
 
 
 AutoFarmChest:Toggle("[Main] Auto Farm Chest Tween",_G.Settings.Main["TweenChest[1]"],function(c)
@@ -8655,34 +8655,13 @@ AutoFarmChest:Toggle("[]for Main Chest 3",_G.Settings.Main["Chest3"],function(va
 	SaveSettings()
 end)
 
-spawn(function()
-	while wait() do
-	pcall(function()
-		if getgenv().ChestFarm then
-			if getgenv().ChestCharacter then
-				if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
-					if getgenv().Chest1 and getgenv().Chest2 and getgenv().Chest3 then
-						BTP(game:GetService("Workspace").Chest3.CFrame)
-						BTP(game:GetService("Workspace").Chest2.CFrame)
-						BTP(game:GetService("Workspace").Chest1.CFrame)
-						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Chest3.CFrame
-						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Chest2.CFrame
-						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Chest1.CFrame
-					end
-				end
-			end
-		end
-	end)
-	end
-end)
-
 game:GetService("RunService").Heartbeat:Connect(function()
 	pcall(function()
 		if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
 			if getgenv().ChestFarm then
 				if getgenv().ChestCharacter then
 				if getgenv().Chest1 then
-					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Chest1.CFrame * CFrame.new(0,0,0)
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Chest1.CFrame-- * CFrame.new(0,0,0)
 				end
 				end
 			end
@@ -8696,7 +8675,7 @@ game:GetService("RunService").Heartbeat:Connect(function()
 			if getgenv().ChestFarm then
 				if getgenv().ChestCharacter then
 				if getgenv().Chest2 then
-					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Chest2.CFrame * CFrame.new(0,0,0)
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Chest2.CFrame-- * CFrame.new(0,0,0)
 				end
 				end
 			end
@@ -8710,7 +8689,7 @@ game:GetService("RunService").Heartbeat:Connect(function()
 			if getgenv().ChestFarm then
 				if getgenv().ChestCharacter then
 				if getgenv().Chest3 then
-					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Chest3.CFrame * CFrame.new(0,0,0)
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Chest3.CFrame-- * CFrame.new(0,0,0)
 				end
 				end
 			end
@@ -8737,7 +8716,7 @@ game:GetService("RunService").Heartbeat:Connect(function()
 		if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
 			if getgenv().ChestFarm then
 				if getgenv().Chest1 then
-					L_3_func(game:GetService("Workspace").Chest1.CFrame * CFrame.new(0,0,0))
+					L_3_func(game:GetService("Workspace").Chest1.CFrame)-- * CFrame.new(0,0,0))
 				end
 			end
 		end
@@ -8749,7 +8728,7 @@ game:GetService("RunService").Heartbeat:Connect(function()
 		if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
 			if getgenv().ChestFarm then
 				if getgenv().Chest2 then
-					L_3_func(game:GetService("Workspace").Chest2.CFrame * CFrame.new(0,0,0))
+					L_3_func(game:GetService("Workspace").Chest2.CFrame)-- * CFrame.new(0,0,0))
 				end
 			end
 		end
@@ -8761,7 +8740,7 @@ game:GetService("RunService").Heartbeat:Connect(function()
 		if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
 			if getgenv().ChestFarm then
 				if getgenv().Chest3 then
-					L_3_func(game:GetService("Workspace").Chest3.CFrame * CFrame.new(0,0,0))
+					L_3_func(game:GetService("Workspace").Chest3.CFrame)-- * CFrame.new(0,0,0))
 				end
 			end
 		end
