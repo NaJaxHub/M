@@ -8228,10 +8228,10 @@ spawn(function()
 						--v.HumanoidRootPart.CanCollide = false 
 						--v.Humanoid:ChangeState(12)
 						--v.HumanoidRootPart.Size = Vector3.new(80,80,80)
-						v.Position = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
+						v.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
 					end
 				end
-			until not _G.Chest_17500.Parent or not getgenv().Auto_Farm_Chest
+			until not getgenv().AutoFarmChestBug
 		end
 	end
 end)
