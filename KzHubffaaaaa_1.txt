@@ -8574,10 +8574,40 @@ game:GetService("RunService").Heartbeat:Connect(function()
     end)
 end)
 
+spawn(function()
+	while wait() do 
+		pcall(function()
+			if getgenv().Chest1 then
+				ModeFarmChest = game:GetService("Workspace").Chest1.CFrame * CFrame.new(0,0,0)
+			elseif getgenv().Chest2 then
+				ModeFarmChest = game:GetService("Workspace").Chest2.CFrame * CFrame.new(0,0,0)
+			elseif getgenv().Chest3 then
+				ModeFarmChest = game:GetService("Workspace").Chest3.CFrame * CFrame.new(0,0,0)
+			end
+		end)
+	end
+end)
+
+AutoFarmChest:Toggle("[Main] Auto Farm Chest",_G.Settings.Main["Auto Farm Chest [Main]"],function(value)
+	_G.Settings.Main["Auto Farm Chest [Main]"] = value
+	getgenv().ChestFarm = value
+	SaveSettings()
+	if value == false then
+		wait()
+		L_3_func(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+		wait()
+	end
+end)
+
 AutoFarmChest:Toggle("Auto Farm Chest Tween (Ban Risk)",_G.Settings.Main["TweenChest[2]"],function(c)
 	_G.Settings.Main["TweenChest[2]"] = c
 	getgenv().TweenChest = c
 	SaveSettings()
+	if c == false then
+		wait()
+		L_3_func(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+		wait()
+	end
 end)
 
 spawn(function()
@@ -8599,17 +8629,6 @@ spawn(function()
 	end
 end)
 
-AutoFarmChest:Toggle("[Main] Auto Farm Chest",_G.Settings.Main["Auto Farm Chest [Main]"],function(value)
-	_G.Settings.Main["Auto Farm Chest [Main]"] = value
-	getgenv().ChestFarm = value
-	SaveSettings()
-	if value == false then
-		wait()
-		L_3_func(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-		wait()
-	end
-end)
-
 AutoFarmChest:Label("- Settings Auto Farm Chest -")
 
 AutoFarmChest:Toggle("White Screen for Auto Farm Chest",_G.Settings.Main["FarmChestWhite"],function(value)
@@ -8617,10 +8636,8 @@ AutoFarmChest:Toggle("White Screen for Auto Farm Chest",_G.Settings.Main["FarmCh
 	getgenv().FarmChestWhite = value
 	SaveSettings()
 end)
-AutoFarmChest:Toggle("[] รีตัว Bug",_G.Settings.Main["Chest1"],function(value)
-	_G.Settings.Main["Chest1"] = value
+AutoFarmChest:Toggle("[] รีตัว Bug",getgenv().ChestCharacter,function(value)
 	getgenv().ChestCharacter = value
-	SaveSettings()
 end)
 AutoFarmChest:Toggle("[]for Main Chest 1",_G.Settings.Main["Chest1"],function(value)
 	_G.Settings.Main["Chest1"] = value
@@ -8639,18 +8656,26 @@ AutoFarmChest:Toggle("[]for Main Chest 3",_G.Settings.Main["Chest3"],function(va
 end)
 
 spawn(function()
-	while wait() do 
-		pcall(function()
-			if getgenv().Chest1 then
-				ModeFarmChest = game:GetService("Workspace").Chest1.CFrame * CFrame.new(0,0,0)
-			elseif getgenv().Chest2 then
-				ModeFarmChest = game:GetService("Workspace").Chest2.CFrame * CFrame.new(0,0,0)
-			elseif getgenv().Chest3 then
-				ModeFarmChest = game:GetService("Workspace").Chest3.CFrame * CFrame.new(0,0,0)
+	while wait() do
+	pcall(function()
+		if getgenv().ChestFarm then
+			if getgenv().ChestCharacter then
+				if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
+					if getgenv().Chest1 and getgenv().Chest2 and getgenv().Chest3 then
+						BTP(game:GetService("Workspace").Chest3.CFrame)
+						BTP(game:GetService("Workspace").Chest2.CFrame)
+						BTP(game:GetService("Workspace").Chest1.CFrame)
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Chest3.CFrame
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Chest2.CFrame
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Chest1.CFrame
+					end
+				end
 			end
-		end)
+		end
+	end)
 	end
 end)
+
 game:GetService("RunService").Heartbeat:Connect(function()
 	pcall(function()
 		if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
@@ -8698,14 +8723,14 @@ game:GetService("RunService").Heartbeat:Connect(function()
 			if getgenv().ChestCharacter then
 			if getgenv().ChestFarm then
 				game.Players.LocalPlayer.Character.Humanoid.Health = 0
-				wait(.1)
+				wait(1)
 			end
 			end
 		end
 	end)
 end)
 
---
+--tween
 
 game:GetService("RunService").Heartbeat:Connect(function()
 	pcall(function()
