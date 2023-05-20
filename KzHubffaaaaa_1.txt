@@ -8226,7 +8226,7 @@ if _G.Chest_Lock == nil then
 end
 C_H_H = 0
 
-spawn(function()
+
 if getgenv().Auto_Farm_Chest then
 	function Chest_100()
 		for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
@@ -8405,7 +8405,6 @@ if getgenv().Auto_Farm_Chest then
 		end
 	end
 end
-end)
 
 spawn(function()
 	while wait() do 
@@ -8445,132 +8444,125 @@ spawn(function()
 						Chest_17500()
 						if _G.Chest_100 ~= nil then
 							repeat wait(.3)
-								
 								L_3_func(_G.Chest_100.CFrame)
-							until not _G.Chest_100.Parent or not Auto_Dark_Coat
-							if Auto_Dark_Coat then
-								C_H_H = C_H_H + 1
-								L_C:Change('Chest : '..tostring(C_H_H).."/".._G.Chest_Lock)
-							end
+							until not _G.Chest_100.Parent or not getgenv().Auto_Farm_Chest
 						elseif _G.Chest_500 ~= nil then
 							repeat wait(.3)
 								L_3_func(_G.Chest_500.CFrame)
-							until not _G.Chest_500.Parent or not Auto_Dark_Coat
-							if Auto_Dark_Coat then
+							until not _G.Chest_500.Parent or not getgenv().Auto_Farm_Chest
+							if getgenv().Auto_Farm_Chest then
 								C_H_H = C_H_H + 1
 								L_C:Change('Chest : '..tostring(C_H_H).."/".._G.Chest_Lock)
 							end
 						elseif _G.Chest_1000 ~= nil then
 							repeat wait(.3)
 								L_3_func(_G.Chest_1000.CFrame)
-							until not _G.Chest_1000.Parent or not Auto_Dark_Coat
-							if Auto_Dark_Coat then
+							until not _G.Chest_1000.Parent or not getgenv().Auto_Farm_Chest
+							if getgenv().Auto_Farm_Chest then
 								C_H_H = C_H_H + 1
 								L_C:Change('Chest : '..tostring(C_H_H).."/".._G.Chest_Lock)
 							end
 						elseif _G.Chest_1500 ~= nil then
 							repeat wait(.3)
 								L_3_func(_G.Chest_1500.CFrame)
-							until not _G.Chest_1500.Parent or not Auto_Dark_Coat
-							if Auto_Dark_Coat then
+							until not _G.Chest_1500.Parent or not getgenv().Auto_Farm_Chest
+							if getgenv().Auto_Farm_Chest then
 								C_H_H = C_H_H + 1
 								L_C:Change('Chest : '..tostring(C_H_H).."/".._G.Chest_Lock)
 							end
 						elseif _G.Chest_2000 ~= nil then
 							repeat wait(.3)
 								L_3_func(_G.Chest_2000.CFrame)
-							until not _G.Chest_2000.Parent or not Auto_Dark_Coat
-							if Auto_Dark_Coat then
+							until not _G.Chest_2000.Parent or not getgenv().Auto_Farm_Chest
+							if getgenv().Auto_Farm_Chest then
 								C_H_H = C_H_H + 1
 								L_C:Change('Chest : '..tostring(C_H_H).."/".._G.Chest_Lock)
 							end
 						elseif _G.Chest_2500 ~= nil then
 							repeat wait(.3)
 								L_3_func(_G.Chest_2500.CFrame)
-							until not _G.Chest_2500.Parent or not Auto_Dark_Coat
-							if Auto_Dark_Coat then
+							until not _G.Chest_2500.Parent or not getgenv().Auto_Farm_Chest
+							if getgenv().Auto_Farm_Chest then
 								C_H_H = C_H_H + 1
 								L_C:Change('Chest : '..tostring(C_H_H).."/".._G.Chest_Lock)
 							end
 						elseif _G.Chest_3500 ~= nil then
 							repeat wait(.3)
 								L_3_func(_G.Chest_3500.CFrame)
-							until not _G.Chest_3500.Parent or not Auto_Dark_Coat
-							if Auto_Dark_Coat then
+							until not _G.Chest_3500.Parent or not getgenv().Auto_Farm_Chest
+							if getgenv().Auto_Farm_Chest then
 								C_H_H = C_H_H + 1
 								L_C:Change('Chest : '..tostring(C_H_H).."/".._G.Chest_Lock)
 							end
 						elseif _G.Chest_4500 ~= nil then
 							repeat wait(.3)
 								L_3_func(_G.Chest_4500.CFrame)
-							until not _G.Chest_4500.Parent or not Auto_Dark_Coat
-							if Auto_Dark_Coat then
+							until not _G.Chest_4500.Parent or not getgenv().Auto_Farm_Chest
+							if getgenv().Auto_Farm_Chest then
 								C_H_H = C_H_H + 1
 								L_C:Change('Chest : '..tostring(C_H_H).."/".._G.Chest_Lock)
 							end
 						elseif _G.Chest_5500 ~= nil then
 							repeat wait(.3)
 								L_3_func(_G.Chest_5500.CFrame)
-							until not _G.Chest_5500.Parent or not Auto_Dark_Coat
-							if Auto_Dark_Coat then
+							until not _G.Chest_5500.Parent or not getgenv().Auto_Farm_Chest
+							if getgenv().Auto_Farm_Chest then
 								C_H_H = C_H_H + 1
 								L_C:Change('Chest : '..tostring(C_H_H).."/".._G.Chest_Lock)
 							end
 						elseif _G.Chest_6500 ~= nil then
 							repeat wait(.3)
 								L_3_func(_G.Chest_6500.CFrame)
-							until not _G.Chest_6500.Parent or not Auto_Dark_Coat
-							if Auto_Dark_Coat then
+							until not _G.Chest_6500.Parent or not getgenv().Auto_Farm_Chest
+							if getgenv().Auto_Farm_Chest then
 								C_H_H = C_H_H + 1
 								L_C:Change('Chest : '..tostring(C_H_H).."/".._G.Chest_Lock)
 							end
 						elseif _G.Chest_7500 ~= nil then
 							repeat wait(.3)
 								L_3_func(_G.Chest_7500.CFrame)
-							until not _G.Chest_7500.Parent or not Auto_Dark_Coat
-							if Auto_Dark_Coat then
+							until not _G.Chest_7500.Parent or not getgenv().Auto_Farm_Chest
+							if getgenv().Auto_Farm_Chest then
 								C_H_H = C_H_H + 1
 								L_C:Change('Chest : '..tostring(C_H_H).."/".._G.Chest_Lock)
 							end
 						elseif _G.Chest_9500 ~= nil then
 							repeat wait(.3)
 								L_3_func(_G.Chest_9500.CFrame)
-							until not _G.Chest_9500.Parent or not Auto_Dark_Coat
-							if Auto_Dark_Coat then
+							until not _G.Chest_9500.Parent or not getgenv().Auto_Farm_Chest
+							if getgenv().Auto_Farm_Chest then
 								C_H_H = C_H_H + 1
 								L_C:Change('Chest : '..tostring(C_H_H).."/".._G.Chest_Lock)
 							end
 						elseif _G.Chest_10500 ~= nil then
 							repeat wait(.3)
 								L_3_func(_G.Chest_10500.CFrame)
-							until not _G.Chest_10500.Parent or not Auto_Dark_Coat
-							if Auto_Dark_Coat then
+							until not _G.Chest_10500.Parent or not getgenv().Auto_Farm_Chest
+							if getgenv().Auto_Farm_Chest then
 								C_H_H = C_H_H + 1
 								L_C:Change('Chest : '..tostring(C_H_H).."/".._G.Chest_Lock)
 							end
 						elseif _G.Chest_12500 ~= nil then
 							repeat wait(.3)
 								L_3_func(_G.Chest_12500.CFrame)
-							until not _G.Chest_12500.Parent or not Auto_Dark_Coat
-							if Auto_Dark_Coat then
+							until not _G.Chest_12500.Parent or not getgenv().Auto_Farm_Chest
+							if getgenv().Auto_Farm_Chest then
 								C_H_H = C_H_H + 1
 								L_C:Change('Chest : '..tostring(C_H_H).."/".._G.Chest_Lock)
 							end
 						elseif _G.Chest_15500 ~= nil then
 							repeat wait(.3)
 								L_3_func(_G.Chest_15500.CFrame)
-							until not _G.Chest_15500.Parent or not Auto_Dark_Coat
-							if Auto_Dark_Coat then
+							until not _G.Chest_15500.Parent or not getgenv().Auto_Farm_Chest
+							if getgenv().Auto_Farm_Chest then
 								C_H_H = C_H_H + 1
 								L_C:Change('Chest : '..tostring(C_H_H).."/".._G.Chest_Lock)
 							end
 						elseif _G.Chest_17500 ~= nil then
 							repeat wait(.3)
-								BTP(_G.Chest_17500.CFrame)
-								wait(.3)
 								L_3_func(_G.Chest_17500.CFrame)
-							until not _G.Chest_17500.Parent or not Auto_Dark_Coat
-							if Auto_Dark_Coat then
+							until not _G.Chest_17500.Parent or not getgenv().Auto_Farm_Chest
+							if getgenv().Auto_Farm_Chest then
 								C_H_H = C_H_H + 1
 								L_C:Change('Chest : '..tostring(C_H_H).."/".._G.Chest_Lock)
 							end
