@@ -8210,6 +8210,40 @@ local AutoFarmChest = A:Section("Auto Farm Chest","Left")
 
 AutoFarmChest:Label("-「 Auto Farm Chest 」-")
 
+AutoFarmChest:Toggle("Auto Farm Chest Bug !",false,function(a)
+	getgenv().AutoFarmChestBug = a
+	if a == false then
+		wait()
+		L_3_func(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+		wait()
+	end
+end)
+
+function Chest_17500()
+	for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+		if v.Name == "Chest1" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 17500 then
+			_G.Chest_17500 = v
+			return
+		elseif v.Name == "Chest2" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 17500 then
+			_G.Chest_17500 = v
+			v.HumanoidRootPart.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0)
+			return
+		end
+	end
+end
+
+spawn(function()
+	while wait() do 
+		if getgenv().AutoFarmChestBug then
+			if _G.Chest_17500 ~= nil then
+				repeat wait(.3)
+					L_3_func(_G.Chest_17500.CFrame)
+				until not _G.Chest_17500.Parent or not getgenv().Auto_Farm_Chest
+			end
+		end
+	end
+end)
+
 AutoFarmChest:Toggle("Auto Farm Chest New !",_G.Settings.Main["TweenChest"],function(a)
 	_G.Settings.Main["TweenChest"] = a
 	getgenv().Auto_Farm_Chest = a
@@ -8398,9 +8432,9 @@ end)
 		end
 	end
 
-spawn(function()
-	while wait() do 
-		if getgenv().Auto_Farm_Chest then
+			spawn(function()
+				while wait() do 
+					if getgenv().Auto_Farm_Chest then
 						_G.Chest_100 = nil
 						_G.Chest_500 = nil
 						_G.Chest_1000 = nil
@@ -8498,11 +8532,9 @@ spawn(function()
 								L_3_func(_G.Chest_17500.CFrame)
 							until not _G.Chest_17500.Parent or not getgenv().Auto_Farm_Chest
 						end
-					
-		end
-	end
-end)
-
+					end
+				end
+			end)
 
 
 AutoFarmChest:Toggle("[Main] Auto Farm Chest Tween",_G.Settings.Main["TweenChest[1]"],function(c)
