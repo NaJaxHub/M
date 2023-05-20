@@ -8222,13 +8222,13 @@ end)
 spawn(function()
 	while wait() do 
 		if getgenv().AutoFarmChestBug then
-			repeat wait(.3)
+			repeat wait()
 				for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
-					if v.Name == "Chest1" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 17500 then --17500
-						v.HumanoidRootPart.CanCollide = false
-						v.Humanoid:ChangeState(12)
-						v.HumanoidRootPart.Size = Vector3.new(80,80,80)
-						v.HumanoidRootPart.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
+					if v.Name == "Chest1" then --17500
+						--v.HumanoidRootPart.CanCollide = false 
+						--v.Humanoid:ChangeState(12)
+						--v.HumanoidRootPart.Size = Vector3.new(80,80,80)
+						v.Position = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
 					end
 				end
 			until not _G.Chest_17500.Parent or not getgenv().Auto_Farm_Chest
