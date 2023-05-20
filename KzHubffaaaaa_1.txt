@@ -8219,27 +8219,19 @@ AutoFarmChest:Toggle("Auto Farm Chest Bug !",false,function(a)
 	end
 end)
 
-function Chest_17500()
-	for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
-		if v.Name == "Chest1" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 17500 then
-			_G.Chest_17500 = v
-			return
-		elseif v.Name == "Chest2" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 17500 then
-			_G.Chest_17500 = v
-			v.HumanoidRootPart.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0)
-			return
-		end
-	end
-end
-
 spawn(function()
 	while wait() do 
 		if getgenv().AutoFarmChestBug then
-			if _G.Chest_17500 ~= nil then
-				repeat wait(.3)
-					L_3_func(_G.Chest_17500.CFrame)
-				until not _G.Chest_17500.Parent or not getgenv().Auto_Farm_Chest
-			end
+			repeat wait(.3)
+				for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+					if v.Name == "Chest1" and (v.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 17500 then --17500
+						v.HumanoidRootPart.CanCollide = false
+						v.Humanoid:ChangeState(12)
+						v.HumanoidRootPart.Size = Vector3.new(80,80,80)
+						v.HumanoidRootPart.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
+					end
+				end
+			until not _G.Chest_17500.Parent or not getgenv().Auto_Farm_Chest
 		end
 	end
 end)
