@@ -1002,6 +1002,194 @@ local function L_11_func(L_158_arg0)
 	end 
 end
 
+local function QuestCheck()
+	local Lvl = game:GetService("Players").LocalPlayer.Data.Level.Value
+	if Lvl >= 1 and Lvl <= 9 then
+		if tostring(game.Players.LocalPlayer.Team) == "Marines" then
+			MobName = "Trainee"
+			QuestName = "MarineQuest"
+			QuestLevel = 1
+			Mon = "Trainee"
+			NPCPosition = CFrame.new(-2709.67944, 24.5206585, 2104.24585, -0.744724929, -3.97967455e-08, -0.667371571, 4.32403588e-08, 1, -1.07884304e-07, 0.667371571, -1.09201515e-07, -0.744724929)
+		elseif tostring(game.Players.LocalPlayer.Team) == "Pirates" then
+			MobName = "Bandit"
+			Mon = "Bandit"
+			QuestName = "BanditQuest1"
+			QuestLevel = 1
+			NPCPosition = CFrame.new(1059.99731, 16.9222069, 1549.28162, -0.95466274, 7.29721794e-09, 0.297689587, 1.05190106e-08, 1, 9.22064114e-09, -0.297689587, 1.19340022e-08, -0.95466274)
+		end
+		return {
+			[1] = QuestLevel,
+			[2] = NPCPosition,
+			[3] = MobName,
+			[4] = QuestName,
+			[5] = LevelRequire,
+			[6] = Mon,
+			[7] = MobCFrame
+		}
+	end
+
+	if Lvl >= 210 and Lvl <= 249 then
+		MobName = "Dangerous Prisoner"
+		QuestName = "PrisonerQuest"
+		QuestLevel = 2
+		Mon = "Dangerous Prisoner"
+		NPCPosition = CFrame.new(5308.93115, 1.65517521, 475.120514, -0.0894274712, -5.00292918e-09, -0.995993316, 1.60817859e-09, 1, -5.16744869e-09, 0.995993316, -2.06384709e-09, -0.0894274712)
+		local matchingCFrames = {}
+		local result = string.gsub(MobName, "Lv. ", "")
+		local result2 = string.gsub(result, "[%[%]]", "")
+		local result3 = string.gsub(result2, "%d+", "")
+		local result4 = string.gsub(result3, "%s+", "")
+		
+		for i,v in pairs(game.workspace.EnemySpawns:GetChildren()) do
+			if v.Name == result4 then
+				table.insert(matchingCFrames, v.CFrame)
+			end
+			MobCFrame = matchingCFrames
+		end
+		return {
+			[1] = QuestLevel,
+			[2] = NPCPosition,
+			[3] = MobName,
+			[4] = QuestName,
+			[5] = LevelRequire,
+			[6] = Mon,
+			[7] = MobCFrame
+		}
+	end
+	
+	--game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
+	local GuideModule = require(game:GetService("ReplicatedStorage").GuideModule)
+	local Quests = require(game:GetService("ReplicatedStorage").Quests)
+	for i,v in pairs(GuideModule["Data"]["NPCList"]) do
+		for i1,v1 in pairs(v["Levels"]) do
+			if Lvl >= v1 then
+				if not LevelRequire then
+					LevelRequire = 0
+				end
+				if v1 > LevelRequire then
+					NPCPosition = i["CFrame"]
+					QuestLevel = i1
+					LevelRequire = v1
+				end
+				if #v["Levels"] == 3 and QuestLevel == 3 then
+					NPCPosition = i["CFrame"]
+					QuestLevel = 2
+					LevelRequire = v["Levels"][2]
+				end
+			end
+		end
+	end
+	if Lvl >= 375 and Lvl <= 399 then -- Fishman Warrior
+		if _G.Auto_Farm_Level and (NPCPosition.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 3000 then
+			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
+		end
+	end
+
+	if Lvl >= 400 and Lvl <= 449 then -- Fishman Commando
+		if _G.Auto_Farm_Level and (NPCPosition.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 3000 then
+			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
+		end
+	end
+	if Lvl >= 450 and Lvl <= 524 then -- Shanda
+		if _G.Auto_Farm_Level and (NPCPosition.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 3000 then
+			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
+		end
+	end
+		if Lvl >= 525 and Lvl <= 549 then -- Royal Squad 
+		if _G.Auto_Farm_Level and (NPCPosition.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 3000 then
+			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
+		end
+	end
+		if Lvl >= 550 and Lvl <= 624 then -- Royal Squad 
+		if _G.Auto_Farm_Level and (NPCPosition.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 3000 then
+			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
+		end
+	end
+	
+	for i,v in pairs(Quests) do
+		for i1,v1 in pairs(v) do
+			if v1["LevelReq"] == LevelRequire and i ~= "CitizenQuest" then
+				QuestName = i
+				for i2,v2 in pairs(v1["Task"]) do
+					MobName = i2
+					Mon = string.split(i2," [Lv. ".. v1["LevelReq"] .. "]")[1]
+				end
+			end
+		end
+	end
+	if QuestName == "MarineQuest2" then
+		QuestName = "MarineQuest2"
+		QuestLevel = 1
+		MobName = "Chief Petty Officer"
+		Mon = "Chief Petty Officer"
+		LevelRequire = 120
+	elseif QuestName == "ImpelQuest" then
+		QuestName = "PrisonerQuest"
+		QuestLevel = 2
+		MobName = "Dangerous Prisoner"
+		Mon = "Dangerous Prisoner"
+		LevelRequire = 210
+		NPCPosition = CFrame.new(5310.60547, 0.350014925, 474.946594, 0.0175017118, 0, 0.999846935, 0, 1, 0, -0.999846935, 0, 0.0175017118)
+	elseif QuestName == "SkyExp1Quest" then
+		if QuestLevel == 1 then
+			NPCPosition = CFrame.new(-4721.88867, 843.874695, -1949.96643, 0.996191859, -0, -0.0871884301, 0, 1, -0, 0.0871884301, 0, 0.996191859)
+		elseif QuestLevel == 2 then
+			NPCPosition = CFrame.new(-7859.09814, 5544.19043, -381.476196, -0.422592998, 0, 0.906319618, 0, 1, 0, -0.906319618, 0, -0.422592998)
+		end
+	elseif QuestName == "Area2Quest" and QuestLevel == 2 then
+		QuestName = "Area2Quest"
+		QuestLevel = 1
+		MobName = "Swan Pirate"
+		Mon = "Swan Pirate"
+		LevelRequire = 775
+	end
+	MobName = MobName:sub(1,#MobName)
+	if not MobName:find("Lv") then
+		for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+			MonLV = string.match(v.Name, "%d+")
+			if v.Name:find(MobName) and #v.Name > #MobName and tonumber(MonLV) <= Lvl + 50 then
+				MobName = v.Name
+			end
+		end
+	end
+	if not MobName:find("Lv") then
+		for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
+			MonLV = string.match(v.Name, "%d+")
+			if v.Name:find(MobName) and #v.Name > #MobName and tonumber(MonLV) <= Lvl + 50 then
+				MobName = v.Name
+				Mon = a
+			end
+		end
+	end
+
+	local matchingCFrames = {}
+	local result = string.gsub(MobName, "Lv. ", "")
+	local result2 = string.gsub(result, "[%[%]]", "")
+	local result3 = string.gsub(result2, "%d+", "")
+	local result4 = string.gsub(result3, "%s+", "")
+	
+	for i,v in pairs(game.workspace.EnemySpawns:GetChildren()) do
+		if v.Name == result4 then
+			table.insert(matchingCFrames, v.CFrame)
+		else
+			table.insert(matchingCFrames, nil)
+		end
+		MobCFrame = matchingCFrames
+	end
+	
+	return {
+		[1] = QuestLevel,
+		[2] = NPCPosition,
+		[3] = MobName,
+		[4] = QuestName,
+		[5] = LevelRequire,
+		[6] = Mon,
+		[7] = MobCFrame,
+		[8] = MonQ,
+		[9] = MobCFrameNuber
+	}
+end
 -- [Check Quest]
 function CheckQuest() 
     MyLevel = game:GetService("Players").LocalPlayer.Data.Level.Value
@@ -3393,6 +3581,310 @@ Auto_Farm_Level = s
 	end
 	SaveSettings()
 end)
+
+L_14_1:Toggle("Auto Farm Level ตัวใหม่",_G.Settings.Auto_Farm_Level,function(value)
+    _G.Auto_Farm_Level = value 
+	_G.Settings.Auto_Farm_Level = value
+	StopTween(_G.Auto_Farm_Level)
+	SaveSettings()
+end)
+if World1 then 
+Main:Toggle('Fast Farm Level ตัวใหม่',_G.Settings.Fast_Farm_Level,function(value)
+	_G.Fast_Farm_Level = value
+	_G.Settings.Fast_Farm_Level = value
+	SaveSettings()
+end)
+end
+
+
+-- [Tween Functions]
+
+local function GetIsLand(...)
+	local RealtargetPos = {...}
+	local targetPos = RealtargetPos[1]
+	local RealTarget
+	if type(targetPos) == "vector" then
+		RealTarget = targetPos
+	elseif type(targetPos) == "userdata" then
+		RealTarget = targetPos.Position
+	elseif type(targetPos) == "number" then
+		RealTarget = CFrame.new(unpack(RealtargetPos))
+		RealTarget = RealTarget.p
+	end
+
+	local ReturnValue
+	local CheckInOut = math.huge;
+	if game.Players.LocalPlayer.Team then
+		for i,v in pairs(game.Workspace._WorldOrigin.PlayerSpawns:FindFirstChild(tostring(game.Players.LocalPlayer.Team)):GetChildren()) do 
+			local ReMagnitude = (RealTarget - v:GetModelCFrame().p).Magnitude;
+			if ReMagnitude < CheckInOut then
+				CheckInOut = ReMagnitude;
+				ReturnValue = v.Name
+			end
+		end
+		if ReturnValue then
+			return ReturnValue
+		end 
+	end
+end
+Tween = function(p)
+    task.spawn(function()
+        pcall(function()
+        if game.Players.LocalPlayer.Character.Humanoid.Sit == true then 
+        game.Players.LocalPlayer.Character.Humanoid.Sit = false 
+    end
+            if game:GetService("Players").LocalPlayer:DistanceFromCharacter(p.Position) <= 250 then 
+                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = p
+            elseif not game.Players.LocalPlayer.Character:FindFirstChild("Root")then 
+                local K = Instance.new("Part",game.Players.LocalPlayer.Character)
+                K.Size = Vector3.new(20,0.5,20)
+                K.Name = "Root"
+                K.Anchored = true
+                K.Transparency = 1
+                K.CanCollide = false
+                K.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,0)
+            end
+            local U = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-p.Position).Magnitude
+            local z = game:service("TweenService")
+            local B = TweenInfo.new((p.Position-game.Players.LocalPlayer.Character.Root.Position).Magnitude/425,Enum.EasingStyle.Linear)
+            local S,g = pcall(function()
+            local q = z:Create(game.Players.LocalPlayer.Character.Root,B,{CFrame = p})
+            q:Play()
+        end)
+        if not S then 
+            return g
+        end
+        game.Players.LocalPlayer.Character.Root.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            if S and game.Players.LocalPlayer.Character:FindFirstChild("Root") then 
+                pcall(function()
+                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-p.Position).Magnitude >= 20 then 
+                        spawn(function()
+                            pcall(function()
+                                if (game.Players.LocalPlayer.Character.Root.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 150 then 
+                                    game.Players.LocalPlayer.Character.Root.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                                else 
+                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame=game.Players.LocalPlayer.Character.Root.CFrame
+                                end
+                            end)
+                        end)
+                    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-p.Position).Magnitude >= 10 and(game.Players.LocalPlayer.Character.HumanoidRootPart.Position-p.Position).Magnitude < 20 then 
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
+                    elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-p.Position).Magnitude < 10 then 
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
+                    end
+                end)
+            end
+	    end)
+    end)
+end
+
+Random_CFrame = 1
+	spawn(function()
+		while wait() do 
+			Random_CFrame = math.random(1,5)
+			wait(0.3)
+		end
+	end)
+
+	spawn(function()
+		while wait() do 
+			if _G.Settings.Fast_Farm_Level and _G.Fast_Farm_Level_Num == 1 then
+				_G.Fast_Farm_Level = false
+			end
+		end
+	end)
+	
+	local SetCFarme = 1
+
+	spawn(function()
+		while wait() do
+			local MyLevel = game.Players.LocalPlayer.Data.Level.Value
+			local QuestC = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
+			pcall(function()
+				if _G.Auto_Farm_Level then
+					if _G.Fast_Farm_Level and (MyLevel >= 15 and MyLevel <= 300) then
+						if MyLevel >= 15 and MyLevel <= 300 then
+							Fast_Farm_Lv()
+							return
+						end
+					else
+						if QuestC.Visible == true then
+							if game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
+								for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+									if v.Name == QuestCheck()[3] then
+										if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+											repeat task.wait()
+												if _G.Auto_CFrame then
+													SetCFarme = 1
+												end
+												if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
+													print(321)
+												else
+													PosMon = v.HumanoidRootPart.CFrame
+													v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+													v.HumanoidRootPart.CanCollide = false
+													v.Humanoid.WalkSpeed = 0
+													v.Head.CanCollide = false
+													StartMagnet = true
+													EquipWeapon(_G.Settings.Configs["Select Weapon"])
+													v.HumanoidRootPart.Transparency = 1
+													Tween(v.HumanoidRootPart.CFrame * MethodFarm)
+													game:GetService 'VirtualUser':CaptureController()
+							                        game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
+												end
+											until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
+										end
+									end
+								end
+							else
+								if _G.Auto_CFrame and not _G.Fast_Farm_Level then
+									Tween(QuestCheck()[7][SetCFarme] * MethodFarm)
+									if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+										if SetCFarme == nil or SetCFarme == '' then
+											SetCFarme = 1
+											print(SetCFarme)
+										elseif SetCFarme >= #QuestCheck()[7] then
+											SetCFarme = 1
+											print(SetCFarme)
+										end
+										SetCFarme =  SetCFarme + 1
+
+										print(SetCFarme)
+										wait(0.5)
+									end
+								else
+									if not _G.Fast_Farm_Level then
+										if Random_CFrame == 1 then
+											Tween(QuestCheck()[7][1] * CFrame.new(0,30,20))
+										elseif Random_CFrame == 2 then
+											Tween(QuestCheck()[7][1] * CFrame.new(0,30,-20))
+										elseif Random_CFrame == 3 then
+											Tween(QuestCheck()[7][1] * CFrame.new(20,30,0))
+										elseif Random_CFrame == 4 then
+											Tween(QuestCheck()[7][1] * CFrame.new(0,30,-20))
+										elseif Random_CFrame == 5 then
+											Tween(QuestCheck()[7][1] * CFrame.new(-20,30,0))
+										else
+											Tween(QuestCheck()[7][1] * CFrame.new(0,30,20))
+										end
+									end
+								end
+							end
+						else
+							Tween(QuestCheck()[2])
+							if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
+								StartMagnet = false
+								wait(0.2)
+								game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5)
+								Tween(QuestCheck()[7][1] * MethodFarm)
+							end
+						end
+					end
+				end
+			end)
+		end
+	end)
+
+	_G.ChackPlayer = 0
+	_G.ChackPlayer2 = _G.ChackPlayer
+	function Fast_Farm_Lv()
+		local PlayersAll = game.Players:GetPlayers()
+		local PlayerLevel = game.Players.LocalPlayer.Data.Level.Value
+		local quest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
+		local Player = string.split(quest," ")[2]
+		getgenv().SelectPly = string.split(quest," ")[2]
+		pcall(function()
+			local MyLevel = game.Players.LocalPlayer.Data.Level.Value
+			local QuestC = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
+			CFrameMon = CFrame.new(-4837.64258, 850.10199, -1840.58374, -0.430530697, -4.42848638e-08, -0.90257591, -3.08042516e-08, 1, -3.43712756e-08, 0.90257591, 1.30052875e-08, -0.430530697)
+			if MyLevel >= 15 and MyLevel <= 69 then
+				StartMagnet = false
+				for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+					if v.Name == "God's Guard" then
+						if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+							repeat task.wait()
+								v.HumanoidRootPart.CanCollide = false
+								v.Humanoid.WalkSpeed = 0
+								v.Head.CanCollide = false
+								StartMagnet = true
+								EquipWeapon(_G.Settings.Configs["Select Weapon"])
+								if MyLevel >= 70 and MyLevel <= 310 then
+									if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+										game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter")
+									end
+								end
+								PosMon = v.HumanoidRootPart.CFrame
+								v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+								v.HumanoidRootPart.Transparency = 1
+								Tween(v.HumanoidRootPart.CFrame * MethodFarm)
+								game:GetService 'VirtualUser':CaptureController()
+							    game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
+							until not v.Parent or not _G.Auto_Farm_Level or v.Humanoid.Health < 0
+						end
+					else
+						StartMagnet = false
+						if _G.Auto_Farm_Level and (CFrameMon.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 500 then
+							game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
+						end
+						Tween(CFrameMon)
+					end
+				end
+			elseif MyLevel >= 70 and MyLevel <= 310 then
+				if QuestC.Visible == false then
+					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter")
+				elseif QuestC.Visible == true then
+					if string.find(quest,"Defeat") then
+						if game.Players[getgenv().SelectPly].Data.Level.Value >= 20 and game.Players[getgenv().SelectPly].Data.Level.Value <= MyLevel * 2 then
+							repeat task.wait()
+								if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
+									game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+								end
+								if game:GetService("Players").LocalPlayer.PlayerGui.Main.PvpDisabled.Visible == true then
+									game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
+								end
+								AttackPlayers()
+								EquipWeapon(_G.Settings.Configs["Select Weapon"])
+								TPPlayer(game:GetService("Players")[getgenv().SelectPly].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
+								game:GetService("Players")[getgenv().SelectPly].Character.HumanoidRootPart.Size = Vector3.new(120,120,120)
+								game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
+								game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
+								game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
+								game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
+								if game:GetService("Players")[getgenv().SelectPly].Character.Humanoid.Health <= 0 then
+									_G.Fast_Farm_Level_Num = 1
+									_G.Fast_Farm_Level = false
+								end
+							until game.Players[getgenv().SelectPly].Character.Humanoid.Health <= 0 or not Auto_Farm_Level_Fast() or _G.Fast_Farm_Level_Num == 1
+							_G.Fast_Farm_Level_Num = 1
+							_G.Fast_Farm_Level = false
+							if not game.Players:FindFirstChild(Player) then
+								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter")
+							end
+						else
+							for i,v in pairs(PlayersAll) do
+								if v.Data.Level.Value >= 20 and v.Data.Level.Value <= PlayerLevel * 2 then
+									game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter")
+									print(v)
+								else
+									_G.ChackPlayer = _G.ChackPlayer + 1
+									if _G.ChackPlayer >= 12 then
+										Hop()
+									else
+										print("Chack Player ".._G.ChackPlayer)
+									end
+								end
+							end
+						end
+					end
+				end
+			elseif MyLevel >= 311 then 
+				_G.Fast_Farm_Level = false 
+				_G.Auto_Farm_Level = true
+			end
+		end)
+	end
+
+
 
 L_14_1:Button("Redeem All Code",function()
 spawn(function()
