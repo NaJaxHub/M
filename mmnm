@@ -5991,7 +5991,8 @@ function AutoFarmLevel()
 				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance", Vector3.new(- 6508.5581054688, 89.034996032715, - 132.83953857422))
             end
 		elseif GetQuest.Visible == true then
-            --[[if getgenv().FarmModeRough then
+            --[[
+			if getgenv().FarmModeRough then
             CFrameMontween = Tween(CFrameMonPoD)
                 if not game:GetService("Workspace").Enemies:FindFirstChild(Name) or not game:GetService("Workspace").Enemies[Name] then
                     StartMagnet = false
@@ -6018,7 +6019,8 @@ function AutoFarmLevel()
                         end
                     end
                 end
-            end]]
+            end
+			]]
         if GetQuest.Visible == true then
 			if game:GetService("Workspace").Enemies:FindFirstChild(Name).HumanoidRootPart then
 				for L_188_forvar0, L_189_forvar1 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -6051,7 +6053,8 @@ function AutoFarmLevel()
 			end
 		else if not string.find(GetQuestTitle.Text, NameMon) then Com("F_", "AbandonQuest"); end
 			StartMagnet = false
-			--[[Modstween = Tween(CFrameMonPoD.Position, CFrameMonPoD)
+			--[[
+			Modstween = Tween(CFrameMonPoD.Position, CFrameMonPoD)
 			if game:GetService("ReplicatedStorage"):FindFirstChild(Name) or game:GetService("ReplicatedStorage"):FindFirstChild(Name).Humanoid.Health <= 0 then
                 Tween(game:GetService("ReplicatedStorage"):FindFirstChild(Name).HumanoidRootPart.CFrame * CFrame.new(0,30,0))
 			end
@@ -6100,8 +6103,9 @@ function AutoFarmLevel()
                         end
                         _G.FastAttackNormalSpeed = false
                     end
-				end ]]
-			end
+				end 
+				]]
+			end 
         end
 	end
 end
