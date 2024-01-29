@@ -3679,7 +3679,7 @@ end
 spawn(function()
 	pcall(function() --velocity
 		game:GetService("RunService").Stepped:Connect(function()
-			if _G.Auto_Farm_Level  then
+			if _G.Auto_Farm_Level or _G.Settings.Main["Auto Farm Level"] then
 				if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
 					local Noclip = Instance.new("BodyVelocity")
 					Noclip.Name = "BodyClip"
@@ -3699,7 +3699,7 @@ end)
 spawn(function()
 	pcall(function()
 		game:GetService("RunService").Stepped:Connect(function()
-			if _G.Auto_Farm_Level  then
+			if _G.Auto_Farm_Level or _G.Settings.Main["Auto Farm Level"] then
 				for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
 					if v:IsA("BasePart") then
 						v.CanCollide = false    
@@ -4431,6 +4431,7 @@ function AutoFarmLevel()
 						if string.find(GetQuestTitle.Text, NameMon) then
 						    PosMon = L_189_forvar1.HumanoidRootPart.CFrame
 							repeat game:GetService("RunService").Heartbeat:wait() --AttackOKKO()
+							L_3_func(L_189_forvar1.HumanoidRootPart.CFrame * CFrame.new(0, 5, 20))
                                 if _G.Settings.Configs["Auto Haki"] then 
                                     if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
