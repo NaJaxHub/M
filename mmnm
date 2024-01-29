@@ -1,8 +1,9 @@
-print(":)")
+print(" :) ")
 -- KzSystem(getgenv().PCMode)| คุณใช้ PC ใช้มั้ย ใช้เปลี่ยนเป็น true แต่ถ้าคุณใช้มือถือเปลี่ยนเป็น false
 -- KzSystem(getgenv().UIHit)| ปิดการแสดงของ UI false ต้องการดูเปลี่ยนเป็น true
---getgenv().PCMode = false -- true / false 
---getgenv().UIHit = true -- true / false 
+getgenv().PCMode = false -- true / false 
+getgenv().UIHit = true -- true / false 
+if getgenv().PCMode then
 
 if _G.RunScriptRequest then
     game:GetService("Players").LocalPlayer:Kick("[ do not run repeatedly ]")
@@ -12,7 +13,7 @@ else
     _G.RunScriptRequest = true
 end
 
-if getgenv().PCMode then
+
 
 local function playtroll()
    local sound = Instance.new("Sound", game.workspace)
@@ -273,7 +274,7 @@ _G.Settings = {
 		["Mob Health (%)"] = "15",
 	},
 	Configs = {
-	    ["SelectTypeModeFarm"] = {"Mode : Rough"}, --,"Mode : Smooth"}, --"Mode : Rough,Smooth"
+	    ["SelectTypeModeFarm"] = {"Mode : Rough"}, --, "Mode : Smooth"}, --"Mode : Rough,Smooth"
 	    --["SelectTypeModeFarm"] = true
 	    ["Fast Attack[1]"] = false,
 	    ["Fast Attack[2]"] = true,
@@ -590,7 +591,7 @@ task.spawn(function()
 		pcall(function()
 			if StartMagnet then
 				for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then --not string.find(v.Name,"Boss") and 
+                    if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then -- not string.find(v.Name,"Boss") and 
 						if InMyNetWork(v.HumanoidRootPart) then
 							v.HumanoidRootPart.CFrame = PosMon
 							v.Humanoid.JumpPower = 0
@@ -1001,7 +1002,31 @@ local function L_11_func(L_158_arg0)
 		end 
 	end 
 end
+function AutoHaki()
+	if not game:GetService("Players").LocalPlayer.Character:FindFirstChild("HasBuso") then
+		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+	end
+end
 
+function Com(com,...)
+	local Remote = game:GetService('ReplicatedStorage').Remotes:FindFirstChild("Comm"..com)
+	if Remote:IsA("RemoteEvent") then
+		Remote:FireServer(...)
+	elseif Remote:IsA("RemoteFunction") then
+		Remote:InvokeServer(...)
+	end
+end
+local function formatNumber(number)
+	local i, k, j = tostring(number):match("(%-?%d?)(%d*)(%.?.*)")
+	return i..k:reverse():gsub("(%d%d%d)", "%1,"):reverse()..j
+end
+
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+	vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+	wait(1)
+	vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
 local function QuestCheck()
 	local Lvl = game:GetService("Players").LocalPlayer.Data.Level.Value
 	if Lvl >= 1 and Lvl <= 9 then
@@ -5378,12 +5403,12 @@ _G.Fast_Farm_Level = false
 						else
 							print("Check")
 							game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
-							-- Tween(QuestCheck()[2])
-							-- if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
+							 Tween(QuestCheck()[2])
+							 if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
 								StartMagnet = false
-								--game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
-								-- Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0))
-							-- end
+								game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
+								Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0))
+							 end
 						end
 					end
 				end
@@ -6001,7 +6026,6 @@ function AutoFarmLevel()
 						if string.find(GetQuestTitle.Text, NameMon) then
 						    PosMon = L_189_forvar1.HumanoidRootPart.CFrame
 							repeat game:GetService("RunService").Heartbeat:wait() --AttackOKKO()
-							Tween(L_189_forvar1.HumanoidRootPart.CFrame * CFrame.new(0, 5, 20))
                                 if _G.Settings.Configs["Auto Haki"] then 
                                     if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
