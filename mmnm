@@ -6031,9 +6031,10 @@ function AutoFarmLevel()
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
                                     end
                                 end
+								Tween(L_189_forvar1.HumanoidRootPart.CFrame * CFrame.new(0, 28, 10))
 								if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Settings.Configs["Select Weapon"]) then
-							 wait() EquipWeapon(_G.Settings.Configs["Select Weapon"])
-								end EquipWeapon(_G.Settings.Configs["Select Weapon"])
+									EquipWeapon(_G.Settings.Configs["Select Weapon"])
+								end --EquipWeapon(_G.Settings.Configs["Select Weapon"])
                                 if getgenv().FarmModeRough then StartMagnet = true
                                     _G.abcdefg = 335
                                     _G.abcdefgs = 55
