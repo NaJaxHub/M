@@ -1858,17 +1858,16 @@ end)
 		end) 
 	end)
 
-local SelectWeapon
+
 	local Weapon = {
 		"Melee",
 		"Sword",
 		"Fruit"
 	}
 
-Settings:Dropdown("Select Weapon เลือกอาวุธ",Weapon,'Melee',function(value)
+local SelectWeapon Settings:Dropdown("Select Weapon เลือกอาวุธ",Weapon,'Melee',function(value)
     SelectWeapon = value
 	_G.Settings.SelectWeapon = value
-	print(value)
 	SaveSettings()
 end)
 
@@ -1919,11 +1918,11 @@ if  _G.Method == nil then
 	_G.Method = "Upper"
 end
 
-Settings:Dropdown("Select Farm Method เลือกตำแหน่งฟาร์ม",{"Upper","Behind","Below"},'Upper',function(value)
+--[[Settings:Dropdown("Select Farm Method เลือกตำแหน่งฟาร์ม",{"Upper","Behind","Below"},'Upper',function(value)
     _G.Method = value
 	_G.Settings.Method = value
 	SaveSettings()
-end)
+end)]]
 --[[
 Settings:Slider("Distance\nระยะฟาร์ม",_G.Settings.DistanceAutoFarm,1,100,20,function(value)
 	DistanceAutoFarm = value
@@ -1931,11 +1930,12 @@ Settings:Slider("Distance\nระยะฟาร์ม",_G.Settings.DistanceAuto
 	SaveSettings()
 end)
 ]]
-_G.Settings.DistanceAutoFarm = 10
+
 task.spawn(function()
 	while task.wait(0) do
 	pcall(function()
-		if _G.Method == "Behind" then
+	MethodFarm = CFrame.new(0,  20, 20)
+		--[[if _G.Method == "Behind" then
 			MethodFarm = CFrame.new(0, 0,  _G.DistanceAutoFarm)
 		elseif _G.Method == "Below" then
 			MethodFarm = CFrame.new(0, - _G.DistanceAutoFarm, 0) * CFrame.Angles(math.rad(90), 0, 0)
@@ -1943,7 +1943,7 @@ task.spawn(function()
 			MethodFarm = CFrame.new(0,  _G.DistanceAutoFarm, 0) * CFrame.Angles(math.rad(0), 0, 0)
 		else
 			MethodFarm = CFrame.new(0,  _G.DistanceAutoFarm, 0)
-		end
+		end]]
 	end)
 	end
 end)
