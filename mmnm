@@ -3763,7 +3763,7 @@ _G.Fast_Farm_Level = false
 													StartMagnet = true
 													EquipWeapon(_G.Settings.Configs["Select Weapon"])
 													v.HumanoidRootPart.Transparency = 1
-													Tween(v.HumanoidRootPart.CFrame * MethodFarm)
+													L_3_func(v.HumanoidRootPart.CFrame * MethodFarm)
 													game:GetService 'VirtualUser':CaptureController()
 							                        game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 												end
@@ -3773,7 +3773,7 @@ _G.Fast_Farm_Level = false
 								end
 							else
 								if _G.Auto_CFrame and not _G.Fast_Farm_Level then
-									Tween(QuestCheck()[7][SetCFarme] * MethodFarm)
+									L_3_func(QuestCheck()[7][SetCFarme] * MethodFarm)
 									if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
 										if SetCFarme == nil or SetCFarme == '' then
 											SetCFarme = 1
@@ -3790,29 +3790,29 @@ _G.Fast_Farm_Level = false
 								else
 									if not _G.Fast_Farm_Level then
 										if Random_CFrame == 1 then
-											Tween(QuestCheck()[7][1] * CFrame.new(0,30,20))
+											L_3_func(QuestCheck()[7][1] * CFrame.new(0,30,20))
 										elseif Random_CFrame == 2 then
-											Tween(QuestCheck()[7][1] * CFrame.new(0,30,-20))
+											L_3_func(QuestCheck()[7][1] * CFrame.new(0,30,-20))
 										elseif Random_CFrame == 3 then
-											Tween(QuestCheck()[7][1] * CFrame.new(20,30,0))
+											L_3_func(QuestCheck()[7][1] * CFrame.new(20,30,0))
 										elseif Random_CFrame == 4 then
-											Tween(QuestCheck()[7][1] * CFrame.new(0,30,-20))
+											L_3_func(QuestCheck()[7][1] * CFrame.new(0,30,-20))
 										elseif Random_CFrame == 5 then
-											Tween(QuestCheck()[7][1] * CFrame.new(-20,30,0))
+											L_3_func(QuestCheck()[7][1] * CFrame.new(-20,30,0))
 										else
-											Tween(QuestCheck()[7][1] * CFrame.new(0,30,20))
+											L_3_func(QuestCheck()[7][1] * CFrame.new(0,30,20))
 										end
 									end
 								end
 							end
 						else
-							Tween(QuestCheck()[2])
-							if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
+							-- Tween(QuestCheck()[2])
+							-- if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
 								StartMagnet = false
 								wait(0.2)
 								game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5)
-								Tween(QuestCheck()[7][1] * MethodFarm)
-							end
+								-- Tween(QuestCheck()[7][1] * MethodFarm)
+							-- end
 						end
 					end
 				end
