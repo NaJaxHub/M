@@ -6032,97 +6032,12 @@ function AutoFarmLevel()
                                     end
                                 end
 								Tween(L_189_forvar1.HumanoidRootPart.CFrame * CFrame.new(0, 28, 10))
-								if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Settings.Configs["Select Weapon"]) then
-									EquipWeapon(_G.Settings.Configs["Select Weapon"])
-								end --EquipWeapon(_G.Settings.Configs["Select Weapon"])
-                                if getgenv().FarmModeRough then StartMagnet = true
-                                    _G.abcdefg = 335
-                                    _G.abcdefgs = 55
-                                    _G.abcdefgsas = 80
-                                    FarmtoTarget = Tween(L_189_forvar1.HumanoidRootPart.CFrame * CFrame.new(0, 55, 0))
-                                    game:GetService'VirtualUser':CaptureController()
-                                    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                end
-                                if getgenv().FarmModeSmooth then StartMagnet = true
-                                    _G.abcdefg = 100
-                                    _G.abcdefgs = 40
-                                    _G.abcdefgsas = 90
-                                    FarmtoTarget = Tween(L_189_forvar1.HumanoidRootPart.CFrame * CFrame.new(0, 45, 0))
-                                    game:GetService'VirtualUser':CaptureController()
-                                    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                end
-								if game.Players.LocalPlayer.Data.Level.Value >= 20 and game.Players.LocalPlayer.Data.Level.Value <= 90 then end
-								PosMon = L_189_forvar1.HumanoidRootPart.CFrame
+								StartMagnet = true
 								L_189_forvar1.HumanoidRootPart.Transparency = 1 
 								L_189_forvar1.HumanoidRootPart.CanCollide = false
-								--L_189_forvar1.Humanoid.JumpPower = 0 L_189_forvar1.Humanoid.WalkSpeed = 0
-								if not string.find(L_189_forvar1.Name,"Boss") and L_189_forvar1.Humanoid.Health <= 0 and L_189_forvar1:FindFirstChild("Humanoid") then L_189_forvar1:Destroy() end
-                                if L_189_forvar1:FindFirstChild("HumanoidRootPart") and L_189_forvar1:FindFirstChild("Humanoid") and (L_189_forvar1.HumanoidRootPart.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= _G.abcdefg then
-                                    if FarmtoTarget then FarmtoTarget:Stop() end
-                                    local MonHealth = L_189_forvar1.Humanoid.MaxHealth * 49/100
-                                    local MonHealth2 = L_189_forvar1.Humanoid.MaxHealth * _G.abcdefgs/100
-                                    local MonHealth3 = L_189_forvar1.Humanoid.MaxHealth * _G.abcdefgsas/100
-                                    if getgenv().FarmModeRough then
-                                        if L_189_forvar1.Humanoid.Health <= MonHealth then
-                                            --L_189_forvar1.HumanoidRootPart.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,-25,0)
-                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = L_189_forvar1.HumanoidRootPart.CFrame * (PosOdslob)
-                                        else 
-                                           game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = L_189_forvar1.HumanoidRootPart.CFrame * (PosOds)
-                                        end
-                                        if L_189_forvar1.Humanoid.Health <= MonHealth2 then
-                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = L_189_forvar1.HumanoidRootPart.CFrame * CFrame.new(0,10,0)
-                                            _G.FastAttackNormalSpeed = true
-                                            _G.AutoGoGoGoFarm = true
-                                            AttackPlayersFunction()
-                                            AttackOK()
-                                        else
-                                            _G.FastAttackNormalSpeed = false
-                                            _G.AutoGoGoGoFarm = false
-                                        end
-                                    end
-                                    if getgenv().FarmModeSmooth then
-                                        if L_189_forvar1.Humanoid.Health <= MonHealth2 then
-                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = L_189_forvar1.HumanoidRootPart.CFrame * CFrame.new(0,13,13)
-                                            _G.FastAttackNormalSpeed = true
-                                            _G.AutoGoGoGoFarm = true
-                                            AttackAC()
-                                            AttackOK()
-                                            AttackPlayersFunction()
-                                        else
-                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = L_189_forvar1.HumanoidRootPart.CFrame * CFrame.new(0,20,20)
-                                            _G.FastAttackNormalSpeed = false
-                                            _G.AutoGoGoGoFarm = false
-                                        end
-                                    end
-                                    if getgenv().FarmModeRough then
-                                        if L_189_forvar1.Humanoid.Health <= MonHealth3 then
-                                            game:GetService'VirtualUser':CaptureController()
-                                            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                        else
-                                            AttackOK()
-                                            KoAttackOK()
-                                            game:GetService'VirtualUser':CaptureController()
-                                            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                        end
-                                    end
-                                    if getgenv().FarmModeSmooth then 
-                                        if L_189_forvar1.Humanoid.Health <= MonHealth3 then
-                                            game:GetService'VirtualUser':CaptureController()
-                                            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                        else
-                                            AttackOK()
-                                            KoAttackOK()
-                                            game:GetService'VirtualUser':CaptureController()
-                                            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                        end
-                                    end
-                                end
-                                StartMagnet = true
-                                --L_189_forvar1.Humanoid:ChangeState(12)
                                 L_189_forvar1.HumanoidRootPart.Size = Vector3.new(75, 75, 75)
                                 game:GetService'VirtualUser':CaptureController()
                                 game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                --AttackOKKO()
                                 if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
 									game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
 								end
@@ -6136,7 +6051,7 @@ function AutoFarmLevel()
 			end
 		else if not string.find(GetQuestTitle.Text, NameMon) then Com("F_", "AbandonQuest"); end
 			StartMagnet = false
-			Modstween = Tween(CFrameMonPoD.Position, CFrameMonPoD)
+			--[[Modstween = Tween(CFrameMonPoD.Position, CFrameMonPoD)
 			if game:GetService("ReplicatedStorage"):FindFirstChild(Name) or game:GetService("ReplicatedStorage"):FindFirstChild(Name).Humanoid.Health <= 0 then
                 Tween(game:GetService("ReplicatedStorage"):FindFirstChild(Name).HumanoidRootPart.CFrame * CFrame.new(0,30,0))
 			end
@@ -6185,7 +6100,7 @@ function AutoFarmLevel()
                         end
                         _G.FastAttackNormalSpeed = false
                     end
-				end
+				end ]]
 			end
         end
 	end
