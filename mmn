@@ -3582,11 +3582,9 @@ Auto_Farm_Level = s
 	SaveSettings()
 end)
 
-L_14_1:Toggle("Auto Farm Level ตัวใหม่",_G.Settings.Auto_Farm_Level,function(value)
+L_14_1:Toggle("Auto Farm Level",_G.Settings.Auto_Farm_Level,function(value)
     _G.Auto_Farm_Level = value 
 	_G.Settings.Auto_Farm_Level = value
-	StopTween(_G.Auto_Farm_Level)
-	SaveSettings()
 end)
 --[[
 L_14_1:Toggle('Fast Farm Level ตัวใหม่',_G.Settings.Fast_Farm_Level,function(value)
