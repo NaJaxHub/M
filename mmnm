@@ -127,17 +127,6 @@ _G.Settings = {
 -- KzSystem(getgenv().UIHit)| ปิดการแสดงของ UI false ต้องการดูเปลี่ยนเป็น true
 getgenv().PCMode = false -- true / false 
 getgenv().UIHit = true -- true / false 
-if getgenv().PCMode then
-
-if _G.RunScriptRequest then
-    game:GetService("Players").LocalPlayer:Kick("[ do not run repeatedly ]")
-    wait(.5)
-    game:GetService("Players").LocalPlayer:Kick("Code = 01/0100/1/0/00/1/2/00512")
-else
-    _G.RunScriptRequest = true
-end
-
-end
 
 if getgenv().UIHit == true then
     getgenv().UIMain = 500
@@ -1935,12 +1924,14 @@ Settings:Dropdown("Select Farm Method เลือกตำแหน่งฟา
 	_G.Settings.Method = value
 	SaveSettings()
 end)
+--[[
 Settings:Slider("Distance\nระยะฟาร์ม",_G.Settings.DistanceAutoFarm,1,100,20,function(value)
 	DistanceAutoFarm = value
 	_G.Settings.DistanceAutoFarm = value
 	SaveSettings()
 end)
-
+]]
+_G.Settings.DistanceAutoFarm = 10
 task.spawn(function()
 	while task.wait(0) do
 	pcall(function()
