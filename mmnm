@@ -1566,20 +1566,20 @@ local L_22_ = E:Section("Misc","Right")
 local L_21_ = E:Section("Shop","Left")
 
 
-Main:Toggle('Auto Farm Level\nออโต้ฟาร์มเลเวล',_G.Settings.Auto_Farm_Level,function(value)
+Main:Toggle('Auto Farm Level ออโต้ฟาร์มเลเวล',_G.Settings.Auto_Farm_Level,function(value)
     _G.Auto_Farm_Level = value 
 	_G.Settings.Auto_Farm_Level = value
 	StopTween(_G.Auto_Farm_Level)
 	SaveSettings()
 end)
 if W1 then 
-Main:Toggle('Fast Farm Level\nออโต้ฟาร์มลัดเวล',_G.Settings.Fast_Farm_Level,function(value)
+Main:Toggle('Fast Farm Level ออโต้ฟาร์มลัดเวล',_G.Settings.Fast_Farm_Level,function(value)
 	_G.Fast_Farm_Level = value
 	_G.Settings.Fast_Farm_Level = value
 	SaveSettings()
 end)
 end 
-Main:Toggle('Auto Farm Nearest\nออโต้ฟาร์มมอนรอบๆ',_G.NeareastFarm,function(value)
+Main:Toggle('Auto Farm Nearest ออโต้ฟาร์มมอนรอบๆ',_G.NeareastFarm,function(value)
 	_G.NeareastFarm = value
 end)
 spawn(function()
@@ -1948,7 +1948,7 @@ task.spawn(function()
 	end
 end)
 
-Settings:Toggle('Fast Attack\nโจมตีเร็ว',true,function(value)
+Settings:Toggle('Fast Attack โจมตีเร็ว',true,function(value)
 	_G.FastAttack = value
 	SaveSettings()
 end)
@@ -2120,7 +2120,7 @@ spawn(function()
     end
 end)
 
-Settings:Toggle('Bring Mob\nรวมมอน',_G.Settings.Brimob,function(value)
+Settings:Toggle('Bring Mob รวมมอน',_G.Settings.Brimob,function(value)
 	_G.Brimob = value
 	_G.Settings.Brimob = value
 	SaveSettings()
