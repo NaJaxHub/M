@@ -3676,6 +3676,43 @@ Tween = function(p)
     end)
 end
 
+spawn(function()
+	pcall(function() --velocity
+		game:GetService("RunService").Stepped:Connect(function()
+			if _G.Auto_Farm_Level  then
+				if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+					local Noclip = Instance.new("BodyVelocity")
+					Noclip.Name = "BodyClip"
+					Noclip.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+					Noclip.MaxForce = Vector3.new(100000,100000,100000)
+					Noclip.Velocity = Vector3.new(0,0,0)
+				end
+			else	
+				if game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+					game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
+				end
+			end
+		end)
+	end)
+end)
+
+spawn(function()
+	pcall(function()
+		game:GetService("RunService").Stepped:Connect(function()
+			if _G.Auto_Farm_Level  then
+				for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+					if v:IsA("BasePart") then
+						v.CanCollide = false    
+					end
+				end
+			end
+		end)
+	end)
+end)
+
+
+MethodFarm = CFrame.new(0, 28, 0)
+
 Random_CFrame = 1
 	spawn(function()
 		while wait() do 
@@ -3683,7 +3720,7 @@ Random_CFrame = 1
 			wait(0.3)
 		end
 	end)
-
+_G.Fast_Farm_Level = false
 	spawn(function()
 		while wait() do 
 			if _G.Settings.Fast_Farm_Level and _G.Fast_Farm_Level_Num == 1 then
