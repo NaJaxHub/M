@@ -1337,35 +1337,28 @@ Random_CFrame = 1
 								for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 									if v.Name == QuestCheck()[3] then
 										if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-											repeat task.wait()
-												if _G.Auto_CFrame then
-													SetCFarme = 1
-												end
-												if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
-													print(321)
-												else
-													if _G.FastAttack then
-														AttackFunction()
+											if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
+												repeat task.wait()
+													if _G.Auto_CFrame then
+														SetCFarme = 1
 													end
+													EquipWeapon(_G.Select_Weapon)
 													PosMon = v.HumanoidRootPart.CFrame
 													v.HumanoidRootPart.Size = Vector3.new(60,60,60)
 													v.HumanoidRootPart.CanCollide = false
 													v.Humanoid.WalkSpeed = 0
 													v.Head.CanCollide = false
 													BringMobFarm = true
-													EquipWeapon(_G.Select_Weapon)
 													v.HumanoidRootPart.Transparency = 1
 													Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
 													game:GetService 'VirtualUser':CaptureController()
 							                        game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
-												end
-											until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
+												until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
+											end
 										end
 									end
-								end
-							else
-								if _G.Auto_CFrame and not _G.Fast_Farm_Level then
-									if _G.TweentoQuest then
+								else
+									if _G.Auto_CFrame and not _G.Fast_Farm_Level then
 										Tween(QuestCheck()[7][SetCFarme] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
 										if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
 											if SetCFarme == nil or SetCFarme == '' then
@@ -1380,43 +1373,37 @@ Random_CFrame = 1
 											wait(0.5)
 										end
 									else
-										if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position) then
-											if SetCFarme == nil or SetCFarme == '' then
-												SetCFarme = 1
-												print(SetCFarme)
-											elseif SetCFarme >= #QuestCheck()[7] then
-												SetCFarme = 1
-												print(SetCFarme)
+										if not _G.Fast_Farm_Level then
+											if Random_CFrame == 1 then
+												Tween(QuestCheck()[7][1] * CFrame.new(0,30,20))
+											elseif Random_CFrame == 2 then
+												Tween(QuestCheck()[7][1] * CFrame.new(0,30,-20))
+											elseif Random_CFrame == 3 then
+												Tween(QuestCheck()[7][1] * CFrame.new(20,30,0))
+											elseif Random_CFrame == 4 then
+												Tween(QuestCheck()[7][1] * CFrame.new(0,30,-20))
+											elseif Random_CFrame == 5 then
+												Tween(QuestCheck()[7][1] * CFrame.new(-20,30,0))
+											else
+												Tween(QuestCheck()[7][1] * CFrame.new(0,30,20))
 											end
-											SetCFarme =  SetCFarme + 1
-											print(SetCFarme)
-										end
-									end
-								else
-									if not _G.Fast_Farm_Level then
-										if Random_CFrame == 1 then
-											Tween(QuestCheck()[7][1] * CFrame.new(0,30,20))
-										elseif Random_CFrame == 2 then
-											Tween(QuestCheck()[7][1] * CFrame.new(0,30,-20))
-										elseif Random_CFrame == 3 then
-											Tween(QuestCheck()[7][1] * CFrame.new(20,30,0))
-										elseif Random_CFrame == 4 then
-											Tween(QuestCheck()[7][1] * CFrame.new(0,30,-20))
-										elseif Random_CFrame == 5 then
-											Tween(QuestCheck()[7][1] * CFrame.new(-20,30,0))
-										else
-											Tween(QuestCheck()[7][1] * CFrame.new(0,30,20))
 										end
 									end
 								end
-							end
-						else
-							Tween(QuestCheck()[2])
-							if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
-								BringMobFarm = false
-								wait(0.2)
-								game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5)
-								Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
+							else
+								if _G.TweentoQuest then
+									Tween(QuestCheck()[2])
+									if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
+										BringMobFarm = false
+										wait(0.2)
+										game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5)
+										Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
+									end
+								else
+									BringMobFarm = false
+									game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
+									Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
+								end
 							end
 						end
 					end
