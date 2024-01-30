@@ -1508,7 +1508,6 @@ Random_CFrame = 1
 		end)
 	end
 
-_G.BringNormal = true
 	spawn(function()
 		game:GetService("RunService").Heartbeat:Connect(function()
 			pcall(function()
