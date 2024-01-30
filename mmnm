@@ -1441,6 +1441,20 @@ Random_CFrame = 1
 					if v.Name == "God's Guard" then
 						if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
 							repeat task.wait()
+								game.ReplicatedStorage:WaitForChild("Remotes").CommF_:InvokeServer("AbandonQuest")
+								for xxx, z in pairs(game:GetService("Workspace").Enemies:GetChildren()) do 
+									if z.Name == "God's Guard [Lv. 450]" and z:FindFirstChild("HumanoidRootPart") and z:FindFirstChild("Humanoid") and z.Humanoid.Health > 0 then
+										if InMyNetWork(z.HumanoidRootPart) then
+											z.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame
+											z.Humanoid.JumpPower = 0
+											z.Humanoid.WalkSpeed = 0
+											z.HumanoidRootPart.CanCollide = false
+											z.Humanoid:ChangeState(14)
+											z.Humanoid:ChangeState(11)
+											z.HumanoidRootPart.Size = Vector3.new(55, 55, 55)
+										end
+									end
+								end
 								v.HumanoidRootPart.CanCollide = false
 								v.Humanoid.WalkSpeed = 0
 								v.Head.CanCollide = false
