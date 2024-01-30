@@ -1595,7 +1595,7 @@ Settings:Dropdown("Select Farm Method",{"Upper","Behind","Below"},'Upper',functi
 	SaveSettings()
 end)
 
-Settings:Slider("Distance",_G.Settings.DistanceAutoFarm,1,100,20,function(value)
+Settings:Slider("Distance",_G.Settings.DistanceAutoFarm,100,20,function(value)
 	DistanceAutoFarm = value
 	_G.Settings.DistanceAutoFarm = value
 	SaveSettings()
