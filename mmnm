@@ -1535,7 +1535,7 @@ local SelectWeapon
 		"Fruit"
 	}
 
-Settings:Dropdown("Select Weapon",Weapon,'Melee',function(value)
+Main:Dropdown("Select Weapon",Weapon,'Melee',function(value)
     SelectWeapon = value
 	_G.Settings.SelectWeapon = value
 	SaveSettings()
@@ -1588,13 +1588,17 @@ if  _G.Method == nil then
 	_G.Method = "Upper"
 end
 
-Settings:Dropdown("Select Farm Method",{"Upper","Behind","Below"},'Upper',function(value)
+Main:Dropdown("Select Farm Method",{"Upper","Behind","Below"},'Upper',function(value)
     _G.Method = value
 	_G.Settings.Method = value
 	SaveSettings()
 end)
-
-Settings:Slider("Distance",_G.Settings.DistanceAutoFarm,100,20,function(value)
+Main:Toggle("Auto Set SpawnPoint",_G.Settings.Auto_Set_Spawn,function(value)
+	_G.Auto_Set_Spawn = value
+	_G.Settings.Auto_Set_Spawn = value
+	SaveSettings()
+end)
+Main:Slider("Distance",_G.Settings.DistanceAutoFarm,100,20,function(value)
 	DistanceAutoFarm = value
 	_G.Settings.DistanceAutoFarm = value
 	SaveSettings()
@@ -1617,11 +1621,7 @@ task.spawn(function()
 end)
 
 
-Settings:Toggle("Auto Set SpawnPoint",_G.Settings.Auto_Set_Spawn,function(value)
-	_G.Auto_Set_Spawn = value
-	_G.Settings.Auto_Set_Spawn = value
-	SaveSettings()
-end)
+
 
 spawn(function()
 		while wait(0.1) do
@@ -1635,7 +1635,7 @@ spawn(function()
 		end
 	end)
 
-Settings:Toggle("Auto Haki",true,function(value)
+Main:Toggle("Auto Haki",true,function(value)
 _G.AUTOHAKI = value
 SaveSettings()
 end)
