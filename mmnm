@@ -1826,7 +1826,7 @@ spawn(function()
     end
 end)
 
-Settings:Toggle('Bring Mob',_G.Settings.Brimob,function(value)
+Settings:Toggle("Bring Mob",_G.Settings.Brimob,function(value)
 	_G.Brimob = value
 	_G.Settings.Brimob = value
 	SaveSettings()
