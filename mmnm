@@ -1319,7 +1319,7 @@ Random_CFrame = 1
 	end)
 	
 	local SetCFarme = 1
-
+--[[
 	spawn(function() 
 		while wait() do
 			local MyLevel = game.Players.LocalPlayer.Data.Level.Value
@@ -1414,7 +1414,7 @@ Random_CFrame = 1
 			end)
 		end
 	end)
-
+]]
 
 	_G.ChackPlayer = 0
 	_G.ChackPlayer2 = _G.ChackPlayer
