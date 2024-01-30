@@ -1679,6 +1679,7 @@ task.spawn(function()
 		end)
 	end
 end)
+
 task.spawn(function()
 	while task.wait() do
 		pcall(function()
