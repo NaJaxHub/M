@@ -1321,6 +1321,7 @@ Random_CFrame = 1
 
 	spawn(function() 
 		while wait() do
+			EquipWeapon(_G.Select_Weapon)
 			local MyLevel = game.Players.LocalPlayer.Data.Level.Value
 			local QuestC = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
 			pcall(function()
@@ -1337,13 +1338,11 @@ Random_CFrame = 1
 									if v.Name == QuestCheck()[3] then
 										if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
 											Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 0)
-											EquipWeapon(_G.Select_Weapon)
 											if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
 												repeat task.wait()
 													if _G.Auto_CFrame then
 														SetCFarme = 1
 													end
-													EquipWeapon(_G.Select_Weapon)
 													PosMon = v.HumanoidRootPart.CFrame
 													v.HumanoidRootPart.Size = Vector3.new(60,60,60)
 													v.HumanoidRootPart.CanCollide = false
@@ -1368,14 +1367,10 @@ Random_CFrame = 1
 									if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
 										if SetCFarme == nil or SetCFarme == '' then
 											SetCFarme = 1
-											print(SetCFarme)
 										elseif SetCFarme >= #QuestCheck()[7] then
 											SetCFarme = 1
-											print(SetCFarme)
 										end
 										SetCFarme =  SetCFarme + 1
-										print(SetCFarme)
-										wait(0.5)
 									end
 								else
 									if not _G.Fast_Farm_Level then
