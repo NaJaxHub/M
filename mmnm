@@ -1745,14 +1745,19 @@ function getAllBladeHitsPlayers(Sizes)
 	end
 	return Hits
 end
-function Attack()
+function AttackNaJaHub()
 	local ac = CombatFrameworkR.activeController
 	if ac and ac.equipped then
-		for m4kor1 = 1, 1 do
-			local bladehit = getAllBladeHits(40)
+		for indexincrement = 1, 1 do
+			local bladehit = getAllBladeHits(60)
 			if #bladehit > 0 then
+				for i , v in pairs(ac.animator.anims.basic) do
+					v:Play()
+				end
 				if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] then
-					game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 1, "")
+					game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(CurrentWeapon()))
+					game.ReplicatedStorage.Remotes.Validator:FireServer();
+					game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "")
 				end
 			end
 		end
@@ -1867,7 +1872,7 @@ coroutine.wrap(function()
 							cooldownfastattack = tick()
 						end
 					else
-						Attack()
+						AttackNaJaHub()
 						AttackFunction()
 						AttackPlayersFunction()
 						if tick() - cooldownfastattack > tonumber(0.75) then wait(0.1)
