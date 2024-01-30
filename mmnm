@@ -1560,7 +1560,7 @@ task.spawn(function()
 						if not v.HumanoidRootPart:FindFirstChild("BodyClip") then
 							local Noclip = Instance.new("BodyVelocity")
 							Noclip.Name = "BodyClip"
-							Noclip.Parent = v
+							Noclip.Parent = v.HumanoidRootPart.CFrame
 							Noclip.MaxForce = Vector3.new(100000,100000,100000)
 							Noclip.Velocity = Vector3.new(0,0,0)
 						end
