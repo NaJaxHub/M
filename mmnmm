@@ -1320,6 +1320,15 @@ Random_CFrame = 1
 
 	local SetCFarme = 1
 
+function Com(L_89_arg0, ...)
+	local L_90_ = game:GetService("ReplicatedStorage").Remotes:FindFirstChild("Comm" .. L_89_arg0)
+	if L_90_:IsA("RemoteEvent") then
+		L_90_:FireServer(...)
+	elseif L_90_:IsA("RemoteFunction") then
+		L_90_:InvokeServer(...)
+	end
+end
+
 	spawn(function() 
 		while wait() do
 			local MyLevel = game.Players.LocalPlayer.Data.Level.Value
@@ -1328,6 +1337,7 @@ Random_CFrame = 1
 				if _G.Auto_Farm_Level then
 					if _G.Fast_Farm_Level and (MyLevel >= 15 and MyLevel <= 300) then
 						if MyLevel >= 15 and MyLevel <= 300 then
+							game.ReplicatedStorage:WaitForChild("Remotes").CommF_:InvokeServer("AbandonQuest")
 							Fast_Farm_Lv()
 							return
 						end
@@ -1441,9 +1451,8 @@ Random_CFrame = 1
 					if v.Name == "God's Guard" then
 						if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
 							repeat task.wait()
-								game.ReplicatedStorage:WaitForChild("Remotes").CommF_:InvokeServer("AbandonQuest")
-								for xxx, z in pairs(game:GetService("Workspace").Enemies:GetChildren()) do 
-									if z.Name == "God's Guard [Lv. 450]" and z:FindFirstChild("HumanoidRootPart") and z:FindFirstChild("Humanoid") and z.Humanoid.Health > 0 then
+								for xxx, z in pairs(game.Workspace.Enemies:GetChildren()) do 
+									if z.Name == "God's Guard" and z:FindFirstChild("HumanoidRootPart") and z:FindFirstChild("Humanoid") and z.Humanoid.Health > 0 then
 										if InMyNetWork(z.HumanoidRootPart) then
 											z.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame
 											z.Humanoid.JumpPower = 0
