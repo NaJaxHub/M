@@ -1317,7 +1317,7 @@ Random_CFrame = 1
 			end
 		end
 	end)
-
+	
 	local SetCFarme = 1
 
 	spawn(function() 
@@ -1368,10 +1368,13 @@ Random_CFrame = 1
 									if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
 										if SetCFarme == nil or SetCFarme == '' then
 											SetCFarme = 1
+											print(SetCFarme)
 										elseif SetCFarme >= #QuestCheck()[7] then
 											SetCFarme = 1
+											print(SetCFarme)
 										end
 										SetCFarme =  SetCFarme + 1
+										print(SetCFarme)
 									end
 								else
 									if not _G.Fast_Farm_Level then
@@ -1511,6 +1514,7 @@ Random_CFrame = 1
 			end
 		end)
 	end
+
 task.spawn(function()
 	while task.wait() do
 		pcall(function()
@@ -1920,7 +1924,7 @@ spawn(function()
 		pcall(function()
 			if BringMobFarm then
 				for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-					if v.Name == (QuestCheck()[3]) and (v.HumanoidRootPart.Position - PosMon.Position).magnitude <= 200 then
+					if v.Name == QuestCheck()[3] and (v.HumanoidRootPart.Position - PosMon.Position).magnitude <= 200 then
 						v.HumanoidRootPart.CFrame = PosMon
 						v.HumanoidRootPart.Size = Vector3.new(60,60,60)
 						v.HumanoidRootPart.Transparency = 1
