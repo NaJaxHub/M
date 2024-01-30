@@ -1994,3 +1994,30 @@ spawn(function()
 		end)
 	end
 end)
+_G.Settings.Misc['Auto Rejoin'] = true
+spawn(function()
+	while wait() do
+		if _G.Settings.Misc['Auto Rejoin'] then
+			_G.Settings.Misc['Auto Rejoin'] = game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(v)
+				if v.Name == 'ErrorPrompt' and v:FindFirstChild('MessageArea') and v.MessageArea:FindFirstChild("ErrorFrame") then
+					print("Auto Rejoin!")
+					game:GetService("TeleportService"):Teleport(game.PlaceId)
+				end
+			end)
+		end
+	end
+end)
+
+-- [Remove Quest Dead]
+spawn(function()
+	while wait() do
+		pcall(function()
+			if game.Players.LocalPlayer.Character:WaitForChild("Humanoid"):GetState() == Enum.HumanoidStateType.Dead then 
+				if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+					repeat wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
+				end
+			end
+		end)
+	end
+end)
