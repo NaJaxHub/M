@@ -1317,10 +1317,9 @@ Random_CFrame = 1
 			end
 		end
 	end)
-	
 	local SetCFarme = 1
 
-	spawn(function()
+	spawn(function() 
 		while wait() do
 			local MyLevel = game.Players.LocalPlayer.Data.Level.Value
 			local QuestC = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
@@ -1337,6 +1336,8 @@ Random_CFrame = 1
 								for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 									if v.Name == QuestCheck()[3] then
 										if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+											Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 0)
+											EquipWeapon(_G.Select_Weapon)
 											if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
 												repeat task.wait()
 													if _G.Auto_CFrame then
@@ -1414,6 +1415,33 @@ Random_CFrame = 1
 			end)
 		end
 	end)
+
+spawn(function()
+    while wait() do
+        pcall(function()
+        if _G.Auto_Farm_Level then
+		GetQuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title
+		GetQuest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
+		local L_165_ = game.Players.LocalPlayer.Data.Level.Value
+        if GetQuest.Visible == true then
+			if game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]).HumanoidRootPart then
+				for L_188_forvar0, L_189_forvar1 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+					if _G.Auto_Farm_Level and L_189_forvar1.Name == QuestCheck()[3] and L_189_forvar1:FindFirstChild("HumanoidRootPart") and L_189_forvar1:FindFirstChild("Humanoid") and L_189_forvar1.Humanoid.Health > 0 and (L_189_forvar1.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 220 then --220
+						if string.find(GetQuestTitle.Text, QuestCheck()[6])) then
+							repeat game:GetService("RunService").Heartbeat:wait()
+								Tween(L_189_forvar1.HumanoidRootPart.CFrame * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
+							    game:GetService'VirtualUser':CaptureController()
+							    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+							until not _G.Auto_Farm_Level == false
+						end
+					end
+				end
+			end
+        end
+        end
+        end)
+    end
+end)
 
 	_G.ChackPlayer = 0
 	_G.ChackPlayer2 = _G.ChackPlayer
@@ -1513,26 +1541,33 @@ Random_CFrame = 1
 			end
 		end)
 	end
-
-	spawn(function()
-		game:GetService("RunService").Heartbeat:Connect(function()
-			pcall(function()
-				if _G.BringNormal then
-					for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-						if _G.Auto_Farm_Level and BringMobFarm and v.Name == Mon and (v.HumanoidRootPart.Position - PosMon.Position).magnitude <= 200 then
+task.spawn(function()
+	while task.wait() do
+		pcall(function()
+			if BringMobFarm then
+				for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then --not string.find(v.Name,"Boss") and 
+						if InMyNetWork(v.HumanoidRootPart) then
 							v.HumanoidRootPart.CFrame = PosMon
+							v.Humanoid.JumpPower = 0
+							v.Humanoid.WalkSpeed = 0
+							v.Humanoid.NameDisplayDistance = 0
+							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
 							v.HumanoidRootPart.CanCollide = false
-							v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+							v.Head.CanCollide = false
 							if v.Humanoid:FindFirstChild("Animator") then
 								v.Humanoid.Animator:Destroy()
 							end
-							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
+							sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius", math.huge)
+							v.Humanoid:ChangeState(12) --12
+							v.Humanoid:ChangeState(14) --12
 						end
-					end
+                    end
 				end
-			end)
-		end) 
-	end)
+			end
+		end)
+	end
+end)
 
 local SelectWeapon
 	local Weapon = {
@@ -1937,37 +1972,11 @@ spawn(function()
 		end
 	end
 end)
-spawn(function()
-	while task.wait() do
-		pcall(function()
-			if _G.Brimob then
-				for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-					if not string.find(v.Name,"Boss") and (v.HumanoidRootPart.Position - PosMon.Position).magnitude <= 200 then
-						if InMyNetWork(v.HumanoidRootPart) then
-							v.HumanoidRootPart.CFrame = PosMon
-							v.HumanoidRootPart.Size = Vector3.new(60,60,60)
-							v.HumanoidRootPart.Transparency = 1
-							v.Humanoid.JumpPower = 0
-							v.Humanoid.WalkSpeed = 0
-							if v.Humanoid:FindFirstChild("Animator") then
-								v.Humanoid.Animator:Destroy()
-							end
-							v.HumanoidRootPart.CanCollide = false
-							v.Head.CanCollide = false
-							v.Humanoid:ChangeState(11)
-							v.Humanoid:ChangeState(14)
-							sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
-						end
-					end
-				end
-			end
-		end)
-	end
-end)
+
 spawn(function()
 	while wait() do
 		pcall(function()
-			if _G.Brimob then
+			if BringMobFarm then
 				for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 					if v.Name == QuestCheck()[3] and (v.HumanoidRootPart.Position - PosMon.Position).magnitude <= 200 then
 						v.HumanoidRootPart.CFrame = PosMon
