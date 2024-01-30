@@ -1350,8 +1350,8 @@ Random_CFrame = 1
 													v.Head.CanCollide = false
 													BringMobFarm = true
 													v.HumanoidRootPart.Transparency = 1
-													Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
-													if _G.Auto_Farm_Level then
+													Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 0))
+													if _G.FastAttack then
 														FastAttackNoCD()
 													end
 													game:GetService 'VirtualUser':CaptureController()
@@ -1411,32 +1411,6 @@ Random_CFrame = 1
 		end
 	end)
 
-spawn(function()
-    while wait() do
-        pcall(function()
-        if _G.Auto_Farm_Level then
-		GetQuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title
-		GetQuest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
-		local L_165_ = game.Players.LocalPlayer.Data.Level.Value
-        if GetQuest.Visible == true then
-			if game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]).HumanoidRootPart then
-				for L_188_forvar0, L_189_forvar1 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-					if _G.Auto_Farm_Level and L_189_forvar1.Name == (QuestCheck()[3]) and L_189_forvar1:FindFirstChild("HumanoidRootPart") and L_189_forvar1:FindFirstChild("Humanoid") and L_189_forvar1.Humanoid.Health > 0 and (L_189_forvar1.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 220 then --220
-						if string.find(GetQuestTitle.Text, (QuestCheck()[6]))) then
-							repeat game:GetService("RunService").Heartbeat:wait()
-								Tween(L_189_forvar1.HumanoidRootPart.CFrame * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
-							    game:GetService'VirtualUser':CaptureController()
-							    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-							until not _G.Auto_Farm_Level == false
-						end
-					end
-				end
-			end
-        end
-        end
-        end)
-    end
-end)
 
 	_G.ChackPlayer = 0
 	_G.ChackPlayer2 = _G.ChackPlayer
