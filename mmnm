@@ -1618,11 +1618,12 @@ task.spawn(function()
 end)
 
 
-Settings:Toggle('Auto Set SpawnPoint',_G.Settings.Auto_Set_Spawn,function(value)
+Settings:Toggle("Auto Set SpawnPoint",_G.Settings.Auto_Set_Spawn,function(value)
 	_G.Auto_Set_Spawn = value
-			_G.Settings.Auto_Set_Spawn = value
-			SaveSettings()
+	_G.Settings.Auto_Set_Spawn = value
+	SaveSettings()
 end)
+
 spawn(function()
 		while wait(0.1) do
 			if _G.Auto_Set_Spawn then
@@ -1653,7 +1654,7 @@ spawn(function()
     end
 end)
 
-Settings:Toggle('Fast Attack',true,function(value)
+Settings:Toggle("Fast Attack",true,function(value)
 	_G.FastAttack = value
 	SaveSettings()
 end)
