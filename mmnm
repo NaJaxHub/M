@@ -1337,13 +1337,13 @@ Random_CFrame = 1
 								for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 									if v.Name == QuestCheck()[3] then
 										if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+											if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
 											repeat task.wait()
 												if _G.Auto_CFrame then
 													SetCFarme = 1
 												end
-												if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
-													print(321)
-												else
+												--	print(321)
+												--else
 													PosMon = v.HumanoidRootPart.CFrame
 													v.HumanoidRootPart.Size = Vector3.new(60,60,60)
 													v.HumanoidRootPart.CanCollide = false
@@ -1352,29 +1352,25 @@ Random_CFrame = 1
 													BringMobFarm = true
 													EquipWeapon(_G.Select_Weapon)
 													v.HumanoidRootPart.Transparency = 1
-													Tween(v.HumanoidRootPart.CFrame *  * CFrame.new(0, 28, 8) * CFrame.Angles(math.rad(90), 0, 0))
+													Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 8) * CFrame.Angles(math.rad(90), 0, 0))
 													game:GetService 'VirtualUser':CaptureController()
 							        		    	game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
-												end
+												--end
 											until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
+											end
 										end
 									end
 								end
 							else
 								if _G.Auto_CFrame and not _G.Fast_Farm_Level then
-									Tween(QuestCheck()[7][SetCFarme] * MethodFarm)
+									Tween(QuestCheck()[7][SetCFarme] * CFrame.new(0, 28, 8) * CFrame.Angles(math.rad(90), 0, 0))
 									if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
 										if SetCFarme == nil or SetCFarme == '' then
 											SetCFarme = 1
-											print(SetCFarme)
 										elseif SetCFarme >= #QuestCheck()[7] then
 											SetCFarme = 1
-											print(SetCFarme)
 										end
 										SetCFarme =  SetCFarme + 1
-
-										print(SetCFarme)
-										wait(0.5)
 									end
 								else
 									if not _G.Fast_Farm_Level then
