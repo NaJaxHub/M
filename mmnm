@@ -1338,6 +1338,61 @@ Random_CFrame = 1
 									if v.Name == QuestCheck()[3] then
 										if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
 											repeat task.wait()
+                                    			if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
+                                        			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+                                    			end
+												if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Select_Weapon) then
+							 						EquipWeapon(_G.Select_Weapon)
+												end
+                                				if getgenv().FarmModeRough then StartMagnet = true
+                                    				_G.abcdefg = 335 _G.abcdefgs = 55 _G.abcdefgsas = 80
+                                    				FarmtoTarget = Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 55, 0))
+                                				end
+                                				if getgenv().FarmModeSmooth then StartMagnet = true
+                                    				_G.abcdefg = 100 _G.abcdefgs = 40 _G.abcdefgsas = 90
+                                    				FarmtoTarget = Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 45, 0))
+                                				end
+												PosMon = v.HumanoidRootPart.CFrame
+												v.HumanoidRootPart.Transparency = 1 
+												v.HumanoidRootPart.CanCollide = false
+												if not string.find(v.Name,"Boss") and v.Humanoid.Health <= 0 and v:FindFirstChild("Humanoid") then v:Destroy() end
+                                				if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and (v.HumanoidRootPart.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= _G.abcdefg then
+                                    				if FarmtoTarget then FarmtoTarget:Stop() end
+                                    				local MonHealth = v.Humanoid.MaxHealth * 49/100
+                                    				local MonHealth2 = v.Humanoid.MaxHealth * _G.abcdefgs/100
+                                    				local MonHealth3 = v.Humanoid.MaxHealth * _G.abcdefgsas/100
+                                    				if getgenv().FarmModeRough then
+                                        				if v.Humanoid.Health <= MonHealth then
+                                            				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * (PosOdslob)
+                                        				else 
+                                           					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * (PosOds)
+                                        				end
+                                        				if v.Humanoid.Health <= MonHealth2 then
+                                            				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,10,0)
+                                            				_G.FastAttackNormalSpeed = true
+                                            				_G.AutoGoGoGoFarm = true
+                                            				AttackPlayersFunction() AttackOK()
+                                        				else
+                                            				_G.FastAttackNormalSpeed = false
+                                            				_G.AutoGoGoGoFarm = false
+                                        				end
+                                    				end
+                                    				if getgenv().FarmModeSmooth then
+                                        				if v.Humanoid.Health <= MonHealth2 then
+                                            				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,13,13)
+                                            				_G.FastAttackNormalSpeed = true
+                                            				_G.AutoGoGoGoFarm = true
+                                            				AttackAC() AttackOK() AttackPlayersFunction()
+                                        				else
+                                            				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,20,20)
+                                            				_G.FastAttackNormalSpeed = false
+                                            				_G.AutoGoGoGoFarm = false
+                                        				end
+                                    				end
+                                    			end
+                                				if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
+													game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
+												end
 												if _G.Auto_CFrame then
 													SetCFarme = 1
 												end
@@ -1414,7 +1469,90 @@ Random_CFrame = 1
 			end)
 		end
 	end)
+Type = getgenv().Mode
+Type2 = getgenv().Mode
+    spawn(function()
+        while task.wait(.01) do
+            if Type2 == 1 then
+                CFrameMonPoD = CFrameMon
+            elseif Type2 == 2 then
+                CFrameMonPoD = CFrameMon1
+            elseif Type2 == 3 then
+                for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
+                    if v.Name == Name then
+                        CFrameMonPoD = v.CFrame * CFrame.new(0,30,0)
+                    end
+                end
+            end
+        end
+    end)
+    
+    spawn(function()
+        while wait(.1) do
+            if Type == 1 then
+                PosOds = CFrame.new(0, 7, 17)
+            elseif Type == 2 then
+                PosOds = CFrame.new(17, 7, 0)
+            elseif Type == 3 then
+                PosOds = CFrame.new(0, 7, -17)
+            elseif Type == 4 then
+                PosOds = CFrame.new(-17, 7, 0)
+            end
+        end
+    end)
 
+    spawn(function()
+        while wait(.1) do
+            if Type == 1 then
+                PosOdslob = CFrame.new(0, -4.5, 15)
+            elseif Type == 2 then
+                PosOdslob = CFrame.new(15, -10, 0)
+            elseif Type == 3 then
+                PosOdslob = CFrame.new(0, -15, -15)
+            elseif Type == 4 then
+                PosOdslob = CFrame.new(-0, -15, 0)
+            end
+        end
+    end)
+
+    spawn(function()
+        while wait(.15) do  --1
+            Type = 1
+            task.wait(.15)  --1
+            Type = 2
+            task.wait(.15)  --1
+            Type = 3
+            task.wait(.15)   --1
+            Type = 4
+            task.wait(.15)  --1
+        end
+    end)
+
+    spawn(function()
+        while task.wait(.1) do
+            Type2 = 1
+            wait(3)
+            Type2 = 2
+            wait(3)
+            Type2 = 3
+            wait(3.5)
+        end
+    end)
+a = 1
+spawn(function()
+	while wait() do 
+		a = math.random(1, 2)
+		wait(0.3)
+	end
+end)
+
+c = 1
+spawn(function()
+	while wait() do 
+		c = math.random(1, 2)
+		task.wait(.1)
+	end
+end)
 	_G.ChackPlayer = 0
 	_G.ChackPlayer2 = _G.ChackPlayer
 	function Fast_Farm_Lv()
@@ -1521,6 +1659,40 @@ task.spawn(function()
 				for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
                     if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then --not string.find(v.Name,"Boss") and 
 						if InMyNetWork(v.HumanoidRootPart) then
+							v.HumanoidRootPart.CFrame = PosMon
+							v.Humanoid.JumpPower = 0
+							v.Humanoid.WalkSpeed = 0
+							v.Humanoid.NameDisplayDistance = 0
+							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+							v.HumanoidRootPart.CanCollide = false
+							v.Head.CanCollide = false
+							if v.Humanoid:FindFirstChild("Animator") then
+								v.Humanoid.Animator:Destroy()
+							end
+							sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius", math.huge)
+							v.Humanoid:ChangeState(12) --12
+							v.Humanoid:ChangeState(14) --12
+						end
+                    end
+				end
+			end
+		end)
+	end
+end)
+task.spawn(function()
+	while task.wait() do
+		pcall(function()
+			if BringMobFarm then
+				for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then --not string.find(v.Name,"Boss") and 
+						if InMyNetWork(v.HumanoidRootPart) then
+						if not v.HumanoidRootPart:FindFirstChild("BodyClip") then
+							local Noclip = Instance.new("BodyVelocity")
+							Noclip.Name = "BodyClip"
+							Noclip.Parent = v
+							Noclip.MaxForce = Vector3.new(100000,100000,100000)
+							Noclip.Velocity = Vector3.new(0,0,0)
+						end
 							v.HumanoidRootPart.CFrame = PosMon
 							v.Humanoid.JumpPower = 0
 							v.Humanoid.WalkSpeed = 0
