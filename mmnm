@@ -1722,17 +1722,11 @@ function getAllBladeHits(Sizes)
                         debug.setupvalue(AC.attack, 6, u9)
                         debug.setupvalue(AC.attack, 4, u7)
                         debug.setupvalue(AC.attack, 7, u10)
-                        --pcall(function()
-                        --if  then--plr.Character:FindFirstChildOfClass("Tool") and
                             if _G.FastAttack and plr.Character:FindFirstChildOfClass("Tool") and AC.blades and AC.blades[1] then
                                 AC.animator.anims.basic[1]:Play(0.01,0.01,0.01)
                                 game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetCurrentBlade()))
-                                --game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(u12 / 1099511627776 * 16777215), u10 / 1099511627776 * 16777215)
                                 game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "")
-                                --AttackPlayersFunction() AttackOK()
                             end
-                        --end
-                        --end)
                     end
                 end
         end)
@@ -1818,17 +1812,6 @@ spawn(function()
 			end
 		end
 	end
-end)
-spawn(function()
-	game:GetService('RunService').Stepped:Connect(function()
-		if _G.FastAttack then
-			for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
-				if v.Name == "Sounds" then--or v.Name == "SlashHit"
-					v:Destroy() 
-				end
-			end
-		end
-	end)
 end)
 
 coroutine.wrap(function()
