@@ -1535,7 +1535,7 @@ local SelectWeapon
 		"Fruit"
 	}
 
-Main:Dropdown("Select Weapon",Weapon,'Melee',function(value)
+Settings:Dropdown("Select Weapon",Weapon,'Melee',function(value)
     SelectWeapon = value
 	_G.Settings.SelectWeapon = value
 	SaveSettings()
@@ -1581,42 +1581,17 @@ task.spawn(function()
 	end
 end)
 
-if _G.DistanceAutoFarm == nil then
-	_G.DistanceAutoFarm = 30
-end
-if  _G.Method == nil then
-	_G.Method = "Upper"
-end
-
-Main:Dropdown("Select Farm Method",{"Upper","Behind","Below"},'Upper',function(value)
-    _G.Method = value
-	_G.Settings.Method = value
-	SaveSettings()
-end)
-Main:Toggle("Auto Set SpawnPoint",_G.Settings.Auto_Set_Spawn,function(value)
+Settings:Toggle("Auto Set SpawnPoint",_G.Settings.Auto_Set_Spawn,function(value)
 	_G.Auto_Set_Spawn = value
 	_G.Settings.Auto_Set_Spawn = value
-	SaveSettings()
-end)
-Main:Slider("Distance",_G.Settings.DistanceAutoFarm,100,20,function(value)
-	DistanceAutoFarm = value
-	_G.Settings.DistanceAutoFarm = value
 	SaveSettings()
 end)
 
 task.spawn(function()
 	while task.wait(0) do
-	pcall(function()
-		if _G.Method == "Behind" then
-			MethodFarm = CFrame.new(0, 0,  _G.DistanceAutoFarm)
-		elseif _G.Method == "Below" then
-			MethodFarm = CFrame.new(0, - _G.DistanceAutoFarm, 0) * CFrame.Angles(math.rad(90), 0, 0)
-		elseif _G.Method == "Upper" then
-			MethodFarm = CFrame.new(0,  _G.DistanceAutoFarm, 0) * CFrame.Angles(math.rad(0), 0, 0)
-		else
-			MethodFarm = CFrame.new(0,  _G.DistanceAutoFarm, 0)
-		end
-	end)
+		pcall(function()
+			MethodFarm = CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0)
+		end)
 	end
 end)
 
@@ -1635,7 +1610,7 @@ spawn(function()
 		end
 	end)
 
-Main:Toggle("Auto Haki",true,function(value)
+Settings:Toggle("Auto Haki",true,function(value)
 _G.AUTOHAKI = value
 SaveSettings()
 end)
