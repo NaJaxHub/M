@@ -1319,7 +1319,7 @@ Random_CFrame = 1
 	end)
 	
 	local SetCFarme = 1
---[[
+
 	spawn(function() 
 		while wait() do
 			local MyLevel = game.Players.LocalPlayer.Data.Level.Value
@@ -1337,28 +1337,26 @@ Random_CFrame = 1
 								for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 									if v.Name == QuestCheck()[3] then
 										if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-											Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 0)
-											if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
-												repeat task.wait()
-													if _G.Auto_CFrame then
-														SetCFarme = 1
-													end
-													EquipWeapon(_G.Select_Weapon)
+											repeat task.wait()
+												if _G.Auto_CFrame then
+													SetCFarme = 1
+												end
+												--if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
+													--print(321)
+												--else
 													PosMon = v.HumanoidRootPart.CFrame
 													v.HumanoidRootPart.Size = Vector3.new(60,60,60)
 													v.HumanoidRootPart.CanCollide = false
 													v.Humanoid.WalkSpeed = 0
 													v.Head.CanCollide = false
 													BringMobFarm = true
+													EquipWeapon(_G.Select_Weapon)
 													v.HumanoidRootPart.Transparency = 1
-													Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 0))
-													if _G.FastAttack then
-														FastAttackNoCD()
-													end
+													Tween(v.HumanoidRootPart.CFrame *  * CFrame.new(0, 28, 8) * CFrame.Angles(math.rad(90), 0, 0))
 													game:GetService 'VirtualUser':CaptureController()
 							                        game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
-												until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
-											end
+												--end
+											until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
 										end
 									end
 								end
@@ -1414,7 +1412,6 @@ Random_CFrame = 1
 			end)
 		end
 	end)
-]]
 
 	_G.ChackPlayer = 0
 	_G.ChackPlayer2 = _G.ChackPlayer
