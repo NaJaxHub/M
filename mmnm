@@ -315,51 +315,6 @@ if _G.Settings.Select_Boss == nil then
 	_G.Settings.Select_Boss = "nil"
 end
 
--- [GetMaterial]
-
-function GetMaterial(matname)
-for i, v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
-if type(v) == "table" then
-	if v.Type == "Material" then
-		if v.Name == matname then
-			return v.Count
-		end
-	end
-end
-end
-return 0
-end
-
-local AllMaterial
-if World1 then
-AllMaterial = {
-"Magma Ore",
-"Leather",
-"Scrap Metal",
-"Angel Wings",
-"Fish Tail"
-}
-elseif World2 then
-AllMaterial = {
-"Magma Ore",
-"Scrap Metal",
-"Radioactive Material",
-"Vampire Fang",
-"Mystic Droplet",
-}
-elseif World3 then
-AllMaterial = {
-"Mini Tusk",
-"Fish Tail",
-"Scrap Metal",
-"Dragon Scale",
-"Conjured Cocoa",
-"Demonic Wisp",
-"Gunpowder",
-}
-end
-
-table.sort(AllMaterial)
 
 -- [CustomFindFirstChild]
 
