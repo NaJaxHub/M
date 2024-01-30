@@ -1292,7 +1292,7 @@ spawn(function()
 							v.Head.CanCollide = false
 							v.HumanoidRootPart.Size = Vector3.new(80, 80, 80)
 							StartMagnet = true
-							Tween(v.HumanoidRootPart.CFrame * MethodFarm)
+							Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
 							game:GetService 'VirtualUser':CaptureController()
 							game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 						until not _G.NeareastFarm or not v.Parent or v.Humanoid.Health <= 0 
@@ -1344,6 +1344,9 @@ Random_CFrame = 1
 												if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
 													print(321)
 												else
+													if _G.FastAttack then
+														AttackFunction()
+													end
 													PosMon = v.HumanoidRootPart.CFrame
 													v.HumanoidRootPart.Size = Vector3.new(60,60,60)
 													v.HumanoidRootPart.CanCollide = false
@@ -1352,7 +1355,7 @@ Random_CFrame = 1
 													BringMobFarm = true
 													EquipWeapon(_G.Select_Weapon)
 													v.HumanoidRootPart.Transparency = 1
-													Tween(v.HumanoidRootPart.CFrame * MethodFarm)
+													Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
 													game:GetService 'VirtualUser':CaptureController()
 							                        game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 												end
@@ -1362,19 +1365,32 @@ Random_CFrame = 1
 								end
 							else
 								if _G.Auto_CFrame and not _G.Fast_Farm_Level then
-									Tween(QuestCheck()[7][SetCFarme] * MethodFarm)
-									if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
-										if SetCFarme == nil or SetCFarme == '' then
-											SetCFarme = 1
+									if _G.TweentoQuest then
+										Tween(QuestCheck()[7][SetCFarme] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
+										if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+											if SetCFarme == nil or SetCFarme == '' then
+												SetCFarme = 1
+												print(SetCFarme)
+											elseif SetCFarme >= #QuestCheck()[7] then
+												SetCFarme = 1
+												print(SetCFarme)
+											end
+											SetCFarme =  SetCFarme + 1
 											print(SetCFarme)
-										elseif SetCFarme >= #QuestCheck()[7] then
-											SetCFarme = 1
+											wait(0.5)
+										end
+									else
+										if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position) then
+											if SetCFarme == nil or SetCFarme == '' then
+												SetCFarme = 1
+												print(SetCFarme)
+											elseif SetCFarme >= #QuestCheck()[7] then
+												SetCFarme = 1
+												print(SetCFarme)
+											end
+											SetCFarme =  SetCFarme + 1
 											print(SetCFarme)
 										end
-										SetCFarme =  SetCFarme + 1
-
-										print(SetCFarme)
-										wait(0.5)
 									end
 								else
 									if not _G.Fast_Farm_Level then
@@ -1400,7 +1416,7 @@ Random_CFrame = 1
 								BringMobFarm = false
 								wait(0.2)
 								game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5)
-								Tween(QuestCheck()[7][1] * MethodFarm)
+								Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
 							end
 						end
 					end
@@ -1440,7 +1456,7 @@ Random_CFrame = 1
 								PosMon = v.HumanoidRootPart.CFrame
 								v.HumanoidRootPart.Size = Vector3.new(60,60,60)
 								v.HumanoidRootPart.Transparency = 1
-								Tween(v.HumanoidRootPart.CFrame * MethodFarm)
+								Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
 								game:GetService 'VirtualUser':CaptureController()
 							    game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 							until not v.Parent or not _G.Auto_Farm_Level or v.Humanoid.Health < 0
@@ -1587,15 +1603,6 @@ Settings:Toggle("Auto Set SpawnPoint",_G.Settings.Auto_Set_Spawn,function(value)
 	SaveSettings()
 end)
 
-task.spawn(function()
-	while task.wait(0) do
-		pcall(function()
-			MethodFarm = CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0)
-		end)
-	end
-end)
-
-
 
 
 spawn(function()
@@ -1626,6 +1633,12 @@ spawn(function()
             end
         end
     end
+end)
+
+Settings:Toggle("Tween to Quest",_G.Settings.TweentoQuest,function(value)
+    _G.TweentoQuest = value 
+	_G.Settings.TweentoQuest = value
+	SaveSettings()
 end)
 
 Settings:Toggle("Fast Attack",true,function(value)
