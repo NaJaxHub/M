@@ -1317,6 +1317,7 @@ Random_CFrame = 1
 			end
 		end
 	end)
+
 	local SetCFarme = 1
 
 	spawn(function() 
@@ -1886,17 +1887,6 @@ for _, func in pairs(getreg()) do
     end
 end
 
-spawn(function()
-      while wait() do
-      if _G.FastAttack then
-        for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
-            if v.Name == "CurvedRing" or v.Name == "SlashHit" or v.Name == "DamageCounter" or v.Name == "SwordSlash" or v.Name == "SlashTail" or v.Name == "Sounds" then
-                v:Destroy() 
-            end
-        end
-    end
-    end
-end)
 
 Settings:Toggle("Bring Mob",_G.Settings.Brimob,function(value)
 	_G.Brimob = value
@@ -1930,7 +1920,7 @@ spawn(function()
 		pcall(function()
 			if BringMobFarm then
 				for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-					if v.Name == QuestCheck()[3] and (v.HumanoidRootPart.Position - PosMon.Position).magnitude <= 200 then
+					if v.Name == (QuestCheck()[3]) and (v.HumanoidRootPart.Position - PosMon.Position).magnitude <= 200 then
 						v.HumanoidRootPart.CFrame = PosMon
 						v.HumanoidRootPart.Size = Vector3.new(60,60,60)
 						v.HumanoidRootPart.Transparency = 1
