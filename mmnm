@@ -1321,7 +1321,6 @@ Random_CFrame = 1
 
 	spawn(function() 
 		while wait() do
-			EquipWeapon(_G.Select_Weapon)
 			local MyLevel = game.Players.LocalPlayer.Data.Level.Value
 			local QuestC = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
 			pcall(function()
@@ -1343,6 +1342,7 @@ Random_CFrame = 1
 													if _G.Auto_CFrame then
 														SetCFarme = 1
 													end
+													EquipWeapon(_G.Select_Weapon)
 													PosMon = v.HumanoidRootPart.CFrame
 													v.HumanoidRootPart.Size = Vector3.new(60,60,60)
 													v.HumanoidRootPart.CanCollide = false
@@ -1421,8 +1421,8 @@ spawn(function()
         if GetQuest.Visible == true then
 			if game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]).HumanoidRootPart then
 				for L_188_forvar0, L_189_forvar1 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-					if _G.Auto_Farm_Level and L_189_forvar1.Name == QuestCheck()[3] and L_189_forvar1:FindFirstChild("HumanoidRootPart") and L_189_forvar1:FindFirstChild("Humanoid") and L_189_forvar1.Humanoid.Health > 0 and (L_189_forvar1.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 220 then --220
-						if string.find(GetQuestTitle.Text, QuestCheck()[6])) then
+					if _G.Auto_Farm_Level and L_189_forvar1.Name == (QuestCheck()[3]) and L_189_forvar1:FindFirstChild("HumanoidRootPart") and L_189_forvar1:FindFirstChild("Humanoid") and L_189_forvar1.Humanoid.Health > 0 and (L_189_forvar1.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 220 then --220
+						if string.find(GetQuestTitle.Text, (QuestCheck()[6]))) then
 							repeat game:GetService("RunService").Heartbeat:wait()
 								Tween(L_189_forvar1.HumanoidRootPart.CFrame * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
 							    game:GetService'VirtualUser':CaptureController()
