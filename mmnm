@@ -1351,59 +1351,62 @@ Random_CFrame = 1
 													BringMobFarm = true
 													v.HumanoidRootPart.Transparency = 1
 													Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
+													if _G.Auto_Farm_Level then
+														FastAttackNoCD()
+													end
 													game:GetService 'VirtualUser':CaptureController()
 							                        game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 												until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
 											end
 										end
 									end
-								else
-									if _G.Auto_CFrame and not _G.Fast_Farm_Level then
-										Tween(QuestCheck()[7][SetCFarme] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
-										if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
-											if SetCFarme == nil or SetCFarme == '' then
-												SetCFarme = 1
-												print(SetCFarme)
-											elseif SetCFarme >= #QuestCheck()[7] then
-												SetCFarme = 1
-												print(SetCFarme)
-											end
-											SetCFarme =  SetCFarme + 1
-											print(SetCFarme)
-											wait(0.5)
-										end
-									else
-										if not _G.Fast_Farm_Level then
-											if Random_CFrame == 1 then
-												Tween(QuestCheck()[7][1] * CFrame.new(0,30,20))
-											elseif Random_CFrame == 2 then
-												Tween(QuestCheck()[7][1] * CFrame.new(0,30,-20))
-											elseif Random_CFrame == 3 then
-												Tween(QuestCheck()[7][1] * CFrame.new(20,30,0))
-											elseif Random_CFrame == 4 then
-												Tween(QuestCheck()[7][1] * CFrame.new(0,30,-20))
-											elseif Random_CFrame == 5 then
-												Tween(QuestCheck()[7][1] * CFrame.new(-20,30,0))
-											else
-												Tween(QuestCheck()[7][1] * CFrame.new(0,30,20))
-											end
-										end
-									end
 								end
 							else
-								if _G.TweentoQuest then
-									Tween(QuestCheck()[2])
-									if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
-										BringMobFarm = false
-										wait(0.2)
-										game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5)
-										Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
+								if _G.Auto_CFrame and not _G.Fast_Farm_Level then
+									Tween(QuestCheck()[7][SetCFarme] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
+									if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+										if SetCFarme == nil or SetCFarme == '' then
+											SetCFarme = 1
+											print(SetCFarme)
+										elseif SetCFarme >= #QuestCheck()[7] then
+											SetCFarme = 1
+											print(SetCFarme)
+										end
+										SetCFarme =  SetCFarme + 1
+										print(SetCFarme)
+										wait(0.5)
 									end
 								else
+									if not _G.Fast_Farm_Level then
+										if Random_CFrame == 1 then
+											Tween(QuestCheck()[7][1] * CFrame.new(0,30,20))
+										elseif Random_CFrame == 2 then
+											Tween(QuestCheck()[7][1] * CFrame.new(0,30,-20))
+										elseif Random_CFrame == 3 then
+											Tween(QuestCheck()[7][1] * CFrame.new(20,30,0))
+										elseif Random_CFrame == 4 then
+											Tween(QuestCheck()[7][1] * CFrame.new(0,30,-20))
+										elseif Random_CFrame == 5 then
+											Tween(QuestCheck()[7][1] * CFrame.new(-20,30,0))
+										else
+											Tween(QuestCheck()[7][1] * CFrame.new(0,30,20))
+										end
+									end
+								end
+							end
+						else
+							if _G.TweentoQuest then
+								Tween(QuestCheck()[2])
+								if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
 									BringMobFarm = false
-									game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
+									wait(0.2)
+									game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5)
 									Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
 								end
+							else
+								BringMobFarm = false
+								game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
+								Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
 							end
 						end
 					end
@@ -1680,6 +1683,57 @@ function getAllBladeHits(Sizes)
 	return Hits
 	end
 
+    function FastAttackNoCD()
+        pcall(function()
+                local AC = CombatFrameworkR.activeController
+                for i = 1, 1 do 
+                    local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getAllBladeHits(
+                        plr.Character,
+                        {plr.Character.HumanoidRootPart},
+                        80
+                    )
+                    local cac = {}
+                    local hash = {}
+                    for k, v in pairs(bladehit) do
+                        if v.Parent:FindFirstChild("HumanoidRootPart") and not hash[v.Parent] then
+                            table.insert(cac, v.Parent.HumanoidRootPart)
+                            hash[v.Parent] = true
+                        end
+                    end
+                    bladehit = cac
+                    if #bladehit > 0 then
+                        local u8 = debug.getupvalue(AC.attack, 5)
+                        local u9 = debug.getupvalue(AC.attack, 6)
+                        local u7 = debug.getupvalue(AC.attack, 4)
+                        local u10 = debug.getupvalue(AC.attack, 7)
+                        local u12 = (u8 * 798405 + u7 * 727595) % u9
+                        local u13 = u7 * 798405
+                        (function()
+                            u12 = (u12 * u9 + u13) % 1099511627776
+                            u8 = math.floor(u12 / u9)
+                            u7 = u12 - u8 * u9
+                        end)()
+                        u10 = u10 + (u8 + u9 + u7 + u10) * (798405 * u13 + 727595 * u12) / 1 + 1 -- % 1099511627776 - 16777215 / u12-- 1
+                        debug.setupvalue(AC.attack, 5, u8)
+                        debug.setupvalue(AC.attack, 6, u9)
+                        debug.setupvalue(AC.attack, 4, u7)
+                        debug.setupvalue(AC.attack, 7, u10)
+                        --pcall(function()
+                        --if  then--plr.Character:FindFirstChildOfClass("Tool") and
+                            if _G.FastAttack and plr.Character:FindFirstChildOfClass("Tool") and AC.blades and AC.blades[1] then
+                                AC.animator.anims.basic[1]:Play(0.01,0.01,0.01)
+                                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetCurrentBlade()))
+                                --game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(u12 / 1099511627776 * 16777215), u10 / 1099511627776 * 16777215)
+                                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "")
+                                --AttackPlayersFunction() AttackOK()
+                            end
+                        --end
+                        --end)
+                    end
+                end
+        end)
+    end
+
 	function AttackFunction()
 		local ac = CombatFrameworkR.activeController
 		if ac and ac.equipped then
@@ -1714,7 +1768,64 @@ function getAllBladeHits(Sizes)
 		end
 		end
 		end
-	
+
+task.spawn(function()
+	local Camera = require(game.Players.LocalPlayer.PlayerScripts.CombatFramework.CameraShaker)
+	while wait() do
+		pcall(function()
+			Camera.CameraShakeInstance.CameraShakeState.Inactive = 0
+		end)
+	end
+end)
+
+local YaY = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+local CameraShakerR = require(game.ReplicatedStorage.Util.CameraShaker)
+spawn(function()
+	while task.wait() do
+		if _G.FastAttack then
+			pcall(function()
+				for i,CombatFrameworkR in pairs(debug.getupvalues(YaY)) do
+					if i == 2 then
+						CameraShakerR:Stop()
+						CombatFrameworkR.activeController.attacking = false
+						CombatFrameworkR.activeController.timeToNextAttack = 0
+						CombatFrameworkR.activeController.increment = 4
+						CombatFrameworkR.activeController.increment = 2
+						CombatFrameworkR.activeController.hitboxMagnitude = 60
+						CombatFrameworkR.activeController.blocking = false
+						CombatFrameworkR.activeController.timeToNextBlock = 0
+						CombatFrameworkR.activeController.focusStart = 0
+						CombatFrameworkR.activeController.humanoid.AutoRotate = true
+					end
+				end
+			end)
+		else
+			for i,CombatFrameworkR in pairs(debug.getupvalues(YaY)) do
+				if i == 2 then
+					pcall(function()
+						CameraShakerR:Stop()
+						CombatFrameworkR.activeController.attacking = false
+						CombatFrameworkR.activeController.hitboxMagnitude = 60
+						CombatFrameworkR.activeController.blocking = false
+						CombatFrameworkR.activeController.focusStart = 0
+						CombatFrameworkR.activeController.humanoid.AutoRotate = true
+					end)
+				end
+			end
+		end
+	end
+end)
+spawn(function()
+	game:GetService('RunService').Stepped:Connect(function()
+		if _G.FastAttack then
+			for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
+				if v.Name == "Sounds" then--or v.Name == "SlashHit"
+					v:Destroy() 
+				end
+			end
+		end
+	end)
+end)
 
 coroutine.wrap(function()
 	while task.wait(0) do
