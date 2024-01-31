@@ -1269,7 +1269,7 @@ spawn(function()
 							v.HumanoidRootPart.CanCollide = false 
 							v.Head.CanCollide = false
 							v.HumanoidRootPart.Size = Vector3.new(80, 80, 80)
-							StartMagnet = true
+							BringMobFarm = true
 							Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
 							game:GetService 'VirtualUser':CaptureController()
 							game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
@@ -1518,6 +1518,185 @@ Random_CFrame = 1
 		end)
 	end
 
+    Main:Label("Auto Farm Mastery Fruits")
+
+    Main:Toggle("Auto Farm Mastery Fruits",_G.Settings.AutoMasterySkill ,function(value)
+        _G.Settings.AutoMasterySkill = value
+        getgenv().AuToFarmMasFruits = value
+        SaveSettings()
+		if value == false then
+			wait()
+			L_3_func(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+			wait()
+		end
+    end)
+
+local HealthMon = {
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "55",
+    "60",
+    "70",
+    "80",
+    "90",
+    "100"
+}
+Main:Dropdown("Select Health (%)",HealthMon,HealthMs,function(value)
+    HealthMs = value
+    SaveSettings()
+end)
+
+spawn(function()
+    while wait() do
+        if HealthMs ~= nil then
+            pcall(function()
+                if HealthMs == "5" then
+                    MobHealthFruits = 5
+                elseif HealthMs == "10" then
+                    MobHealthFruits = 10
+                elseif HealthMs == "15" then
+                    MobHealthFruits = 15
+                elseif HealthMs == "20" then
+                    MobHealthFruits = 20
+                elseif HealthMs == "25" then
+                    MobHealthFruits = 25
+                elseif HealthMs == "30" then
+                    MobHealthFruits = 30
+                elseif HealthMs == "35" then
+                    MobHealthFruits = 35
+                elseif HealthMs == "40" then
+                    MobHealthFruits = 40
+                elseif HealthMs == "45" then
+                    MobHealthFruits = 45
+                elseif HealthMs == "50" then
+                    MobHealthFruits = 50
+                elseif HealthMs == "55" then
+                    MobHealthFruits = 55
+                elseif HealthMs == "60" then
+                    MobHealthFruits = 60
+                elseif HealthMs == "70" then
+                    MobHealthFruits = 70
+                elseif HealthMs == "80" then
+                    MobHealthFruits = 80
+                elseif HealthMs == "90" then
+                    MobHealthFruits = 90
+                elseif HealthMs == "100" then
+                    MobHealthFruits = 100
+                end
+            end)
+        end
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if getgenv().AuToFarmMasFruits then
+                for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if v.Name == QuestCheck()[3] then
+                        if v:FindFirstChild("HumanoidRootPart") then
+                            repeat task.wait()
+								if _G.Auto_CFrame then
+									SetCFarme = 1
+								end
+								if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
+									print(321)
+								else
+                              	  	BringMobFarm = true
+        	                        PosMon = v.HumanoidRootPart.CFrame
+           	                     	if v.Humanoid.Health <= v.Humanoid.MaxHealth * MobHealthFruits/100 then
+										EquipWeapon(game.Players.LocalPlayer.Data.DevilFruit.Value)
+           	                         	getgenv().UseSkill = true
+           	                         	PosMon = v.HumanoidRootPart.CFrame
+										Tween(v.HumanoidRootPart.CFrame * CFrame.new(0,0,25))
+           	                     	else
+           	                         	getgenv().UseSkill = false
+           	                         	EquipWeapon(_G.Select_Weapon)
+										Tween(v.HumanoidRootPart.CFrame * CFrame.new(0,0,25))
+            	                    end
+								end
+               	            until not getgenv().AuToFarmMasFruits or not v.Parent or v.Humanoid.Health <= 0
+                        end
+					else
+						if _G.Auto_CFrame and not getgenv().AuToFarmMasFruits then
+							Tween(QuestCheck()[7][SetCFarme] * CFrame.new(0, 28, 8) * CFrame.Angles(math.rad(90), 0, 0))
+							if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+								if SetCFarme == nil or SetCFarme == '' then
+									SetCFarme = 1
+									print(SetCFarme)
+								elseif SetCFarme >= #QuestCheck()[7] then
+									SetCFarme = 1
+									print(SetCFarme)
+								end
+									SetCFarme =  SetCFarme + 1
+									print(SetCFarme)
+									--wait(0.5)
+								end
+							else
+								if not getgenv().AuToFarmMasFruits then
+									if Random_CFrame == 1 then
+										Tween(QuestCheck()[7][1] * CFrame.new(0,30,20))
+									elseif Random_CFrame == 2 then
+										Tween(QuestCheck()[7][1] * CFrame.new(0,30,-20))
+									elseif Random_CFrame == 3 then
+										Tween(QuestCheck()[7][1] * CFrame.new(20,30,0))
+									elseif Random_CFrame == 4 then
+										Tween(QuestCheck()[7][1] * CFrame.new(0,30,-20))
+									elseif Random_CFrame == 5 then
+										Tween(QuestCheck()[7][1] * CFrame.new(-20,30,0))
+									else
+										Tween(QuestCheck()[7][1] * CFrame.new(0,30,20))
+									end
+								end
+							end
+						end
+					else
+						BringMobFarm = false
+						if _G.TweentoQuest then
+							Tween(QuestCheck()[2])
+							if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
+								wait(0.2)
+								game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5)
+								Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
+							end
+						else
+							game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
+							Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
+						end
+					end
+                end
+            end
+        end)
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if getgenv().AuToFarmMasFruits then
+                local On = {
+                    [1] = PosMon.Position
+                }
+                game:GetService("Players").LocalPlayer.Character[game:GetService("Players").LocalPlayer.Data.DevilFruit.Value].RemoteEvent:FireServer(unpack(On))
+            else
+               local Off = {
+                    [1] = nil
+                }
+                game:GetService("Players").LocalPlayer.Character[game:GetService("Players").LocalPlayer.Data.DevilFruit.Value].RemoteEvent:FireServer(unpack(Off)) 
+            end
+        end)
+    end
+end)
+
+
 task.spawn(function()
 	while task.wait() do
 		pcall(function()
@@ -1580,6 +1759,10 @@ task.spawn(function()
 		end)
 	end
 end)
+
+
+
+
 
 local SelectWeapon
 	local Weapon = {
@@ -1652,6 +1835,12 @@ spawn(function()
 		end
 	end)
 
+Settings:Toggle("Tween to Quest",_G.Settings.TweentoQuest,function(value)
+    _G.TweentoQuest = value 
+	_G.Settings.TweentoQuest = value
+	SaveSettings()
+end)
+
 Settings:Toggle("Auto Haki",true,function(value)
 _G.AUTOHAKI = value
 SaveSettings()
@@ -1670,17 +1859,108 @@ spawn(function()
     end
 end)
 
-Settings:Toggle("Tween to Quest",_G.Settings.TweentoQuest,function(value)
-    _G.TweentoQuest = value 
-	_G.Settings.TweentoQuest = value
-	SaveSettings()
-end)
-
 Settings:Toggle("Fast Attack",true,function(value)
 	_G.FastAttack = value
 	SaveSettings()
 end)
 
+Settings:Label("Auto Skill Settings")
+
+Settings:Toggle("Skill Z",_G.Settings.SkillZ,function(a)
+	_G.Settings.SkillZ = a
+	_G.SkillZ = a
+end)
+
+Settings:Toggle("Skill X",_G.Settings.SkillX,function(a)
+	_G.Settings.SkillX = a
+	_G.SkillX = a
+end)
+
+Settings:Toggle("Skill C",_G.Settings.SkillC,function(a)
+	_G.Settings.SkillC = a
+	_G.SkillC = a
+end)
+
+Settings:Toggle("Skill V",_G.Settings.SkillV,function(a)
+	_G.Settings.SkillV = a
+	_G.SkillV = a
+end)
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if getgenv().UseSkill then --CheckQuest()
+                for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if v.Humanoid.Health > 0 and v:FindFirstChild("HumanoidRootPart") and (v.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 30 then --250
+                if _G.SkillZ then
+					wait()
+                    game:GetService("VirtualInputManager"):SendKeyEvent(true,"Z",false,game)
+                    wait(.1)
+                    game:GetService("VirtualInputManager"):SendKeyEvent(false,"Z",false,game)
+					wait()
+                end
+                if _G.SkillX then
+					wait()
+                    game:GetService("VirtualInputManager"):SendKeyEvent(true,"X",false,game)
+                    wait(.1)
+                    game:GetService("VirtualInputManager"):SendKeyEvent(false,"X",false,game)
+					wait()
+                end
+                if _G.SkillC then
+					wait()
+                    game:GetService("VirtualInputManager"):SendKeyEvent(true,"C",false,game)
+                    wait(.1)
+                    game:GetService("VirtualInputManager"):SendKeyEvent(false,"C",false,game)
+					wait()
+                end
+                if _G.SkillV then
+					wait()
+                    game:GetService("VirtualInputManager"):SendKeyEvent(true,"V",false,game)
+                    wait(.1)
+                    game:GetService("VirtualInputManager"):SendKeyEvent(false,"V",false,game)
+					wait()
+                end
+                    end
+                end
+            end
+        end)
+    end
+end)
+spawn(function()
+    while wait() do
+        pcall(function()
+    		function SkillUse()
+        		if _G.SkillZ then
+					wait()
+                    game:GetService("VirtualInputManager"):SendKeyEvent(true,"Z",false,game)
+                    wait(.1)
+                    game:GetService("VirtualInputManager"):SendKeyEvent(false,"Z",false,game)
+					wait()
+                end
+                if _G.SkillX then
+					wait()
+                    game:GetService("VirtualInputManager"):SendKeyEvent(true,"X",false,game)
+                    wait(.1)
+                    game:GetService("VirtualInputManager"):SendKeyEvent(false,"X",false,game)
+					wait()
+                end
+                if _G.SkillC then
+					wait()
+                    game:GetService("VirtualInputManager"):SendKeyEvent(true,"C",false,game)
+                    wait(.1)
+                    game:GetService("VirtualInputManager"):SendKeyEvent(false,"C",false,game)
+					wait()
+                end
+                if _G.SkillV then
+					wait()
+                    game:GetService("VirtualInputManager"):SendKeyEvent(true,"V",false,game)
+                    wait(.1)
+                    game:GetService("VirtualInputManager"):SendKeyEvent(false,"V",false,game)
+					wait()
+                end
+    		end
+        end)
+    end
+end)
 -- [require module]
 local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
 local CombatFrameworkR = getupvalues(CombatFramework)[2]
