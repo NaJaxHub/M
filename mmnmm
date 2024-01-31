@@ -768,14 +768,6 @@ function UnEquipWeapon(Weapon)
 end
 
 
-function Com(com,...)
-	local Remote = game:GetService('ReplicatedStorage').Remotes:FindFirstChild("Comm"..com)
-	if Remote:IsA("RemoteEvent") then
-		Remote:FireServer(...)
-	elseif Remote:IsA("RemoteFunction") then
-		Remote:InvokeServer(...)
-	end
-end
 
 -- [Tween Functions]
 
