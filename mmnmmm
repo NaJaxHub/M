@@ -1911,36 +1911,6 @@ Settings:Toggle("Bring Mob",_G.Settings.Brimob,function(value)
 end)
 
 spawn(function()
-    while task.wait() do
-        pcall(function()
-            if _G.Brimob then
-                CheckQuest()
-                for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                    if _G.Brimob and BringMobFarm and v.Name == Name and v.Name == NameBoss and (Name == "Factory Staff [Lv. 800]" or Name == "Monkey [Lv. 14]" or Name == "Dragon Crew Warrior [Lv. 1575]" or Name == "Dragon Crew Archer [Lv. 1600]" or Name == "Head Baker [Lv. 2275]" or Name == "Baking Staff [Lv. 2250]" or Name == "Cake Guard [Lv. 2225]") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (v.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 123 then
-                        v.HumanoidRootPart.CFrame = PosMon
-                        v.Humanoid:ChangeState(14)
-                        v.HumanoidRootPart.CanCollide = false
-                        v.Head.CanCollide = false
-                        if v.Humanoid:FindFirstChild("Animator") then
-                            v.Humanoid.Animator:Destroy()
-                        end
-                        sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
-                    elseif _G.Brimob and BringMobFarm and v.Name == Name and v.Name == NameBoss and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (v.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-                        v.HumanoidRootPart.CFrame = PosMon
-                        v.Humanoid:ChangeState(14)
-                        v.HumanoidRootPart.CanCollide = false
-                        v.Head.CanCollide = false
-                        if v.Humanoid:FindFirstChild("Animator") then
-                            v.Humanoid.Animator:Destroy()
-                        end
-                        sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
-                    end
-                end
-            end
-        end)
-    end
-end)
-spawn(function()
 	while wait() do
 		pcall(function()
 			if _G.Brimob then
