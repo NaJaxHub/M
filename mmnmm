@@ -2032,16 +2032,3 @@ spawn(function()
 	end
 end)
 
--- [Remove Quest Dead]
-spawn(function()
-	while wait() do
-		pcall(function()
-			if game.Players.LocalPlayer.Character:WaitForChild("Humanoid"):GetState() == Enum.HumanoidStateType.Dead then 
-				if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-					repeat wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
-				end
-			end
-		end)
-	end
-end)
