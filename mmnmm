@@ -768,6 +768,14 @@ function UnEquipWeapon(Weapon)
 end
 
 
+function Com(com,...)
+	local Remote = game:GetService('ReplicatedStorage').Remotes:FindFirstChild("Comm"..com)
+	if Remote:IsA("RemoteEvent") then
+		Remote:FireServer(...)
+	elseif Remote:IsA("RemoteFunction") then
+		Remote:InvokeServer(...)
+	end
+end
 
 -- [Tween Functions]
 
@@ -1311,15 +1319,6 @@ Random_CFrame = 1
 
 	local SetCFarme = 1
 
-function Com(L_89_arg0, ...)
-	local L_90_ = game:GetService("ReplicatedStorage").Remotes:FindFirstChild("Comm" .. L_89_arg0)
-	if L_90_:IsA("RemoteEvent") then
-		L_90_:FireServer(...)
-	elseif L_90_:IsA("RemoteFunction") then
-		L_90_:InvokeServer(...)
-	end
-end
-
 	spawn(function() 
 		while wait() do
 			local MyLevel = game.Players.LocalPlayer.Data.Level.Value
@@ -1444,7 +1443,6 @@ end
 							repeat task.wait()
 								for xxx, z in pairs(game.Workspace.Enemies:GetChildren()) do 
 									if z.Name == "God's Guard" and z:FindFirstChild("HumanoidRootPart") and z:FindFirstChild("Humanoid") and z.Humanoid.Health > 0 then
-										if InMyNetWork(z.HumanoidRootPart) then
 											z.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame
 											z.Humanoid.JumpPower = 0
 											z.Humanoid.WalkSpeed = 0
@@ -1452,7 +1450,6 @@ end
 											z.Humanoid:ChangeState(14)
 											z.Humanoid:ChangeState(11)
 											z.HumanoidRootPart.Size = Vector3.new(55, 55, 55)
-										end
 									end
 								end
 								v.HumanoidRootPart.CanCollide = false
