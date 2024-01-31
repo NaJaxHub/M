@@ -768,15 +768,6 @@ function UnEquipWeapon(Weapon)
 end
 
 
-function Com(com,...)
-	local Remote = game:GetService('ReplicatedStorage').Remotes:FindFirstChild("Comm"..com)
-	if Remote:IsA("RemoteEvent") then
-		Remote:FireServer(...)
-	elseif Remote:IsA("RemoteFunction") then
-		Remote:InvokeServer(...)
-	end
-end
-
 -- [Tween Functions]
 
 local function GetIsLand(...)
@@ -1319,68 +1310,6 @@ Random_CFrame = 1
 
 	local SetCFarme = 1
 
-task.spawn(function()
-	while task.wait() do
-		pcall(function()
-			if BringMobFarm then
-				for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then --not string.find(v.Name,"Boss") and 
-						if InMyNetWork(v.HumanoidRootPart) then
-							v.HumanoidRootPart.CFrame = PosMon
-							v.Humanoid.JumpPower = 0
-							v.Humanoid.WalkSpeed = 0
-							v.Humanoid.NameDisplayDistance = 0
-							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-							v.HumanoidRootPart.CanCollide = false
-							v.Head.CanCollide = false
-							if v.Humanoid:FindFirstChild("Animator") then
-								v.Humanoid.Animator:Destroy()
-							end
-							sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius", math.huge)
-							v.Humanoid:ChangeState(12) --12
-							v.Humanoid:ChangeState(14) --12
-						end
-                    end
-				end
-			end
-		end)
-	end
-end)
-
-task.spawn(function()
-	while task.wait() do
-		pcall(function()
-			if BringMobFarm then
-				for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then --not string.find(v.Name,"Boss") and 
-						if InMyNetWork(v.HumanoidRootPart) then
-						if not v.HumanoidRootPart:FindFirstChild("BodyClip") then
-							local Noclip = Instance.new("BodyVelocity")
-							Noclip.Name = "BodyClip"
-							Noclip.Parent = v.HumanoidRootPart.CFrame
-							Noclip.MaxForce = Vector3.new(100000,100000,100000)
-							Noclip.Velocity = Vector3.new(0,0,0)
-						end
-							v.HumanoidRootPart.CFrame = PosMon
-							v.Humanoid.JumpPower = 0
-							v.Humanoid.WalkSpeed = 0
-							v.Humanoid.NameDisplayDistance = 0
-							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-							v.HumanoidRootPart.CanCollide = false
-							v.Head.CanCollide = false
-							if v.Humanoid:FindFirstChild("Animator") then
-								v.Humanoid.Animator:Destroy()
-							end
-							sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius", math.huge)
-							v.Humanoid:ChangeState(12) --12
-							v.Humanoid:ChangeState(14) --12
-						end
-                    end
-				end
-			end
-		end)
-	end
-end)
 
 local SelectWeapon
 	local Weapon = {
