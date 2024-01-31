@@ -1265,6 +1265,9 @@ Main:Toggle("Auto Farm Level",_G.Settings.Auto_Farm_Level,function(value)
     _G.Auto_Farm_Level = value 
 	_G.Settings.Auto_Farm_Level = value
 	StopTween(_G.Auto_Farm_Level)
+	if value == false then
+		game.ReplicatedStorage:WaitForChild("Remotes").CommF_:InvokeServer("AbandonQuest")
+	end
 	SaveSettings()
 end)
 if W1 then 
@@ -1327,7 +1330,6 @@ Random_CFrame = 1
 				if _G.Auto_Farm_Level then
 					if _G.Fast_Farm_Level and (MyLevel >= 15 and MyLevel <= 300) then
 						if MyLevel >= 15 and MyLevel <= 300 then
-							game.ReplicatedStorage:WaitForChild("Remotes").CommF_:InvokeServer("AbandonQuest")
 							Fast_Farm_Lv()
 							return
 						end
@@ -1572,17 +1574,17 @@ end)
 task.spawn(function()
 	while task.wait() do
 		pcall(function()
-			if BringMobFarm then
+			if _G.Brimob and BringMobFarm then
 				for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
                     if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then --not string.find(v.Name,"Boss") and 
 						if InMyNetWork(v.HumanoidRootPart) then
-						if not v.HumanoidRootPart:FindFirstChild("BodyClip") then
+							if not v.HumanoidRootPart:FindFirstChild("BodyClip") then
 							local Noclip = Instance.new("BodyVelocity")
 							Noclip.Name = "BodyClip"
 							Noclip.Parent = v.HumanoidRootPart.CFrame
 							Noclip.MaxForce = Vector3.new(100000,100000,100000)
 							Noclip.Velocity = Vector3.new(0,0,0)
-						end
+							end
 							v.HumanoidRootPart.CFrame = PosMon
 							v.Humanoid.JumpPower = 0
 							v.Humanoid.WalkSpeed = 0
@@ -1764,24 +1766,6 @@ function getAllBladeHitsPlayers(Sizes)
 	end
 	return Hits
 end
-function AttackNaJaHub()
-	local ac = CombatFrameworkR.activeController
-	if ac and ac.equipped then
-		for indexincrement = 1, 1 do
-			local bladehit = getAllBladeHits(60)
-			if #bladehit > 0 then
-				for i , v in pairs(ac.animator.anims.basic) do
-					v:Play()
-				end
-				if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] then
-					game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(CurrentWeapon()))
-					game.ReplicatedStorage.Remotes.Validator:FireServer();
-					game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "")
-				end
-			end
-		end
-	end
-end
 function AttackFunction()
 	local ac = CombatFrameworkR.activeController
 	if ac and ac.equipped then
@@ -1870,34 +1854,17 @@ coroutine.wrap(function()
 end)()
 
 
-function CheckPlyayers()
-	for i,v in pairs(game:GetService("Workspace").Characters:GetChildren()) do
-		if v.Name ~= game.Players.LocalPlayer.Name and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 35 then
-			return true
-		end
-	end
-end
-
 coroutine.wrap(function()
 	while wait() do
 		pcall(function()
 			local ac = CombatFrameworkR.activeController
 			if ac and ac.equipped then
 				if _G.FastAttack then
-					if CheckPlyayers() == true then
-						AttackFunction()
-						AttackPlayersFunction()
-						if tick() - cooldownfastattack > tonumber(0.4) then wait(1)
-							cooldownfastattack = tick()
-						end
-					else
-						AttackNaJaHub()
 						AttackFunction()
 						AttackPlayersFunction()
 						if tick() - cooldownfastattack > tonumber(0.75) then wait(0.1)
 							cooldownfastattack = tick()
 						end
-					end
 				end
 			end
 		end)
@@ -1939,37 +1906,36 @@ for _, func in pairs(getreg()) do
     end
 end
 
-require(game.ReplicatedStorage.Util.CameraShaker):Stop()
-xShadowFastAttackx = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
-xShadowx = debug.getupvalues(xShadowFastAttackx)[2]
-
-spawn(function()
-    game:GetService("RunService").RenderStepped:Connect(function()
-        if _G.FastAttack then
-            if typeof(xShadowx) == "table" then
-                pcall(function()
-                    xShadowx.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
-                    xShadowx.activeController.timeToNextAttack = 0
-                    xShadowx.activeController.hitboxMagnitude = 200
-                    xShadowx.activeController.active = false
-                    xShadowx.activeController.timeToNextBlock = 0
-                    xShadowx.activeController.focusStart = 0
-                    xShadowx.activeController.increment = 4
-                    xShadowx.activeController.blocking = false
-                    xShadowx.activeController.attacking = false
-                    xShadowx.activeController.humanoid.AutoRotate = 50
-                    game:GetService'VirtualUser':CaptureController()
-					game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                end)
-            end
-        end
-    end)
-end)
 
 Settings:Toggle("Bring Mob",_G.Settings.Brimob,function(value)
 	_G.Brimob = value
 	_G.Settings.Brimob = value
 	SaveSettings()
+end)
+spawn(function()
+	while wait() do
+		pcall(function()
+			if _G.Brimob then
+				for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+					if v.Name == QuestCheck()[3] and (v.HumanoidRootPart.Position - PosMon.Position).magnitude <= 200 then
+						v.HumanoidRootPart.CFrame = PosMon
+						v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+						v.HumanoidRootPart.Transparency = 1
+						v.Humanoid.JumpPower = 0
+						v.Humanoid.WalkSpeed = 0
+						if v.Humanoid:FindFirstChild("Animator") then
+							v.Humanoid.Animator:Destroy()
+						end
+						v.HumanoidRootPart.CanCollide = false
+						v.Head.CanCollide = false
+						v.Humanoid:ChangeState(11)
+						v.Humanoid:ChangeState(14)
+						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
+					end
+				end
+			end
+		end)
+	end
 end)
 
 function InMyNetWork(object)
@@ -2032,3 +1998,30 @@ spawn(function()
 	end
 end)
 
+
+require(game.ReplicatedStorage.Util.CameraShaker):Stop()
+xShadowFastAttackx = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+xShadowx = debug.getupvalues(xShadowFastAttackx)[2]
+
+spawn(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if _G.FastAttack then
+            if typeof(xShadowx) == "table" then
+                pcall(function()
+                    xShadowx.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
+                    xShadowx.activeController.timeToNextAttack = 0
+                    xShadowx.activeController.hitboxMagnitude = 200
+                    xShadowx.activeController.active = false
+                    xShadowx.activeController.timeToNextBlock = 0
+                    xShadowx.activeController.focusStart = 0
+                    xShadowx.activeController.increment = 4
+                    xShadowx.activeController.blocking = false
+                    xShadowx.activeController.attacking = false
+                    xShadowx.activeController.humanoid.AutoRotate = 50
+                    game:GetService'VirtualUser':CaptureController()
+					game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+                end)
+            end
+        end
+    end)
+end)
