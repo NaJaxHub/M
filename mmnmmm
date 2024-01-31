@@ -1265,8 +1265,9 @@ Main:Toggle("Auto Farm Level",_G.Settings.Auto_Farm_Level,function(value)
     _G.Auto_Farm_Level = value 
 	_G.Settings.Auto_Farm_Level = value
 	StopTween(_G.Auto_Farm_Level)
+	if value == false then
 		game.ReplicatedStorage:WaitForChild("Remotes").CommF_:InvokeServer("AbandonQuest")
-
+	end
 	SaveSettings()
 end)
 if W1 then 
@@ -1292,7 +1293,7 @@ spawn(function()
 							v.HumanoidRootPart.CanCollide = false 
 							v.Head.CanCollide = false
 							v.HumanoidRootPart.Size = Vector3.new(80, 80, 80)
-							BringMobFarm = true
+							StartMagnet = true
 							Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
 							game:GetService 'VirtualUser':CaptureController()
 							game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
@@ -1371,7 +1372,7 @@ Random_CFrame = 1
 								end
 							else
 								if _G.Auto_CFrame and not _G.Fast_Farm_Level then
-									Tween(QuestCheck()[7][SetCFarme] * CFrame.new(0, 80, 10)
+									Tween(QuestCheck()[7][SetCFarme] * CFrame.new(0, 28, 8) * CFrame.Angles(math.rad(90), 0, 0))
 									if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
 										if SetCFarme == nil or SetCFarme == '' then
 											SetCFarme = 1
@@ -1909,7 +1910,6 @@ Settings:Toggle("Bring Mob",_G.Settings.Brimob,function(value)
 	_G.Settings.Brimob = value
 	SaveSettings()
 end)
-
 spawn(function()
 	while wait() do
 		pcall(function()
