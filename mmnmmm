@@ -1303,8 +1303,9 @@ function FreeQuest()
 	game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
 	wait(3)
 end
+
 spawn(function()
-	White wait() do
+	while wait() do
 		pcall(function()
 			if _G.Auto_Farm_Level then 
 				if game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
@@ -1351,6 +1352,7 @@ end)
 								end
 							else
 								FreeQuest()
+								return
 							end
 						end
 						if QuestC.Visible == true then
