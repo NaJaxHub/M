@@ -1312,19 +1312,28 @@ spawn(function()
 	while wait() do
 		pcall(function()
 			if _G.Auto_Farm_Level then 
+			local MyLevel = game.Players.LocalPlayer.Data.Level.Value
+			local QuestC = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
+			if QuestC.Visible == true then
 				if game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
 					for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 						if v.Name == QuestCheck()[3] then
 							if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-								Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 8))
 								repeat task.wait()
-									Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 8))
-									if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Select_Weapon) then
-										EquipWeapon(_G.Select_Weapon)
+									if _G.Auto_CFrame then
+										SetCFarme = 1
 									end
-									PosMon = v.HumanoidRootPart.CFrame
-									game:GetService 'VirtualUser':CaptureController()
-							        game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
+									if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
+										print(321)
+									else
+										Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 8))
+										if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Select_Weapon) then
+											EquipWeapon(_G.Select_Weapon)
+										end
+										PosMon = v.HumanoidRootPart.CFrame
+										game:GetService 'VirtualUser':CaptureController()
+								        game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
+									end
 								until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
 							end
 						end
@@ -1347,6 +1356,7 @@ spawn(function()
 						end
 					end
 				end
+			end
 			end
 		end)
 	end
@@ -1470,31 +1480,6 @@ end)
 			end)
 		end
 	end)
-
-
-Type2 = getgenv().Mode
-    spawn(function()
-        while task.wait(.01) do
-            if Type2 == 1 then
-                CFrameMonPoD = QuestCheck()[7][1] * CFrame.new(0,30,0)
-            elseif Type2 == 2 then
-                for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
-                    if v.Name == Name then
-                        CFrameMonPoD = v.CFrame * CFrame.new(0,30,0)
-                    end
-                end
-            end
-        end
-    end)
-
-   spawn(function()
-        while task.wait(.1) do
-            Type2 = 1
-            task.wait(.1)
-            Type2 = 2
-            task.wait(.1)
-        end
-    end)
 
 	_G.ChackPlayer = 0
 	_G.ChackPlayer2 = _G.ChackPlayer
