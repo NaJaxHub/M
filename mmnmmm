@@ -1301,7 +1301,7 @@ Random_CFrame = 1
 function FreeQuest()
 	task.wait(0.01)
 	game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
-	wait(3)
+	task.wait(3)
 end
 
 spawn(function()
@@ -1358,7 +1358,7 @@ end)
 						if QuestC.Visible == true then
 							if not game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
 								for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
-                    				if v.Name then--== Name then
+                    				if v.Name == Name then
 										Tween(v.CFrame * CFrame.new(0,30,0))
                     				end
                 				end
@@ -1375,7 +1375,7 @@ end)
 												if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
                                        	 			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
                                     			end
-												if  string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
+												if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
 													print(321)
 												else
 													PosMon = v.HumanoidRootPart.CFrame
