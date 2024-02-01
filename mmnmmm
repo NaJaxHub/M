@@ -1298,6 +1298,28 @@ Random_CFrame = 1
 
 	local SetCFarme = 1
 
+spawn(function()
+	while wait() do
+		pcall(function()
+			if _G.TweentoQuest then
+				Tween(QuestCheck()[2])
+				if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
+					wait(0.2)
+					game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5)
+					Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
+				end
+			else
+				game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
+			end
+		end)
+	end
+end)
+
+function FreeQuest()
+	task.wait(0.01)
+	game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
+end
+
 	spawn(function() 
 		while wait() do
 			local MyLevel = game.Players.LocalPlayer.Data.Level.Value
@@ -1313,12 +1335,25 @@ Random_CFrame = 1
 							return
 						end
 					else
+						if QuestC.Visible == false then
+							if _G.TweentoQuest then
+								Tween(QuestCheck()[2])
+								if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
+									wait(0.2)
+									game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5)
+									Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
+								end
+							else
+								FreeQuest()
+							end
+						end
 						if QuestC.Visible == true then
 							if game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
 								for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 									if v.Name == QuestCheck()[3] then
 										if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
 											repeat task.wait()
+												_G.ChestBypass = false
 												if _G.Auto_CFrame then
 													SetCFarme = 1
 												end
@@ -1344,6 +1379,15 @@ Random_CFrame = 1
 							        		    	game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 												end
 											until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
+										else
+											if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) and not v:FindFirstChild("Humanoid") and not v:FindFirstChild("HumanoidRootPart") and not v.Humanoid.Health > 0 then
+												if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+													_G.ChestBypass = true
+												else
+													Tween(CFrameMonPoD)
+													_G.ChestBypass = false
+												end
+											end
 										end
 									end
 								end
@@ -1360,7 +1404,7 @@ Random_CFrame = 1
 										end
 										SetCFarme =  SetCFarme + 1
 										print(SetCFarme)
-										--wait(0.5)
+										task.wait(0.5)
 									end
 								else
 									if not _G.Fast_Farm_Level then
@@ -1382,23 +1426,71 @@ Random_CFrame = 1
 							end
 						else
 							BringMobFarm = false
-							if _G.TweentoQuest then
-								Tween(QuestCheck()[2])
-								if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
-									wait(0.2)
-									game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5)
-									Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
-								end
-							else
-								game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
-								Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
-							end
+							_G.ChestBypass = false
 						end
+					end
+				else
+					_G.ChestBypass = false
+					if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 					end
 				end
 			end)
 		end
 	end)
+spawn(function()
+    while wait() do
+    	if _G.ChestBypass then
+            pcall(function()
+                for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+                    if string.find(v.Name, "Chest") then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                        wait(.15)
+                    end
+                end --game.Players.LocalPlayer.Character.Head:Destroy()
+                for _,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+                    if string.find(v.Name, "Chest") and v:IsA("TouchTransmitter") then
+                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0) --0 is touch
+                        wait()
+                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1) -- 1 is untouch
+                    end
+                end
+            end)
+        end
+    end
+end)
+    
+spawn(function()
+    while task.wait() do
+    	if _G.ChestBypass then
+        	game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(ohString1, ohString2)
+        end
+    end
+end)
+
+Type2 = getgenv().Mode
+    spawn(function()
+        while task.wait(.01) do
+            if Type2 == 1 then
+                CFrameMonPoD = QuestCheck()[7][1] * CFrame.new(0,30,0)
+            elseif Type2 == 2 then
+                for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
+                    if v.Name == Name then
+                        CFrameMonPoD = v.CFrame * CFrame.new(0,30,0)
+                    end
+                end
+            end
+        end
+    end)
+
+   spawn(function()
+        while task.wait(.1) do
+            Type2 = 1
+            wait(3)
+            Type2 = 2
+            wait(3.5)
+        end
+    end)
 
 	_G.ChackPlayer = 0
 	_G.ChackPlayer2 = _G.ChackPlayer
