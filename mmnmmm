@@ -1346,12 +1346,12 @@ end
 											if  string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
 												print(321)
 											else
-											repeat task.wait()
-												if _G.Auto_CFrame then
-													SetCFarme = 1
-												end
+												repeat task.wait()
+													if _G.Auto_CFrame then
+														SetCFarme = 1
+													end
                                     				if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
-                                       	 			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+                                       	 				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
                                     				end
 													PosMon = v.HumanoidRootPart.CFrame
 													v.HumanoidRootPart.Size = Vector3.new(60,60,60)
@@ -1367,7 +1367,7 @@ end
 													if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
 														game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
 													end
-											until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
+												until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
 											end
 										end
 									end
