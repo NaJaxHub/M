@@ -1351,7 +1351,6 @@ end)
 								end
 							else
 								FreeQuest()
-								return
 							end
 						end
 						if QuestC.Visible == true then
