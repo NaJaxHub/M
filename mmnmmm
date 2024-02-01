@@ -1321,10 +1321,10 @@ spawn(function()
 							if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
 								repeat task.wait()
 										Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 8))
-										--if _G.FastAttack then
-										--	Attack()
-										--	AttackFunction()
-										--end
+										if _G.FastAttack then
+											Attack()
+											AttackFunction()
+										end
 										game:GetService 'VirtualUser':CaptureController()
 										game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 								until not _G.Auto_Farm_Level or v.Humanoid.Health <= 0 or QuestC.Visible == false
