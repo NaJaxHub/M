@@ -1298,23 +1298,6 @@ Random_CFrame = 1
 
 	local SetCFarme = 1
 
-spawn(function()
-	while wait() do
-		pcall(function()
-			if _G.TweentoQuest then
-				Tween(QuestCheck()[2])
-				if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
-					wait(0.2)
-					game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5)
-					Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
-				end
-			else
-				game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
-			end
-		end)
-	end
-end)
-
 function FreeQuest()
 	task.wait(0.01)
 	game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
