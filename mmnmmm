@@ -1334,7 +1334,7 @@ spawn(function()
 										game:GetService 'VirtualUser':CaptureController()
 								        game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 									end
-								until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
+								until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false -- or not v:FindFirstChild("HumanoidRootPart")
 							end
 						end
 					end
@@ -1376,14 +1376,8 @@ end)
 					end]]
 						if QuestC.Visible == true then
 							if not game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
-								for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
-                    				if v.Name == Name then
-										Tween(v.CFrame * CFrame.new(0,30,0))
-                    				end
-                				end
-							end
-						end
-						if QuestC.Visible == true then
+								Tween(QuestCheck()[7][SetCFarme] * CFrame.new(0, 28, 8))
+							else
 							if game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
 								for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 									if v.Name == QuestCheck()[3] then
@@ -1412,7 +1406,7 @@ end)
 														game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
 													end
 												end
-											until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
+											until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false  -- or not v:FindFirstChild("HumanoidRootPart")
 										end
 									end
 								end
@@ -1448,6 +1442,7 @@ end)
 										end
 									end
 								end
+							end
 							end
 						else
 							BringMobFarm = false
