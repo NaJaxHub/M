@@ -1331,9 +1331,7 @@ end
 							end
 						end
 						if QuestC.Visible == true then
-							if game:GetService("ReplicatedStorage"):FindFirstChild(QuestCheck()[3]) or game:GetService("ReplicatedStorage"):FindFirstChild(QuestCheck()[3]).Humanoid.Health <= 0 then
-								Tween(game:GetService("ReplicatedStorage"):FindFirstChild(QuestCheck()[3]).HumanoidRootPart.CFrame * CFrame.new(0, 28, 8) * CFrame.Angles(math.rad(90), 0, 0))
-							else
+							if not game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) or not game:GetService("ReplicatedStorage"):FindFirstChild(QuestCheck()[3]).Humanoid.Health <= 0 then
 								for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
                     				if v.Name == Name then
 										EnemyposMon = v.CFrame * CFrame.new(0,30,0)
@@ -1346,6 +1344,8 @@ end
 									if v.Name == QuestCheck()[3] then
 										if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
 											if  string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
+												print(321)
+											else
 											repeat task.wait()
 												if _G.Auto_CFrame then
 													SetCFarme = 1
@@ -1353,9 +1353,6 @@ end
                                     				if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
                                        	 			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
                                     				end
-                                					if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
-														game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
-													end
 													PosMon = v.HumanoidRootPart.CFrame
 													v.HumanoidRootPart.Size = Vector3.new(60,60,60)
 													v.HumanoidRootPart.CanCollide = false
@@ -1367,6 +1364,9 @@ end
 													Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 8) * CFrame.Angles(math.rad(90), 0, 0))
 													game:GetService 'VirtualUser':CaptureController()
 							        		    	game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
+													if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
+														game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
+													end
 											until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
 											end
 										end
@@ -1376,7 +1376,7 @@ end
 								Tween(CFrameMonPoD)
 								if _G.Auto_CFrame and not _G.Fast_Farm_Level then
 									Tween(QuestCheck()[7][SetCFarme] * CFrame.new(0, 28, 8))
-									if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 18 then
+									if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
 										if SetCFarme == nil or SetCFarme == '' then
 											SetCFarme = 1
 											print(SetCFarme)
