@@ -1348,12 +1348,21 @@ end
 							end
 						end
 						if QuestC.Visible == true then
+							if game:GetService("ReplicatedStorage"):FindFirstChild(QuestCheck()[3]) or game:GetService("ReplicatedStorage"):FindFirstChild(QuestCheck()[3]).Humanoid.Health <= 0 then
+								Tween(game:GetService("ReplicatedStorage"):FindFirstChild(QuestCheck()[3]).HumanoidRootPart.CFrame * CFrame.new(0, 28, 8) * CFrame.Angles(math.rad(90), 0, 0))
+							else
+								for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
+                    				if v.Name == Name then
+                        				Tween(v.CFrame * CFrame.new(0,30,0))
+                    				end
+                				end
+							end
 							if game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
 								for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 									if v.Name == QuestCheck()[3] then
 										if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
 											repeat task.wait()
-												_G.ChestBypass = false
+												
 												if _G.Auto_CFrame then
 													SetCFarme = 1
 												end
@@ -1380,12 +1389,34 @@ end
 												end
 											until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
 										else
+											local Mob = game:GetService("ReplicatedStorage"):FindFirstChild(QuestCheck()[3]) 
+											if Mob then
+												Tween(Mob.HumanoidRootPart.CFrame * CFrame.new(0, 28, 8) * CFrame.Angles(math.rad(90), 0, 0))
+											else
+												if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame.Y <= 1 then
+													game:GetService("Players").LocalPlayer.Character.Humanoid.Jump = true
+													task.wait()
+													game:GetService("Players").LocalPlayer.Character.Humanoid.Jump = false
+												end
+											end
 											if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) and not v:FindFirstChild("Humanoid") and not v:FindFirstChild("HumanoidRootPart") and not v.Humanoid.Health > 0 then
 												if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
-													_G.ChestBypass = true
+													for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+														if string.find(v.Name, "Chest") then
+															game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+															wait(.15)
+														end
+													end --game.Players.LocalPlayer.Character.Head:Destroy()
+													for _,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+														if string.find(v.Name, "Chest") and v:IsA("TouchTransmitter") then
+															firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0) --0 is touch
+															wait()
+															firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1) -- 1 is untouch
+														end
+													end
 												else
 													Tween(CFrameMonPoD)
-													_G.ChestBypass = false
+													
 												end
 											end
 										end
@@ -1426,11 +1457,11 @@ end
 							end
 						else
 							BringMobFarm = false
-							_G.ChestBypass = false
+							
 						end
 					end
 				else
-					_G.ChestBypass = false
+					
 					if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
 						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 					end
