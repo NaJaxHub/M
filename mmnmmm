@@ -1344,11 +1344,12 @@ end)
 			local MyLevel = game.Players.LocalPlayer.Data.Level.Value
 			local QuestC = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
 				if _G.Auto_Farm_Level then
-					--if _G.Fast_Farm_Level and (MyLevel >= 15 and MyLevel <= 300) then
-						--if MyLevel >= 15 and MyLevel <= 300 then
-						--	Fast_Farm_Lv()
-						--	return
-						--end
+					if _G.Fast_Farm_Level == true and (MyLevel >= 15 and MyLevel <= 300) then
+						if MyLevel >= 15 and MyLevel <= 300 then
+							Fast_Farm_Lv()
+							return
+						end
+					end
 						if QuestC.Visible == true then
 							if not game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
 								for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
