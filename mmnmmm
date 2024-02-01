@@ -1246,6 +1246,8 @@ Main:Toggle("Auto Farm Level",_G.Settings.Auto_Farm_Level,function(value)
 
 if value == false then
 	wait()
+	tween(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+	wait()
 	StopTween(_G.Auto_Farm_Level)
 	wait()
 end
@@ -1287,6 +1289,7 @@ spawn(function()
 		end
 	end
 end)
+
 Random_CFrame = 1
 	spawn(function()
 		while wait() do 
@@ -1338,10 +1341,9 @@ spawn(function()
 								SetCFarme = 1
 								print(SetCFarme)
 							end
-								SetCFarme =  SetCFarme + 1
-								print(SetCFarme)
-								wait(0.5)
-							end
+							SetCFarme =  SetCFarme + 1
+							print(SetCFarme)
+							wait(0.5)
 						end
 					end
 				end
