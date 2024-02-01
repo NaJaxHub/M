@@ -1323,7 +1323,7 @@ spawn(function()
 										Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 8))
 										if _G.FastAttack then
 											Attack()
-											return
+											AttackFunction()
 										end
 										game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 								until not _G.Auto_Farm_Level or v.Humanoid.Health <= 0 or QuestC.Visible == false
@@ -1360,9 +1360,9 @@ end)
 												if _G.Auto_CFrame then
 													SetCFarme = 1
 												end
-												--if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
-												--	print(321)
-												--else
+												if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
+													print(321)
+												else
 													if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Select_Weapon) then
 														EquipWeapon(_G.Select_Weapon)
 													end
@@ -1382,7 +1382,7 @@ end)
 													if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
 														game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
 													end
-												--end
+												end
 											until not _G.Auto_Farm_Level or v.Humanoid.Health <= 0 or QuestC.Visible == false  -- or not v:FindFirstChild("HumanoidRootPart")
 										end
 									end
