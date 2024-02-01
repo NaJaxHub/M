@@ -1336,8 +1336,8 @@ end
 							else
 								for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
                     				if v.Name == Name then
-										mnsadflhsdjakhfhsd = v.CFrame * CFrame.new(0,30,0)
-                        				Tween(mnsadflhsdjakhfhsd)
+										EnemyposMon = v.CFrame * CFrame.new(0,30,0)
+                        				Tween(EnemyposMon)
                     				end
                 				end
 							end
@@ -1345,13 +1345,11 @@ end
 								for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 									if v.Name == QuestCheck()[3] then
 										if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+											if  string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
 											repeat task.wait()
 												if _G.Auto_CFrame then
 													SetCFarme = 1
 												end
-												if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
-													print(321)
-												else
                                     				if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
                                        	 			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
                                     				end
@@ -1369,16 +1367,16 @@ end
 													Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 8) * CFrame.Angles(math.rad(90), 0, 0))
 													game:GetService 'VirtualUser':CaptureController()
 							        		    	game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
-												end
 											until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
+											end
 										end
 									end
 								end
 							else
 								Tween(CFrameMonPoD)
-								--[[if _G.Auto_CFrame and not _G.Fast_Farm_Level then
-									Tween(QuestCheck()[7][SetCFarme] * CFrame.new(0, 28, 8) * CFrame.Angles(math.rad(90), 0, 0))
-									if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+								if _G.Auto_CFrame and not _G.Fast_Farm_Level then
+									Tween(QuestCheck()[7][SetCFarme] * CFrame.new(0, 28, 8))
+									if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 18 then
 										if SetCFarme == nil or SetCFarme == '' then
 											SetCFarme = 1
 											print(SetCFarme)
@@ -1406,15 +1404,13 @@ end
 											Tween(QuestCheck()[7][1] * CFrame.new(0,30,20))
 										end
 									end
-								end]]
+								end
 							end
 						else
 							BringMobFarm = false
-							
 						end
 					end
 				else
-					
 					if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
 						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 					end
@@ -1422,35 +1418,7 @@ end
 			end)
 		end
 	end)
-spawn(function()
-    while wait() do
-    	if _G.ChestBypass then
-            pcall(function()
-                for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
-                    if string.find(v.Name, "Chest") then
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
-                        wait(.15)
-                    end
-                end --game.Players.LocalPlayer.Character.Head:Destroy()
-                for _,v in pairs(game:GetService("Workspace"):GetDescendants()) do
-                    if string.find(v.Name, "Chest") and v:IsA("TouchTransmitter") then
-                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0) --0 is touch
-                        wait()
-                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1) -- 1 is untouch
-                    end
-                end
-            end)
-        end
-    end
-end)
-    
-spawn(function()
-    while task.wait() do
-    	if _G.ChestBypass then
-        	game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(ohString1, ohString2)
-        end
-    end
-end)
+
 
 Type2 = getgenv().Mode
     spawn(function()
@@ -1470,9 +1438,9 @@ Type2 = getgenv().Mode
    spawn(function()
         while task.wait(.1) do
             Type2 = 1
-            wait(3)
+            task.wait(.1)
             Type2 = 2
-            wait(3.5)
+            task.wait(.1)
         end
     end)
 
