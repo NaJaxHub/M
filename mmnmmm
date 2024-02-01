@@ -1368,25 +1368,13 @@ end)
 			local MyLevel = game.Players.LocalPlayer.Data.Level.Value
 			local QuestC = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
 				if _G.Auto_Farm_Level then
-					if _G.Fast_Farm_Level and (MyLevel >= 15 and MyLevel <= 300) then
+					--[[if _G.Fast_Farm_Level and (MyLevel >= 15 and MyLevel <= 300) then
 						if MyLevel >= 15 and MyLevel <= 300 then
 							Fast_Farm_Lv()
 							return
 						end
-					end
-						if QuestC.Visible == false then
-							if _G.TweentoQuest then
-								Tween(QuestCheck()[2])
-								if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
-									wait(0.2)
-									game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5)
-									Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
-								end
-							else
-								game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
-								task.wait(3)
-							end
-						elseif QuestC.Visible == true then
+					end]]
+						if QuestC.Visible == true then
 							if not game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
 								for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
                     				if v.Name == Name then
@@ -1463,11 +1451,16 @@ end)
 							end
 						else
 							BringMobFarm = false
-							Tween(QuestCheck()[2])
-							if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
-								BringMobFarm = false
-								wait(0.2)
-								game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5)
+							if _G.TweentoQuest then
+								Tween(QuestCheck()[2])
+								if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
+									wait(0.2)
+									game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5)
+									Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
+								end
+							else
+								game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
+								task.wait(.1)
 								Tween(QuestCheck()[7][1] * CFrame.new(0,28,8))
 							end
 						end
