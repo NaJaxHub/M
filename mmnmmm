@@ -1301,7 +1301,33 @@ Random_CFrame = 1
 function FreeQuest()
 	task.wait(0.01)
 	game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1])
+	wait(3)
 end
+spawn(function()
+	White wait() do
+		pcall(function()
+			if _G.Auto_Farm_Level then 
+				if game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
+					for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+						if v.Name == QuestCheck()[3] then
+							if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+								repeat task.wait()
+									if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Select_Weapon) then
+										EquipWeapon(_G.Select_Weapon)
+									end
+									PosMon = v.HumanoidRootPart.CFrame
+									Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 8) * CFrame.Angles(math.rad(90), 0, 0))
+									game:GetService 'VirtualUser':CaptureController()
+							        game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
+								until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
+							end
+						end
+					end
+				end
+			end
+		end)
+	end
+end)
 
 	spawn(function() 
 		while wait() do
@@ -1309,9 +1335,6 @@ end
 			local QuestC = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
 			pcall(function()
 				if _G.Auto_Farm_Level then
-					if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Select_Weapon) then
-						EquipWeapon(_G.Select_Weapon)
-					end
 					if _G.Fast_Farm_Level and (MyLevel >= 15 and MyLevel <= 300) then
 						if MyLevel >= 15 and MyLevel <= 300 then
 							Fast_Farm_Lv()
@@ -1328,6 +1351,7 @@ end
 								end
 							else
 								FreeQuest()
+								return
 							end
 						end
 						if QuestC.Visible == true then
@@ -1343,6 +1367,7 @@ end
 									if v.Name == QuestCheck()[3] then
 										if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
 											repeat task.wait()
+												Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 8) * CFrame.Angles(math.rad(90), 0, 0))
 												if _G.Auto_CFrame then
 													SetCFarme = 1
 												end
@@ -1358,7 +1383,6 @@ end
 													v.Humanoid.WalkSpeed = 0
 													v.Head.CanCollide = false
 													BringMobFarm = true
-													EquipWeapon(_G.Select_Weapon)
 													v.HumanoidRootPart.Transparency = 1
 													Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 8) * CFrame.Angles(math.rad(90), 0, 0))
 													game:GetService 'VirtualUser':CaptureController()
