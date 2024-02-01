@@ -1243,13 +1243,13 @@ local L_21_ = E:Section("Shop","Left")
 Main:Toggle("Auto Farm Level",_G.Settings.Auto_Farm_Level,function(value)
     _G.Auto_Farm_Level = value 
 	_G.Settings.Auto_Farm_Level = value
+
 if value == false then
 	wait()
 	StopTween(_G.Auto_Farm_Level)
 	wait()
-	tween(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
-	wait()
 end
+
 	SaveSettings()
 end)
 
