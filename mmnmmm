@@ -1243,9 +1243,16 @@ local L_21_ = E:Section("Shop","Left")
 Main:Toggle("Auto Farm Level",_G.Settings.Auto_Farm_Level,function(value)
     _G.Auto_Farm_Level = value 
 	_G.Settings.Auto_Farm_Level = value
+if value == false then
+	wait()
 	StopTween(_G.Auto_Farm_Level)
+	wait()
+	tween(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+	wait()
+end
 	SaveSettings()
 end)
+
 if W1 then 
 Main:Toggle('Fast Farm Level',_G.Settings.Fast_Farm_Level,function(value)
 	_G.Fast_Farm_Level = value
@@ -1316,6 +1323,24 @@ spawn(function()
 									game:GetService 'VirtualUser':CaptureController()
 							        game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 								until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or QuestC.Visible == false or not v:FindFirstChild("HumanoidRootPart")
+							end
+						end
+					end
+				else
+					if _G.Auto_CFrame and not _G.Fast_Farm_Level then
+						Tween(QuestCheck()[7][SetCFarme] * CFrame.new(0, 28, 8))
+						if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+							Tween(QuestCheck()[7][SetCFarme] * CFrame.new(0, 28, 8))
+							if SetCFarme == nil or SetCFarme == '' then
+								SetCFarme = 1
+								print(SetCFarme)
+							elseif SetCFarme >= #QuestCheck()[7] then
+								SetCFarme = 1
+								print(SetCFarme)
+							end
+								SetCFarme =  SetCFarme + 1
+								print(SetCFarme)
+								wait(0.5)
 							end
 						end
 					end
