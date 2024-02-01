@@ -1351,7 +1351,19 @@ end)
 						--end
 						if QuestC.Visible == true then
 							if not game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
-								Tween(QuestCheck()[7][SetCFarme] * CFrame.new(0, 28, 8))
+								for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
+                    				if v.Name then --== Name then
+											for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+                            					if string.find(v.Name, "Chest") then
+												if (v.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 500 then
+                                					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                                					wait(.15)
+												end
+                            					end
+                        					end
+                        				Tween(v.CFrame * CFrame.new(0,30,0))
+                    				end
+                				end
 							else
 							if game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
 								for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
