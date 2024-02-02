@@ -1256,6 +1256,11 @@ spawn(function()
 end)
 end)
 
+
+L_17_:Toggle("A",_G.A,function(value)
+    _G.A = value
+end)
+
 Main:Toggle("Auto Farm Level",_G.Settings.Auto_Farm_Level,function(value)
     _G.Auto_Farm_Level = value 
 	_G.Settings.Auto_Farm_Level = value
@@ -2005,7 +2010,7 @@ spawn(function()
 		end)
 	end
 end)
-
+--[[
 Settings:Label("Auto Skill Settings")
 
 Settings:Toggle("Skill Z",_G.Settings.SkillZ,function(a)
@@ -2102,7 +2107,7 @@ spawn(function()
     		end
         end)
     end
-end)
+end)]]
 -- [require module]
 local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
 local CombatFrameworkR = getupvalues(CombatFramework)[2]
