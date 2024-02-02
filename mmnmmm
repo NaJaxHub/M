@@ -1239,15 +1239,15 @@ local LLLL = D:Section("Fruit","Right")
 local L_22_ = E:Section("Misc","Right")
 local L_21_ = E:Section("Shop","Left")
 
-local L4 = loadstring(game:HttpGet("https://pastebin.com/raw/EK13Njf3"))() --redeem Code
+local L_4_ = loadstring(game:HttpGet("https://pastebin.com/raw/EK13Njf3"))() --redeem Code
 Main:Button("Redeem All Code",function()
 spawn(function()
-    function Redeem(L166_arg0)
-        game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(L_166_arg0)
-    end
-    for d, t in pairs(L_4) do
-        Redeem(t) 
-    end
+    function Redeem(L_166_arg0)
+		game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(L_166_arg0)
+	end
+	for d, t in pairs(L_4_) do
+		Redeem(t) 
+	end
 end)
 end)
 
@@ -1267,7 +1267,7 @@ end
 end)
 
 if W1 then 
-Main:Toggle('Fast Farm Level',_G.Settings.Fast_Farm_Level,function(value)
+Main:Toggle('Fast Farm Level BUG',_G.Settings.Fast_Farm_Level,function(value)
 	_G.Fast_Farm_Level = value
 	_G.Settings.Fast_Farm_Level = value
 	SaveSettings()
@@ -1355,12 +1355,12 @@ end)
 			local MyLevel = game.Players.LocalPlayer.Data.Level.Value
 			local QuestC = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
 				if _G.Auto_Farm_Level then
-					if _G.Fast_Farm_Level == true and (MyLevel >= 15 and MyLevel <= 300) then
+					--[[if _G.Fast_Farm_Level == true and (MyLevel >= 15 and MyLevel <= 300) then
 						if MyLevel >= 15 and MyLevel <= 300 then
 							Fast_Farm_Lv()
 							return
 						end
-					end
+					end]]
 						if QuestC.Visible == true then
 							if not game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
 								for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
@@ -2484,4 +2484,78 @@ spawn(function()
             end
         end
     end)
+end)
+
+
+_G.SelectPoint = 1
+PointStats = 1
+--L_16_
+L_17_:Label("Auto Stats Kaitan")
+L_17_:Toggle("Auto Stats Kaitan",_G.Settings.Stat["Auto Stats Kaitun"],function(a)
+	_G.Settings.Stat["Auto Stats Kaitun"] = a
+	SaveSettings()
+end)
+
+L_17_:Toggle("Auto MaxPoint Stats Kaitun",_G.Settings.Stat["MaxPoint Stats Kaitun"],function(value)
+	_G.Settings.Stat["MaxPoint Stats Kaitun"] = value
+	SaveSettings()
+end)
+L_17_:Label("Auto Stats Normal Mode")
+L_17_:Toggle("Auto Stats [Select Mode]",_G.Settings.Stat["Enabled Auto Stats"],function(a)
+	_G.Settings.Stat["Enabled Auto Stats"] = a
+	SaveSettings()
+end)
+
+L_17_:Dropdown("Select Stats",{"Melee","Defense","Sword","Gun","Devil Fruits"},"Melee",function(L_413_arg0)
+	_G.Settings.Stat["Select Stats"] = L_413_arg0
+	spawn(function()
+		pcall(function()
+			while task.wait(1) do
+                if _G.Settings.Stat["MaxPoint Stats"] then
+                    _G.SelectPoint = game:GetService("Players").LocalPlayer.Data.Points.Value
+                end
+				if _G.Settings.Stat["Enabled Auto Stats"] then
+					if _G.Settings.Stat["Select Stats"] == "Melee" then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",_G.SelectPoint)
+					elseif _G.Settings.Stat["Select Stats"] == "Defense" then
+						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Defense",_G.SelectPoint)
+					elseif _G.Settings.Stat["Select Stats"] == "Sword" then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Sword",_G.SelectPoint)
+					elseif _G.Settings.Stat["Select Stats"] == "Gun" then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Gun",_G.SelectPoint)
+					elseif _G.Settings.Stat["Select Stats"] == "Devil Fruits" then
+                        local args = {
+                            [1] = "AddPoint",
+                            [2] = "Demon Fruit",
+                            [3] = _G.SelectPoint
+                        }
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+					else
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",_G.SelectPoint)
+					end
+				end
+			end
+		end)
+	end)
+end)
+
+L_17_:Toggle("MaxPoint Stats",_G.Settings.Stat["MaxPoint Stats"],function(value)
+	_G.Settings.Stat["MaxPoint Stats"] = value
+	SaveSettings()
+end)
+
+-- [Stats Kaitan]
+spawn(function()
+	while task.wait(1) do
+		if _G.Settings.Stat["Auto Stats Kaitun"] then
+            if _G.Settings.Stat["MaxPoint Stats Kaitun"] then
+                PointStats = game:GetService("Players").LocalPlayer.Data.Points.Value
+            end
+			if game:GetService("Players").LocalPlayer.Data.Stats.Melee.Level.Value < 2450 then
+				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",PointStats)
+			elseif game:GetService("Players").LocalPlayer.Data.Stats.Defense.Level.Value < 2450 then
+				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Defense",PointStats)
+			end
+		end
+	end
 end)
