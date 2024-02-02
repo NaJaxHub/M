@@ -2009,8 +2009,8 @@ spawn(function()
 	end
 end)
 
-local SelectPoint = 1
-local PointStats = 1
+SelectPoint = 1
+PointStats = 1
 --L_16_
 L_17_:Label("Auto Stats Kaitan")
 
