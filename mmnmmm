@@ -1931,9 +1931,8 @@ end)
 
 
 
-Settings:Toggle("Bring Mob",_G.Settings.Brimob,function(value)
+Settings:Toggle("Bring Mob",true,function(value)
 	_G.Brimob = value
-	_G.Settings.Brimob = value
 	SaveSettings()
 end)
 
