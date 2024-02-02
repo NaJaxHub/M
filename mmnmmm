@@ -2009,7 +2009,7 @@ spawn(function()
 	end
 end)
 
-local _G.SelectPoint = 1
+local SelectPoint = 1
 local PointStats = 1
 --L_16_
 L_17_:Label("Auto Stats Kaitan")
@@ -2035,26 +2035,26 @@ L_17_:Dropdown("Select Stats",{"Melee","Defense","Sword","Gun","Devil Fruits"},"
 		pcall(function()
 			while task.wait(1) do
                 if _G.Settings.MaxPointStats then
-                    _G.SelectPoint = game:GetService("Players").LocalPlayer.Data.Points.Value
+                    SelectPoint = game:GetService("Players").LocalPlayer.Data.Points.Value
                 end
 				if _G.Settings.EnabledAutoStats then
 					if _G.Settings.Select_Stats  == "Melee" then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",_G.SelectPoint)
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",SelectPoint)
 					elseif _G.Settings.Select_Stats == "Defense" then
-						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Defense",_G.SelectPoint)
+						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Defense",SelectPoint)
 					elseif _G.Settings.Select_Stats == "Sword" then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Sword",_G.SelectPoint)
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Sword",SelectPoint)
 					elseif _G.Settings.Select_Stats == "Gun" then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Gun",_G.SelectPoint)
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Gun",SelectPoint)
 					elseif _G.Settings.Select_Stats == "Devil Fruits" then
                         local args = {
                             [1] = "AddPoint",
                             [2] = "Demon Fruit",
-                            [3] = _G.SelectPoint
+                            [3] = SelectPoint
                         }
                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
 					else
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",_G.SelectPoint)
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",SelectPoint)
 					end
 				end
 			end
