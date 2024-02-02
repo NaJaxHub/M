@@ -1257,83 +1257,6 @@ end)
 end)
 
 
-
-_G.SelectPoint = 1
-PointStats = 1
---L_16_
-L_17_:Label("Auto Stats Kaitan")
-
-L_17_:Toggle("Auto Stats Kaitan",_G.Settings.AutoStatsKaitun,function(a)
-	_G.Settings.AutoStatsKaitun = a
-	SaveSettings()
-end)
-
-L_17_:Toggle("Auto MaxPoint Stats Kaitun",_G.Settings.MaxPointStatsKaitun,function(value)
-	_G.Settings.MaxPointStatsKaitun = value
-	SaveSettings()
-end)
-L_17_:Label("Auto Stats Normal Mode")
-L_17_:Toggle("Auto Stats [Select Mode] ",_G.Settings.EnabledAutoStats,function(a)
-	_G.Settings.EnabledAutoStats = a
-	SaveSettings()
-end)
-
-L_17_:Dropdown("Select Stats",{"Melee","Defense","Sword","Gun","Devil Fruits"},"Melee",function(L_413_arg0)
-	_G.Settings.Select_Stats = L_413_arg0
-	spawn(function()
-		pcall(function()
-			while task.wait(1) do
-                if _G.Settings.MaxPointStats then
-                    _G.SelectPoint = game:GetService("Players").LocalPlayer.Data.Points.Value
-                end
-				if _G.Settings.EnabledAutoStats then
-					if _G.Settings.Select_Stats  == "Melee" then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",_G.SelectPoint)
-					elseif _G.Settings.Select_Stats == "Defense" then
-						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Defense",_G.SelectPoint)
-					elseif _G.Settings.Select_Stats == "Sword" then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Sword",_G.SelectPoint)
-					elseif _G.Settings.Select_Stats == "Gun" then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Gun",_G.SelectPoint)
-					elseif _G.Settings.Select_Stats == "Devil Fruits" then
-                        local args = {
-                            [1] = "AddPoint",
-                            [2] = "Demon Fruit",
-                            [3] = _G.SelectPoint
-                        }
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-					else
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",_G.SelectPoint)
-					end
-				end
-			end
-		end)
-	end)
-end)
-
-L_17_:Toggle("MaxPoint Stats",_G.Settings.MaxPointStats,function(value)
-	_G.Settings.MaxPointStats = value
-	SaveSettings()
-end)
-
--- [Stats Kaitan]
-spawn(function()
-	while task.wait(1) do
-		if _G.Settings.AutoStatsKaitun then
-            if _G.Settings.MaxPointStatsKaitun then
-                PointStats = game:GetService("Players").LocalPlayer.Data.Points.Value
-            end
-			if game:GetService("Players").LocalPlayer.Data.Stats.Melee.Level.Value < 2450 then
-				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",PointStats)
-			elseif game:GetService("Players").LocalPlayer.Data.Stats.Defense.Level.Value < 2450 then
-				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Defense",PointStats)
-			end
-		end
-	end
-end)
-
-
-
 Main:Toggle("Auto Farm Level",_G.Settings.Auto_Farm_Level,function(value)
     _G.Auto_Farm_Level = value 
 	_G.Settings.Auto_Farm_Level = value
@@ -2083,7 +2006,7 @@ spawn(function()
 		end)
 	end
 end)
---[[
+
 Settings:Label("Auto Skill Settings")
 
 Settings:Toggle("Skill Z",_G.Settings.SkillZ,function(a)
@@ -2180,391 +2103,79 @@ spawn(function()
     		end
         end)
     end
-end)]]
--- [require module]
-local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
-local CombatFrameworkR = getupvalues(CombatFramework)[2]
-local RigController = require(game:GetService("Players")["LocalPlayer"].PlayerScripts.CombatFramework.RigController)
-local RigControllerR = getupvalues(RigController)[2]
-local realbhit = require(game.ReplicatedStorage.CombatFramework.RigLib)
-local cooldownfastattack = tick()
-
-function CameraShaker() 
-local Camera = require(game.ReplicatedStorage.Util.CameraShaker)
-Camera:Stop()
-end
--- [FastAttack]
-function CurrentWeapon()
-local ac = CombatFrameworkR.activeController
-local ret = ac.blades[1]
-if not ret then return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name end
-pcall(function()
-while ret.Parent ~= game.Players.LocalPlayer.Character do ret = ret.Parent end
 end)
-if not ret then return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name end
-return ret
-end
+_G.SelectPoint = 1
+PointStats = 1
+--L_16_
+L_17_:Label("Auto Stats Kaitan")
 
-function getAllBladeHits(Sizes)
-	local Hits = {}
-	local Client = game.Players.LocalPlayer
-	local Characters = workspace.Characters:GetChildren()
-	local Enemies = game:GetService("Workspace").Enemies:GetChildren()
-	for i = 1, #Enemies do
-	local v = Enemies[i]
-	local Human = v:FindFirstChildOfClass("Humanoid")
-	if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) <= Sizes + 5 then
-		table.insert(Hits, Human.RootPart)
-	end
-	end
-	for i=1,#Characters do local v = Characters[i]
-		if v ~= game.Players.LocalPlayer.Character then
-			local Human = v:FindFirstChildOfClass("Humanoid")
-			if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) <= Sizes + 5 then
-				table.insert(Hits,Human.RootPart)
-			end
-		end
-	end
-	return Hits
-	end
-function getAllBladeHitsPlayers(Sizes)
-	local Hits = {}
-	local Client = game.Players.LocalPlayer
-	local Characters = game:GetService("Workspace").Characters:GetChildren()
-	for i=1,#Characters do local v = Characters[i]
-		local Human = v:FindFirstChildOfClass("Humanoid")
-		if v.Name ~= game.Players.LocalPlayer.Name and Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
-			table.insert(Hits,Human.RootPart)
-		end
-	end
-	return Hits
-end
-function AttackFunction()
-	local ac = CombatFrameworkR.activeController
-	if ac and ac.equipped then
-		for m4kor1 = 3, 3 do
-			local bladehit = getAllBladeHits(40)
-			if #bladehit > 0 then
-				local AcAttack8 = debug.getupvalue(ac.attack, 5)
-				local AcAttack9 = debug.getupvalue(ac.attack, 6)
-				local AcAttack7 = debug.getupvalue(ac.attack, 4)
-				local AcAttack10 = debug.getupvalue(ac.attack, 7)
-				local NumberAc12 = (AcAttack8 * 798405 + AcAttack7 * 727595) % AcAttack9
-				local NumberAc13 = AcAttack7 * 798405
-				(function() 
-					NumberAc12 = (NumberAc12 * AcAttack9 + NumberAc13) % 1099511627776
-					AcAttack8 = math.floor(NumberAc12 / AcAttack9)
-					AcAttack7 = NumberAc12 - AcAttack8 * AcAttack9
-				end)()
-				AcAttack10 = AcAttack10 + 100
-				debug.setupvalue(ac.attack, 5, AcAttack8)
-				debug.setupvalue(ac.attack, 6, AcAttack9)
-				debug.setupvalue(ac.attack, 4, AcAttack7)
-				debug.setupvalue(ac.attack, 7, AcAttack10)
-				for k, v in pairs(ac.animator.anims.basic) do
-					v:Play(0.01, 0.01, 0.01)
-				end
-				if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] then
-					game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(CurrentWeapon()))
-					game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(NumberAc12 / 1099511627776 * 16777215), AcAttack10)
-					game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 1, "")
-				end
-			end
-		end
-	end
-end
-function AttackPlayersFunction()
-	local ac = CombatFrameworkR.activeController
-	if ac and ac.equipped then
-		for indexincrement = 1, 1 do
-			local bladehit = getAllBladeHitsPlayers(60)
-			if #bladehit > 0 then
-				local AcAttack8 = debug.getupvalue(ac.attack, 5)
-				local AcAttack9 = debug.getupvalue(ac.attack, 6)
-				local AcAttack7 = debug.getupvalue(ac.attack, 4)
-				local AcAttack10 = debug.getupvalue(ac.attack, 7)
-				local NumberAc12 = (AcAttack8 * 798405 + AcAttack7 * 727595) % AcAttack9
-				local NumberAc13 = AcAttack7 * 798405
-				(function()
-					NumberAc12 = (NumberAc12 * AcAttack9 + NumberAc13) % 1099511627776
-					AcAttack8 = math.floor(NumberAc12 / AcAttack9)
-					AcAttack7 = NumberAc12 - AcAttack8 * AcAttack9
-				end)()
-				AcAttack10 = AcAttack10 + 1
-				debug.setupvalue(ac.attack, 5, AcAttack8)
-				debug.setupvalue(ac.attack, 6, AcAttack9)
-				debug.setupvalue(ac.attack, 4, AcAttack7)
-				debug.setupvalue(ac.attack, 7, AcAttack10)
-				for k, v in pairs(ac.animator.anims.basic) do
-					v:Play()
-				end                 
-				if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] then 
-					game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(CurrentWeapon()))
-					game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(NumberAc12 / 1099511627776 * 16777215), AcAttack10)
-					game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "") 
-				end
-			end
-		end
-	end
-end
-coroutine.wrap(function()
-	while task.wait(0) do
-		local ac = CombatFrameworkR.activeController
-		if ac and ac.equipped then
-			task.wait(0)
-			if _G.FastAttack then
-				AttackFunction()
-				if _G.FastAttack then
-					if tick() - cooldownfastattack > 0.4 then wait(1)
-						cooldownfastattack = tick() 
-					end
-				end
-				setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
-				sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-			end
-		end
-	end
-end)()
+L_17_:Toggle("Auto Stats Kaitan",_G.Settings.AutoStatsKaitun,function(a)
+	_G.Settings.AutoStatsKaitun = a
+	SaveSettings()
+end)
 
-            function Boost()
-                spawn(function()
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(SeraphFuckWeapon()))
-                end)
-            end
-            
-            function Unboost()
-                spawn(function()
-                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("unequipWeapon",tostring(SeraphFuckWeapon()))
-                end)
-            end
-                        local SeraphFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
-            local VirtualUser = game:GetService('VirtualUser')
-            local RigControllerR = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.RigController))[2]
-            local Client = game:GetService("Players").LocalPlayer
-            local DMG = require(Client.PlayerScripts.CombatFramework.Particle.Damage)
-            
-            function SeraphFuckWeapon() 
-                local p13 = SeraphFrame.activeController
-                local wea = p13.blades[1]
-                if not wea then return end
-                while wea.Parent~=game.Players.LocalPlayer.Character do wea=wea.Parent end
-                return wea
-            end
-            
-            function getHits(Size)
-                local Hits = {}
-                local Enemies = workspace.Enemies:GetChildren()
-                local Characters = workspace.Characters:GetChildren()
-                for i=1,#Enemies do local v = Enemies[i]
-                    local Human = v:FindFirstChildOfClass("Humanoid")
-                    if Human and Human.RootPart and Human.Health > 0 and game.Players.LocalPlayer:DistanceFromCharacter(Human.RootPart.Position) < Size+55 then
-                        table.insert(Hits,Human.RootPart)
-                    end
-                end
-                for i=1,#Characters do local v = Characters[i]
-                    if v ~= game.Players.LocalPlayer.Character then
-                        local Human = v:FindFirstChildOfClass("Humanoid")
-                        if Human and Human.RootPart and Human.Health > 0 and game.Players.LocalPlayer:DistanceFromCharacter(Human.RootPart.Position) < Size+55 then
-                            table.insert(Hits,Human.RootPart)
-                        end
-                    end
-                end
-                return Hits
-            end
-            
-            task.spawn(
-                function()
-                while wait() do
-                    if  _G.FastAttack then
-                        if SeraphFrame.activeController then
-                            if v.Humanoid.Health > 0 then
-                                SeraphFrame.activeController.timeToNextAttack = 2
-                                SeraphFrame.activeController.focusStart = 0
-                                SeraphFrame.activeController.hitboxMagnitude = 110
-                                SeraphFrame.activeController.humanoid.AutoRotate = true
-                                SeraphFrame.activeController.increment = 3 + 3 / 3
-                             end
-                        end
-                    end
-                end
-            end)
+L_17_:Toggle("Auto MaxPoint Stats Kaitun",_G.Settings.MaxPointStatsKaitun,function(value)
+	_G.Settings.MaxPointStatsKaitun = value
+	SaveSettings()
+end)
+L_17_:Label("Auto Stats Normal Mode")
+L_17_:Toggle("Auto Stats [Select Mode] ",_G.Settings.EnabledAutoStats,function(a)
+	_G.Settings.EnabledAutoStats = a
+	SaveSettings()
+end)
 
-            local cdnormal = 9e9
-            local Animation = Instance.new("Animation")
-            local CooldownFastAttack = 0
-            Attack = function()
-                local ac = SeraphFrame.activeController
-                if ac and ac.equipped then
-                    task.spawn(function()
-                        if tick() - cdnormal > 9e9 then
-                            ac:attack()
-                            cdnormal = tick()
-                        else
-                            Animation.AnimationId = ac.anims.basic[2]
-                            ac.humanoid:LoadAnimation(Animation):Play(100, 99) --(1,1)
-                            game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getHits(120), 2, "")
-                        end
-                    end)
-                end
-            end
-            
-            b = tick()
-            spawn(function()
-                while wait(0) do
-                    if  _G.FastAttack then
-                        if b - tick() > 0.3 then
-                            wait(.1)
-                            b = tick()
-                        end
-                        pcall(function()
-                            for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                                if v.Humanoid.Health > 0 then
-                                    if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
-                                        Attack()
-                                        wait(0)
-                                        Boost()
-                                    end
-                                end
-                            end
-                        end)
-                    end
-                end
-            end)
-            
-            b = tick()
-            spawn(function()
-                while wait(0) do
-                    if  _G.FastAttack then
-                        if b - tick() > 0.75 then
-                            wait(.2)
-                            b = tick()
-                        end
-                        pcall(function()
-                            for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                                if v.Humanoid.Health > 0 then
-                                    if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
-                                        Attack()
-                                        wait(0)
-                                        Boost()
-                                    end
-                                end
-                            end
-                        end)
-                    end
-                end
-            end)
-            
-            k = tick()
-            spawn(function()
-                while wait(0) do
-                    if  _G.FastAttack then
-                        if k - tick() > 0.75 then
-                            wait(0)
-                            k = tick()
-                        end
-                        pcall(function()
-                            for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                                if v.Humanoid.Health > 0 then
-                                    if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then
-                                    wait(0)
-                                    Unboost()
-                                    end
-                                end
-                            end
-                        end)
-                    end
-                end
-            end)
-
-coroutine.wrap(function()
-	while wait() do
+L_17_:Dropdown("Select Stats",{"Melee","Defense","Sword","Gun","Devil Fruits"},"Melee",function(L_413_arg0)
+	_G.Settings.Select_Stats = L_413_arg0
+	spawn(function()
 		pcall(function()
-			local ac = CombatFrameworkR.activeController
-			if ac and ac.equipped then
-				if _G.FastAttack then
-					AttackFunction()
-					AttackPlayersFunction()
-					if tick() - cooldownfastattack > tonumber(0.75) then wait(0.1)
-						cooldownfastattack = tick()
+			while task.wait(1) do
+                if _G.Settings.MaxPointStats then
+                    _G.SelectPoint = game:GetService("Players").LocalPlayer.Data.Points.Value
+                end
+				if _G.Settings.EnabledAutoStats then
+					if _G.Settings.Select_Stats  == "Melee" then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",_G.SelectPoint)
+					elseif _G.Settings.Select_Stats == "Defense" then
+						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Defense",_G.SelectPoint)
+					elseif _G.Settings.Select_Stats == "Sword" then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Sword",_G.SelectPoint)
+					elseif _G.Settings.Select_Stats == "Gun" then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Gun",_G.SelectPoint)
+					elseif _G.Settings.Select_Stats == "Devil Fruits" then
+                        local args = {
+                            [1] = "AddPoint",
+                            [2] = "Demon Fruit",
+                            [3] = _G.SelectPoint
+                        }
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+					else
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",_G.SelectPoint)
 					end
 				end
 			end
 		end)
-	end
-end)()
+	end)
+end)
 
-for _, func in pairs(getreg()) do
-    if typeof(func) == "function" and getfenv(func).script == game.Players.LocalPlayer.PlayerScripts.CombatFramework then
-        for _, upvalue in pairs(debug.getupvalues(func)) do
-            if typeof(upvalue) == "table" then
-                spawn(function()
-                    game:GetService("RunService").RenderStepped:Connect(function()
-                        if _G.FastAttack then
-                            pcall(function()
-                                local controller = upvalue.activeController
-                                if controller then
-                                    controller.increment = 3
-                                    controller.timeToNextAttack = -(math.huge^math.huge)
-                                    controller.attacking = false
-                                    controller.timeToNextBlock = 0
-                                    controller.blocking = false
-                                    controller.hitboxMagnitude = 50
-                                    controller.humanoid.AutoRotate = true
-                                    controller.blocking = false
-                                    controller.timeToNextBlock = 0
-                                    game.Players.LocalPlayer.Character.Stun.Value = 0
-                                    game.Players.LocalPlayer.Character.Humanoid.Sit = false
-                                    controller.focusStart = 0
-                                end
-                            end)
-                        end
-                    end)
-                end)
-            end
-        end
-    end
-end
+L_17_:Toggle("MaxPoint Stats",_G.Settings.MaxPointStats,function(value)
+	_G.Settings.MaxPointStats = value
+	SaveSettings()
+end)
 
-
-
-_G.Settings.Misc['Auto Rejoin'] = true
+-- [Stats Kaitan]
 spawn(function()
-	while wait() do
-		if _G.Settings.Misc['Auto Rejoin'] then
-			_G.Settings.Misc['Auto Rejoin'] = game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(v)
-				if v.Name == 'ErrorPrompt' and v:FindFirstChild('MessageArea') and v.MessageArea:FindFirstChild("ErrorFrame") then
-					print("Auto Rejoin!")
-					game:GetService("TeleportService"):Teleport(game.PlaceId)
-				end
-			end)
+	while task.wait(1) do
+		if _G.Settings.AutoStatsKaitun then
+            if _G.Settings.MaxPointStatsKaitun then
+                PointStats = game:GetService("Players").LocalPlayer.Data.Points.Value
+            end
+			if game:GetService("Players").LocalPlayer.Data.Stats.Melee.Level.Value < 2450 then
+				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",PointStats)
+			elseif game:GetService("Players").LocalPlayer.Data.Stats.Defense.Level.Value < 2450 then
+				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Defense",PointStats)
+			end
 		end
 	end
 end)
 
 
-require(game.ReplicatedStorage.Util.CameraShaker):Stop()
-xShadowFastAttackx = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
-xShadowx = debug.getupvalues(xShadowFastAttackx)[2]
-
-spawn(function()
-    game:GetService("RunService").RenderStepped:Connect(function()
-        if _G.FastAttack then
-            if typeof(xShadowx) == "table" then
-                pcall(function()
-                    xShadowx.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
-                    xShadowx.activeController.timeToNextAttack = 0
-                    xShadowx.activeController.hitboxMagnitude = 200
-                    xShadowx.activeController.active = false
-                    xShadowx.activeController.timeToNextBlock = 0
-                    xShadowx.activeController.focusStart = 0
-                    xShadowx.activeController.increment = 4
-                    xShadowx.activeController.blocking = false
-                    xShadowx.activeController.attacking = false
-                    xShadowx.activeController.humanoid.AutoRotate = 50
-                    game:GetService'VirtualUser':CaptureController()
-					game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                end)
-            end
-        end
-    end)
-end)
