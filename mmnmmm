@@ -1848,7 +1848,8 @@ local L_21_ = E:Section("Shop","Left")
 
 print("UI.Ok")
 local L_4_ = loadstring(game:HttpGet("https://pastebin.com/raw/EK13Njf3"))() --redeem Code
-Main:Button("Redeem All Code",function()
+
+L_16_:Button("Redeem All Code",function()
 spawn(function()
     function Redeem(L_166_arg0)
 		game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(L_166_arg0)
@@ -1858,6 +1859,7 @@ spawn(function()
 	end
 end)
 end)
+
 function toTarget(targetPos, targetCFrame)
     local tweenfunc = {}
     local tween_s = game:service"TweenService"
