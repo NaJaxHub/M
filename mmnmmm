@@ -1929,6 +1929,162 @@ Settings:Toggle("Fast Attack",true,function(value)
 end)
 
 
+
+
+Settings:Toggle("Bring Mob",_G.Settings.Brimob,function(value)
+	_G.Brimob = value
+	_G.Settings.Brimob = value
+	SaveSettings()
+end)
+
+spawn(function()
+	while wait() do
+		pcall(function()
+			if _G.Brimob then
+				for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+					if v.Name == QuestCheck()[3] and (v.HumanoidRootPart.Position - PosMon.Position).magnitude <= 200 then
+						v.HumanoidRootPart.CFrame = PosMon
+						v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+						v.HumanoidRootPart.Transparency = 1
+						v.Humanoid.JumpPower = 0
+						v.Humanoid.WalkSpeed = 0
+						if v.Humanoid:FindFirstChild("Animator") then
+							v.Humanoid.Animator:Destroy()
+						end
+						v.HumanoidRootPart.CanCollide = false
+						v.Head.CanCollide = false
+						v.Humanoid:ChangeState(11)
+						v.Humanoid:ChangeState(14)
+						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
+					end
+				end
+			end
+		end)
+	end
+end)
+
+function InMyNetWork(object)
+	if isnetworkowner then
+		return isnetworkowner(object)
+	else
+		if (object.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then 
+			return true
+		end
+		return false
+	end
+end
+spawn(function()
+	while true do wait()
+		if setscriptable then
+			setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
+		end
+		if sethiddenproperty then
+			sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+		end
+	end
+end)
+
+spawn(function()
+	while wait() do
+		pcall(function()
+			if BringMobFarm then
+				for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+					if v.Name == QuestCheck()[3] and (v.HumanoidRootPart.Position - PosMon.Position).magnitude <= 200 then
+						v.HumanoidRootPart.CFrame = PosMon
+						v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+						v.HumanoidRootPart.Transparency = 1
+						v.Humanoid.JumpPower = 0
+						v.Humanoid.WalkSpeed = 0
+						if v.Humanoid:FindFirstChild("Animator") then
+							v.Humanoid.Animator:Destroy()
+						end
+						v.HumanoidRootPart.CanCollide = false
+						v.Head.CanCollide = false
+						v.Humanoid:ChangeState(11)
+						v.Humanoid:ChangeState(14)
+						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
+					end
+				end
+			end
+		end)
+	end
+end)
+
+local _G.SelectPoint = 1
+local PointStats = 1
+--L_16_
+L_17_:Label("Auto Stats Kaitan")
+
+L_17_:Toggle("Auto Stats Kaitan",_G.Settings.AutoStatsKaitun,function(a)
+	_G.Settings.AutoStatsKaitun = a
+	SaveSettings()
+end)
+
+L_17_:Toggle("Auto MaxPoint Stats Kaitun",_G.Settings.MaxPointStatsKaitun,function(value)
+	_G.Settings.MaxPointStatsKaitun = value
+	SaveSettings()
+end)
+L_17_:Label("Auto Stats Normal Mode")
+L_17_:Toggle("Auto Stats [Select Mode] ",_G.Settings.EnabledAutoStats,function(a)
+	_G.Settings.EnabledAutoStats = a
+	SaveSettings()
+end)
+
+L_17_:Dropdown("Select Stats",{"Melee","Defense","Sword","Gun","Devil Fruits"},"Melee",function(L_413_arg0)
+	_G.Settings.Select_Stats = L_413_arg0
+	spawn(function()
+		pcall(function()
+			while task.wait(1) do
+                if _G.Settings.MaxPointStats then
+                    _G.SelectPoint = game:GetService("Players").LocalPlayer.Data.Points.Value
+                end
+				if _G.Settings.EnabledAutoStats then
+					if _G.Settings.Select_Stats  == "Melee" then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",_G.SelectPoint)
+					elseif _G.Settings.Select_Stats == "Defense" then
+						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Defense",_G.SelectPoint)
+					elseif _G.Settings.Select_Stats == "Sword" then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Sword",_G.SelectPoint)
+					elseif _G.Settings.Select_Stats == "Gun" then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Gun",_G.SelectPoint)
+					elseif _G.Settings.Select_Stats == "Devil Fruits" then
+                        local args = {
+                            [1] = "AddPoint",
+                            [2] = "Demon Fruit",
+                            [3] = _G.SelectPoint
+                        }
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+					else
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",_G.SelectPoint)
+					end
+				end
+			end
+		end)
+	end)
+end)
+
+L_17_:Toggle("MaxPoint Stats",_G.Settings.MaxPointStats,function(value)
+	_G.Settings.MaxPointStats = value
+	SaveSettings()
+end)
+
+-- [Stats Kaitan]
+spawn(function()
+	while task.wait(1) do
+		if _G.Settings.AutoStatsKaitun then
+            if _G.Settings.MaxPointStatsKaitun then
+                PointStats = game:GetService("Players").LocalPlayer.Data.Points.Value
+            end
+			if game:GetService("Players").LocalPlayer.Data.Stats.Melee.Level.Value < 2450 then
+				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",PointStats)
+			elseif game:GetService("Players").LocalPlayer.Data.Stats.Defense.Level.Value < 2450 then
+				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Defense",PointStats)
+			end
+		end
+	end
+end)
+
+
 -- [require module]
 local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
 local CombatFrameworkR = getupvalues(CombatFramework)[2]
@@ -2299,432 +2455,3 @@ spawn(function()
         end
     end)
 end)
-
-
-Settings:Toggle("Bring Mob",_G.Settings.Brimob,function(value)
-	_G.Brimob = value
-	_G.Settings.Brimob = value
-	SaveSettings()
-end)
-
-spawn(function()
-	while wait() do
-		pcall(function()
-			if _G.Brimob then
-				for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-					if v.Name == QuestCheck()[3] and (v.HumanoidRootPart.Position - PosMon.Position).magnitude <= 200 then
-						v.HumanoidRootPart.CFrame = PosMon
-						v.HumanoidRootPart.Size = Vector3.new(60,60,60)
-						v.HumanoidRootPart.Transparency = 1
-						v.Humanoid.JumpPower = 0
-						v.Humanoid.WalkSpeed = 0
-						if v.Humanoid:FindFirstChild("Animator") then
-							v.Humanoid.Animator:Destroy()
-						end
-						v.HumanoidRootPart.CanCollide = false
-						v.Head.CanCollide = false
-						v.Humanoid:ChangeState(11)
-						v.Humanoid:ChangeState(14)
-						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
-					end
-				end
-			end
-		end)
-	end
-end)
-
-function InMyNetWork(object)
-	if isnetworkowner then
-		return isnetworkowner(object)
-	else
-		if (object.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 200 then 
-			return true
-		end
-		return false
-	end
-end
-spawn(function()
-	while true do wait()
-		if setscriptable then
-			setscriptable(game.Players.LocalPlayer, "SimulationRadius", true)
-		end
-		if sethiddenproperty then
-			sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-		end
-	end
-end)
-
-spawn(function()
-	while wait() do
-		pcall(function()
-			if BringMobFarm then
-				for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-					if v.Name == QuestCheck()[3] and (v.HumanoidRootPart.Position - PosMon.Position).magnitude <= 200 then
-						v.HumanoidRootPart.CFrame = PosMon
-						v.HumanoidRootPart.Size = Vector3.new(60,60,60)
-						v.HumanoidRootPart.Transparency = 1
-						v.Humanoid.JumpPower = 0
-						v.Humanoid.WalkSpeed = 0
-						if v.Humanoid:FindFirstChild("Animator") then
-							v.Humanoid.Animator:Destroy()
-						end
-						v.HumanoidRootPart.CanCollide = false
-						v.Head.CanCollide = false
-						v.Humanoid:ChangeState(11)
-						v.Humanoid:ChangeState(14)
-						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
-					end
-				end
-			end
-		end)
-	end
-end)
-
-_G.SelectPoint = 1
-PointStats = 1
---L_16_
-L_17_:Label("Auto Stats Kaitan")
-
-L_17_:Toggle("Auto Stats Kaitan",_G.Settings.AutoStatsKaitun,function(a)
-	_G.Settings.AutoStatsKaitun = a
-	SaveSettings()
-end)
-
-L_17_:Toggle("Auto MaxPoint Stats Kaitun",_G.Settings.MaxPointStatsKaitun,function(value)
-	_G.Settings.MaxPointStatsKaitun = value
-	SaveSettings()
-end)
-L_17_:Label("Auto Stats Normal Mode")
-L_17_:Toggle("Auto Stats [Select Mode] ",_G.Settings.EnabledAutoStats,function(a)
-	_G.Settings.EnabledAutoStats = a
-	SaveSettings()
-end)
-
-L_17_:Dropdown("Select Stats",{"Melee","Defense","Sword","Gun","Devil Fruits"},"Melee",function(L_413_arg0)
-	_G.Settings.Select_Stats = L_413_arg0
-	spawn(function()
-		pcall(function()
-			while task.wait(1) do
-                if _G.Settings.MaxPointStats then
-                    _G.SelectPoint = game:GetService("Players").LocalPlayer.Data.Points.Value
-                end
-				if _G.Settings.EnabledAutoStats then
-					if _G.Settings.Select_Stats  == "Melee" then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",_G.SelectPoint)
-					elseif _G.Settings.Select_Stats == "Defense" then
-						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Defense",_G.SelectPoint)
-					elseif _G.Settings.Select_Stats == "Sword" then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Sword",_G.SelectPoint)
-					elseif _G.Settings.Select_Stats == "Gun" then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Gun",_G.SelectPoint)
-					elseif _G.Settings.Select_Stats == "Devil Fruits" then
-                        local args = {
-                            [1] = "AddPoint",
-                            [2] = "Demon Fruit",
-                            [3] = _G.SelectPoint
-                        }
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-					else
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",_G.SelectPoint)
-					end
-				end
-			end
-		end)
-	end)
-end)
-
-L_17_:Toggle("MaxPoint Stats",_G.Settings.MaxPointStats,function(value)
-	_G.Settings.MaxPointStats = value
-	SaveSettings()
-end)
-
--- [Stats Kaitan]
-spawn(function()
-	while task.wait(1) do
-		if _G.Settings.AutoStatsKaitun then
-            if _G.Settings.MaxPointStatsKaitun then
-                PointStats = game:GetService("Players").LocalPlayer.Data.Points.Value
-            end
-			if game:GetService("Players").LocalPlayer.Data.Stats.Melee.Level.Value < 2450 then
-				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Melee",PointStats)
-			elseif game:GetService("Players").LocalPlayer.Data.Stats.Defense.Level.Value < 2450 then
-				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint","Defense",PointStats)
-			end
-		end
-	end
-end)
-
-
-
-
-
-L_22_:Label("Optimize Game")
-
-L_22_:Button("Boost Fps",function(L_485_arg0)
-		if not game:IsLoaded() then
-			repeat
-				wait()
-			until game:IsLoaded()
-		end
-		if hookfunction and setreadonly then
-			local L_490_ = getrawmetatable(game)
-			local L_491_ = L_490_.__newindex
-			setreadonly(L_490_, false)
-			local L_492_
-			L_492_ = hookfunction(L_491_, function(L_493_arg0, L_494_arg1, L_495_arg2)
-				if L_494_arg1 == "Material" then
-					if L_495_arg2 ~= Enum.Material.Neon and L_495_arg2 ~= Enum.Material.Plastic and L_495_arg2 ~= Enum.Material.ForceField then
-						L_495_arg2 = Enum.Material.Plastic
-					end
-				elseif L_494_arg1 == "TopSurface" then
-					L_495_arg2 = "Smooth"
-				elseif L_494_arg1 == "Reflectance" or L_494_arg1 == "WaterWaveSize" or L_494_arg1 == "WaterWaveSpeed" or L_494_arg1 == "WaterReflectance" then
-					L_495_arg2 = 0
-				elseif L_494_arg1 == "WaterTransparency" then
-					L_495_arg2 = 1
-				elseif L_494_arg1 == "GlobalShadows" then
-					L_495_arg2 = false
-				end
-				return L_492_(L_493_arg0, L_494_arg1, L_495_arg2)
-			end)
-			setreadonly(L_490_, true)
-		end
-		local L_486_ = game
-		local L_487_ = L_486_.Workspace
-		local L_488_ = L_486_:GetService"Lighting"
-		local L_489_ = L_487_:WaitForChild"Terrain"
-		L_489_.WaterWaveSize = 0
-		L_489_.WaterWaveSpeed = 0
-		L_489_.WaterReflectance = 0
-		L_489_.WaterTransparency = 1
-		L_488_.GlobalShadows = false
-		function change(L_496_arg0)
-			pcall(function()
-				if L_496_arg0.Material ~= Enum.Material.Neon and L_496_arg0.Material ~= Enum.Material.Plastic and L_496_arg0.Material ~= Enum.Material.ForceField then
-					pcall(function()
-						L_496_arg0.Reflectance = 0
-					end)
-					pcall(function()
-						L_496_arg0.Material = Enum.Material.Plastic
-					end)
-					pcall(function()
-						L_496_arg0.TopSurface = "Smooth"
-					end)
-				end
-			end)
-		end
-		game.DescendantAdded:Connect(function(L_497_arg0)
-			pcall(function()
-				if L_497_arg0:IsA"Part" then
-					change(L_497_arg0)
-				elseif L_497_arg0:IsA"MeshPart" then
-					change(L_497_arg0)
-				elseif L_497_arg0:IsA"TrussPart" then
-					change(L_497_arg0)
-				elseif L_497_arg0:IsA"UnionOperation" then
-					change(L_497_arg0)
-				elseif L_497_arg0:IsA"CornerWedgePart" then
-					change(L_497_arg0)
-				elseif L_497_arg0:IsA"WedgePart" then
-					change(L_497_arg0)
-				end
-			end)
-		end)
-		for L_498_forvar0, L_499_forvar1 in pairs(game:GetDescendants()) do
-			pcall(function()
-				if L_499_forvar1:IsA"Part" then
-					change(L_499_forvar1)
-				elseif L_499_forvar1:IsA"MeshPart" then
-					change(L_499_forvar1)
-				elseif L_499_forvar1:IsA"TrussPart" then
-					change(L_499_forvar1)
-				elseif L_499_forvar1:IsA"UnionOperation" then
-					change(L_499_forvar1)
-				elseif L_499_forvar1:IsA"CornerWedgePart" then
-					change(L_499_forvar1)
-				elseif L_499_forvar1:IsA"WedgePart" then
-					change(L_499_forvar1)
-				end
-			end)
-		end
-	end
-)
-
-L_22_:Button("Ultra Boost Fps",function(L_500_arg0)
-		local Boost = true
-		local krnl = game
-		local work = krnl.Workspace
-		local light = krnl.Lighting
-		local L_505_ = work.Terrain
-		L_505_.WaterWaveSize = 0
-		L_505_.WaterWaveSpeed = 0
-		L_505_.WaterReflectance = 0
-		L_505_.WaterTransparency = 0
-		light.GlobalShadows = false
-		light.FogEnd = 9e9
-		light.Brightness = 0
-		settings().Rendering.QualityLevel = "Level01"
-		for L_506_forvar0, L_507_forvar1 in pairs(krnl:GetDescendants()) do
-			if L_507_forvar1:IsA("Part") or L_507_forvar1:IsA("Union") or L_507_forvar1:IsA("CornerWedgePart") or L_507_forvar1:IsA("TrussPart") then
-				L_507_forvar1.Material = "Plastic"
-				L_507_forvar1.Reflectance = 0
-			elseif L_507_forvar1:IsA("Decal") or L_507_forvar1:IsA("Texture") and Boost then
-				L_507_forvar1.Transparency = 1
-			elseif L_507_forvar1:IsA("ParticleEmitter") or L_507_forvar1:IsA("Trail") then
-				L_507_forvar1.Lifetime = NumberRange.new(0)
-			elseif L_507_forvar1:IsA("Explosion") then
-				L_507_forvar1.BlastPressure = 1
-				L_507_forvar1.BlastRadius = 1
-			elseif L_507_forvar1:IsA("Fire") or L_507_forvar1:IsA("SpotLight") or L_507_forvar1:IsA("Smoke") then
-				L_507_forvar1.Enabled = false
-			elseif L_507_forvar1:IsA("MeshPart") then
-				L_507_forvar1.Material = "Plastic"
-				L_507_forvar1.Reflectance = 0
-				L_507_forvar1.TextureID = 10385902758728957
-			end
-		end
-		for L_508_forvar0, L_509_forvar1 in pairs(L_504_:GetChildren()) do
-			if L_509_forvar1:IsA("BlurEffect") or L_509_forvar1:IsA("SunRaysEffect") or L_509_forvar1:IsA("ColorCorrectionEffect") or L_509_forvar1:IsA("BloomEffect") or L_509_forvar1:IsA("DepthOfFieldEffect") then
-				L_509_forvar1.Enabled = false
-			end
-		end
-	end
-)
-
-L_22_:Button("Ultra ๆ Boost Fps",function(d)
-    TextureLow()
-    InvisibleObject()
-    ObjectRemvoe()
-    WaterRemvoe()
-end)
-
-function TextureLow()
-	if not game:IsLoaded() then repeat wait() until game:IsLoaded() end
-	if hookfunction and setreadonly then
-		local mt = getrawmetatable(game)
-		local old = mt.__newindex
-		setreadonly(mt, false)
-		local sda
-		sda = hookfunction(old, function(t, k, v)
-			if k == "Material" then
-				if v ~= Enum.Material.Neon and v ~= Enum.Material.Plastic and v ~= Enum.Material.ForceField then v = Enum.Material.Plastic end
-			elseif k == "TopSurface" then v = "Smooth"
-			elseif k == "Reflectance" or k == "WaterWaveSize" or k == "WaterWaveSpeed" or k == "WaterReflectance" then v = 0
-			elseif k == "WaterTransparency" then v = 1
-			elseif k == "GlobalShadows" then v = false end
-			return sda(t, k, v)
-		end)
-		setreadonly(mt, true)
-	end
-	local g = game
-	local w = g.Workspace
-	local l = g:GetService"Lighting"
-	local t = w:WaitForChild"Terrain"
-	t.WaterWaveSize = 0
-	t.WaterWaveSpeed = 0
-	t.WaterReflectance = 0
-	t.WaterTransparency = 1
-	l.GlobalShadows = false
-	function change(v)
-		pcall(function()
-			if v.Material ~= Enum.Material.Neon and v.Material ~= Enum.Material.Plastic and v.Material ~= Enum.Material.ForceField then
-				pcall(function() v.Reflectance = 0 end)
-				pcall(function() v.Material = Enum.Material.Plastic end)
-				pcall(function() v.TopSurface = "Smooth" end)
-			end
-		end)
-	end
-	game.DescendantAdded:Connect(function(v)
-		pcall(function()
-			if v:IsA"Part" then change(v)
-			elseif v:IsA"MeshPart" then change(v)
-			elseif v:IsA"TrussPart" then change(v)
-			elseif v:IsA"UnionOperation" then change(v)
-			elseif v:IsA"CornerWedgePart" then change(v)
-			elseif v:IsA"WedgePart" then change(v) end
-		end)
-	end)
-	for i, v in pairs(game:GetDescendants()) do
-		pcall(function()
-			if v:IsA"Part" then change(v)
-			elseif v:IsA"MeshPart" then change(v)
-			elseif v:IsA"TrussPart" then change(v)
-			elseif v:IsA"UnionOperation" then change(v)
-			elseif v:IsA"CornerWedgePart" then change(v)
-			elseif v:IsA"WedgePart" then change(v) end
-		end)
-	end
-end
-
-function WaterRemvoe()
-	for i,v in pairs(workspace:GetDescendants()) do
-		if string.find(v.Name,"Water") then
-			v:Destroy()
-		end
-	end
-end
-
-function ObjectRemvoe()
-	for i,v in pairs(workspace:GetDescendants()) do
-		if string.find(v.Name,"Tree") or string.find(v.Name,"House") then
-			v:Destroy()
-		end
-	end
-end
-
-function InvisibleObject()
-	for i,v in pairs(game:GetService("Workspace"):GetDescendants()) do
-        if  (v:IsA("Part") or v:IsA("MeshPart") or v:IsA("BasePart")) and v.Transparency then
-            v.Transparency = 1
-        end
-    end
-end
-
-L_22_:Toggle("White Screen | จอขาว",_G.Settings.Configs["White|Screen"],function(v)
-	_G.Settings.Configs["White|Screen"] = v
-	SaveSettings()
-end)
-
-spawn(function()
-	while wait() do
-		if _G.Settings.Configs["White|Screen"] then
-			game:GetService("RunService"):Set3dRenderingEnabled(false)
-		else
-			game:GetService("RunService"):Set3dRenderingEnabled(true)
-		end
-	end
-end)
-
-L_22_:Toggle("Black Screen | จอดำ",_G.Settings.Configs["Black|Screen"],function(v)
-	_G.Settings.Configs["Black|Screen"] = v
-	SaveSettings()
-end)
-
-spawn(function()
-	while wait() do
-		if _G.Settings.Configs["Black|Screen"] then
-			game:GetService("Players").LocalPlayer.PlayerGui.Main.Blackscreen.Size = UDim2.new(500, 0, 500, 500)
-		else
-			game:GetService("Players").LocalPlayer.PlayerGui.Main.Blackscreen.Size = UDim2.new(1, 0, 500, 500)
-		end
-	end
-end)
-
-L_22_:Label("Community")
-
-L_22_:Button("Click to Copy Link Youtube",function(L_512_arg0)
-	setclipboard("https://www.youtube.com/@MrMaxNaJaa")
-end)
-
-L_22_:Button("Click to Copy Link Facebook",function(L_514_arg0)
-	setclipboard("https://www.facebook.com/MrMaxNaJa")
-end)
-
-L_22_:Button("Click to Copy Link Discord",function(L_513_arg0)
-	setclipboard("https://discord.gg/6qwRAxNfpz")
-end)
-
-
-
-
-
