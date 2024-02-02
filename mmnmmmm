@@ -153,7 +153,7 @@ getgenv().TextUI_III = "Donate บาท 10 บาท ได้หมด"
     end)
 
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/NaJaxHub/ser/main/UI-Kz"))()
---loadstring(game:HttpGet("https://pastebin.com/raw/QELCEuem"))()
+-- loadstring(game:HttpGet("https://pastebin.com/raw/QELCEuem"))()
 print("UI Loading")
 repeat wait()
 until game:IsLoaded()
