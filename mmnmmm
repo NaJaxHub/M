@@ -2491,11 +2491,12 @@ spawn(function()
     end)
 end)
 
-
+--[[
 _G.SelectPoint = 1
 PointStats = 1
 --L_16_
 L_17_:Label("Auto Stats Kaitan")
+
 L_17_:Toggle("Auto Stats Kaitan",_G.Settings.AutoStatsKaitun,function(a)
 	_G.Settings.AutoStatsKaitun = a
 	SaveSettings()
@@ -2564,3 +2565,6 @@ spawn(function()
 		end
 	end
 end)
+
+]]
+
