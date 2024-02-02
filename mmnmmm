@@ -1217,6 +1217,7 @@ else
     game:Shutdown()
     kickcash("//a/a//a//a//a///a///s///s//s//d/a//jsdfjghlkfdhgjcxbzvn//0001/01")
 end
+local L_4_ = loadstring(game:HttpGet("https://pastebin.com/raw/EK13Njf3"))() --redeem Code
 ----------------------------------------------------------------------------------------------------------------------------------------------
 print("UI.Lo")
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -1239,6 +1240,16 @@ local LLLL = D:Section("Fruit","Right")
 local L_22_ = E:Section("Misc","Right")
 local L_21_ = E:Section("Shop","Left")
 
+Main:Button("Redeem All Code",function()
+spawn(function()
+    function Redeem(L_166_arg0)
+		game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(L_166_arg0)
+	end
+	for d, t in pairs(L_4_) do
+		Redeem(t) 
+	end
+end)
+end)
 
 Main:Toggle("Auto Farm Level",_G.Settings.Auto_Farm_Level,function(value)
     _G.Auto_Farm_Level = value 
