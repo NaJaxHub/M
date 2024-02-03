@@ -1591,28 +1591,17 @@ spawn(function()
 		end)
 	end
 end)
-	spawn(function()
-    	while wait() do
-    		if _G.ChestBypass then
-             	pcall(function()
+
+function ChestFarm()
                     for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
                         if string.find(v.Name, "Chest") then
                             print(v.Name)
                             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
-                            wait(.15)
-							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
-                            wait(.15)
-							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
-                            wait(.15)
+                            wait(15)
                         end
                     end
-					wait(20)
-                end)
-            end
-        end
-    end)
-
-
+					wait(100)
+end
 
 	spawn(function() 
 		while wait() do
@@ -1628,11 +1617,10 @@ end)
 					end
 						if QuestC.Visible == true then
 							if not game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
-								_G.ChestBypass = true
+								ChestFarm()
 								Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
 							else
 							if game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
-								_G.ChestBypass = false
 								for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 									if v.Name == QuestCheck()[3] then
 										if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
@@ -1729,7 +1717,6 @@ end)
 						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 					end
 					_G.SupGodFastAttack = false
-					_G.ChestBypass = false
 				end
 			end)
 		end
