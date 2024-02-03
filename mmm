@@ -1592,16 +1592,7 @@ spawn(function()
 	end
 end)
 
-function ChestFarm()
-                    for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
-                        if string.find(v.Name, "Chest") then
-                            print(v.Name)
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
-                            wait(15)
-                        end
-                    end
-					wait(100)
-end
+
 
 	spawn(function() 
 		while wait() do
@@ -1617,7 +1608,6 @@ end
 					end
 						if QuestC.Visible == true then
 							if not game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
-								ChestFarm()
 								Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
 							else
 							if game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
