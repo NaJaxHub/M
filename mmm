@@ -1567,7 +1567,7 @@ spawn(function()
 										Attack()
 										AttackFunction()
 									end
-									local MonHealth = v.Humanoid.MaxHealth * 45/100
+									local MonHealth = v.Humanoid.MaxHealth * 25/100
 										Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 8))
 										if v.Humanoid.Health <= MonHealth then
 											game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,10,0)
@@ -1632,7 +1632,7 @@ end)
 														Attack()
 													end
 													PosMon = v.HumanoidRootPart.CFrame
-													v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+													v.HumanoidRootPart.Size = Vector3.new(66,66,66)
 													v.HumanoidRootPart.CanCollide = false
 													v.Humanoid.WalkSpeed = 0
 													v.Head.CanCollide = false
@@ -1919,12 +1919,9 @@ spawn(function()
 						if v.Name == QuestCheck()[3] then
 							if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
 								repeat task.wait()
-									if _G.Auto_CFrame then
+									if _G.Auto_CFrame1 then
 										SetCFarme = 1
 									end
-									if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, QuestCheck()[6]) then
-										print(321)
-									else
                               		  	BringMobFarm = true
         	                   	     	PosMon = v.HumanoidRootPart.CFrame
            	                   	  		if v.Humanoid.Health <= v.Humanoid.MaxHealth * MobHealthFruits/100 then
@@ -1937,13 +1934,12 @@ spawn(function()
            	            	             	EquipWeapon(_G.Select_Weapon)
 											Tween(v.HumanoidRootPart.CFrame * CFrame.new(0,0,25))
             	        	            end
-									end
             	   	            until not getgenv().AuToFarmMasFruits or not v.Parent or v.Humanoid.Health <= 0
                		        end
 						end
 					end
 				else
-					if _G.Auto_CFrame and not _G.Fast_Farm_Level then
+					if _G.Auto_CFrame1 and not _G.Fast_Farm_Level then
 						Tween(QuestCheck()[7][SetCFarme] * CFrame.new(0,0,25))
 						if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
 							if SetCFarme == nil or SetCFarme == '' then
@@ -2017,8 +2013,8 @@ task.spawn(function()
 								v.Humanoid.Animator:Destroy()
 							end
 							sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius", math.huge)
-							v.Humanoid:ChangeState(12) --12
-							v.Humanoid:ChangeState(14) --12
+							v.Humanoid:ChangeState(11) --12
+							v.Humanoid:ChangeState(13) --12
 						end
                     end
 				end
@@ -2034,18 +2030,16 @@ task.spawn(function()
 				for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
                     if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 500 then --not string.find(v.Name,"Boss") and 
 						if InMyNetWork(v.HumanoidRootPart) then
-							if not v.HumanoidRootPart:FindFirstChild("BodyClip") then
 							local Noclip = Instance.new("BodyVelocity")
 							Noclip.Name = "BodyClip"
 							Noclip.Parent = v.HumanoidRootPart.CFrame
 							Noclip.MaxForce = Vector3.new(100000,100000,100000)
 							Noclip.Velocity = Vector3.new(0,0,0)
-							end
 							v.HumanoidRootPart.CFrame = PosMon
 							v.Humanoid.JumpPower = 0
 							v.Humanoid.WalkSpeed = 0
 							v.Humanoid.NameDisplayDistance = 0
-							v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+							v.HumanoidRootPart.Size = Vector3.new(66, 66, 66)
 							v.HumanoidRootPart.CanCollide = false
 							v.Head.CanCollide = false
 							if v.Humanoid:FindFirstChild("Animator") then
