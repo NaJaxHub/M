@@ -1598,6 +1598,9 @@ spawn(function()
 			if _G.Auto_Farm_Level then 
 			local MyLevel = game.Players.LocalPlayer.Data.Level.Value
 			local QuestC = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
+			if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Select_Weapon) then
+				EquipWeapon(_G.Select_Weapon)
+			end
 			if QuestC.Visible == true then
 				if game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
 					for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -1690,7 +1693,7 @@ end)
 									end
 								end
 							else
-								if _G.Auto_CFrame and not _G.Fast_Farm_Level then
+								--if _G.Auto_CFrame and not _G.Fast_Farm_Level then
 									Tween(QuestCheck()[7][SetCFarme] * CFrame.new(0, 28, 8))
 									if (QuestCheck()[7][SetCFarme].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
 										if SetCFarme == nil or SetCFarme == '' then
@@ -1704,8 +1707,8 @@ end)
 										print(SetCFarme)
 										task.wait(0.5)
 									end
-								else
-									if not _G.Fast_Farm_Level then
+								--else
+									--if not _G.Fast_Farm_Level then
 										if Random_CFrame == 1 then
 											Tween(QuestCheck()[7][1] * CFrame.new(0,30,20))
 										elseif Random_CFrame == 2 then
@@ -1719,7 +1722,7 @@ end)
 										else
 											Tween(QuestCheck()[7][1] * CFrame.new(0,30,20))
 										end
-									end
+									--end
 								end
 							end
 							end
