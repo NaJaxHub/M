@@ -1570,7 +1570,7 @@ spawn(function()
 									local MonHealth = v.Humanoid.MaxHealth * 45/100
 										Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 8))
 										if v.Humanoid.Health <= MonHealth then
-											game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = L_189_forvar1.HumanoidRootPart.CFrame * CFrame.new(0,10,0)
+											game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,10,0)
 											if _G.FastAttack then
 												Attack()
 												AttackFunction()
@@ -1606,6 +1606,15 @@ end)
 					end
 						if QuestC.Visible == true then
 							if not game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
+								for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+                            		if string.find(v.Name, "Chest") then
+                               	 		--print(v.Name)
+                                		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                                		wait(.15)
+										game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+										wait(15)
+                            		end
+                        		end
 								Tween(QuestCheck()[7][1] * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
 							else
 							if game:GetService("Workspace").Enemies:FindFirstChild(QuestCheck()[3]) then
@@ -1622,6 +1631,13 @@ end)
 													if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
                                        	 				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
                                     				end
+													if _G.FastAttack then
+														Attack()
+														AttackFunction()
+														AttackNoCDGod()
+														_G.SupGodFastAttack = true
+														Attack()
+													end
 													PosMon = v.HumanoidRootPart.CFrame
 													v.HumanoidRootPart.Size = Vector3.new(60,60,60)
 													v.HumanoidRootPart.CanCollide = false
