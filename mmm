@@ -365,7 +365,7 @@ spawn(function()
 	end
 end) 
 
-
+--[[
 	local plr = game.Players.LocalPlayer
 	local CbFw = getupvalues(require(plr.PlayerScripts.CombatFramework))
 	local CbFw2 = CbFw[2]
@@ -425,7 +425,7 @@ end)
                 end)
             end
         end
-    end)
+    end)]]
 
 
 coroutine.wrap(function()
