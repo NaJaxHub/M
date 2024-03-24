@@ -7033,11 +7033,11 @@ spawn(function()
 												v.Head.CanCollide = false
 												EquipWeapon(_G.Select_Weapon)
 												v.HumanoidRootPart.Transparency = 1
-												Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, -30, 30))
+												Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 35))
 												if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
                    	                				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
                    	                			end
-												   game:GetService'VirtualUser':CaptureController() game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+												game:GetService'VirtualUser':CaptureController() game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
 											until not _G.Auto_Third_World or v.Humanoid.Health <= 0 --not v.Parent or 
 											repeat wait() game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelZou") until LOL == "LOLOL"
 										end
@@ -7058,7 +7058,7 @@ spawn(function()
 													v.Head.CanCollide = false
 													EquipWeapon(_G.Select_Weapon)
 													v.HumanoidRootPart.Transparency = 1
-													Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, -30, 30))
+													Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 30))
 													AutoHaki()
 													game:GetService'VirtualUser':CaptureController() game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
 												until not _G.Auto_Third_World or v.Humanoid.Health <= 0 --or not v.Parent 
