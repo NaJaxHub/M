@@ -10902,6 +10902,7 @@ task.spawn(function()
 					game:GetService("ReplicatedStorage").Remotes.CommF:InvokeServer("AbandonQuest")
 				end
 				if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+                    UnEquipWeapon(_G.Select_Weapon)
 					BringMobFarm = false
 					if _G.TweentoQuest then _G.MrMaxNaJaPosMon = true
 						CheckQuest()
@@ -10929,7 +10930,7 @@ task.spawn(function()
                             game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
                         end
                         game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                    else 
+                    else
                         Tween(CFramePosMonNaJaHubNew)
                         UnEquipWeapon(_G.Select_Weapon)
                     end
@@ -10950,20 +10951,27 @@ end)
 								if v.Name == MobName then --and v:FindFirstChild("HumanoidRootPart") 
 									if v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 										repeat task.wait()
+                                            if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Select_Weapon) then
+                                                wait()
+                                                EquipWeapon(_G.Select_Weapon)
+                                            end
+                                            if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
+                                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+                                            end
 											PosMon = v.HumanoidRootPart.CFrame
 											if (v.HumanoidRootPart.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
 												if v.Humanoid.Health <= v.Humanoid.MaxHealth * 25/100 then
-													_G.SuperFastAttack = true
-													game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,25)
+													Attack()
+													game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,25) _G.SuperFastAttack = true
 												else
-													_G.SuperFastAttack = false
-													game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,30,0)
+													
+													game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,30,0) _G.SuperFastAttack = false
 												end
 												if v.Humanoid.Health <= 0 then
 													v:Destroy()
 												end
 											else
-												Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+												Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0)) game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 											end
 											game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 											BringMobFarm = true
@@ -11018,34 +11026,9 @@ local RigController = require(game.Players.LocalPlayer.PlayerScripts.CombatFrame
 local RigControllerR = getupvalues(RigController)[2]
 local realbhit = require(game.ReplicatedStorage.CombatFramework.RigLib)
 
-require(game.ReplicatedStorage.Util.CameraShaker):Stop()
-HeeNay = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
-Mgetupvalues = debug.getupvalues(HeeNay)[2]
-
-spawn(function()
-    while wait() do
-        if _G.FastAttack2 then
-			local ac = CombatFrameworkR.activeController
-			if SeraphFrame.activeController then
-				if tick() - cooldownfastattack > 0.3 then
-					AttackFunction()
-					wait(.7)
-					cooldownfastattack = tick()
-				end
-				SeraphFrame.activeController.timeToNextBlock = 0
-				SeraphFrame.activeController.blocking = false
-				SeraphFrame.activeController.hitboxMagnitude = 80
-				SeraphFrame.activeController.increment = 3
-				game:GetService'VirtualUser':CaptureController()
-				game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-			end
-        end
-    end
-end)
-
-local cdnormal = 0.3
+local cdnormal = 0.1
 local Animation = Instance.new("Animation")
-local CooldownFastAttack = 0.3
+local CooldownFastAttack = 0
 Attack = function()
     local ac = SeraphFrame.activeController
     if _G.FastAttack2 and ac and ac.equipped then
@@ -11064,7 +11047,7 @@ b = tick()
 spawn(function()
 	while wait(0) do
 		if  _G.FastAttack2 then
-			if b - tick() > 0.5 then
+			if b - tick() > 1.75 then
 				wait(.01)
 				b = tick()
 			end
@@ -11150,9 +11133,6 @@ end
 								Attack()
 								wait()
 								Boost()
-								if _G.SuperFastAttack then
-									AttackFunction()
-								end
 							end
 							for _,x in pairs(game:GetService("Players"):GetChildren()) do
 								for m,y in pairs(workspace.Characters:GetChildren()) do
@@ -11165,9 +11145,6 @@ end
 											else
 												if _G.SuperFastAttack then
 													AttackFunction()
-													Attack()
-													wait()
-													Boost()
 												end
 											end
 										end
