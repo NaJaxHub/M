@@ -11051,41 +11051,6 @@ Attack = function()
 		end
     end
 end
-spawn(function()
-    while wait() do
-        if _G.FastAttack2 then
-            pcall(function()
-                local ac = SeraphFrame.activeController
-                if ac and ac.equipped then
-            		if tick() - cdnormala > 0.3 then
-            			ac:Attack()
-            			cdnormala = tick
-            			SeraphFrame.activeController.timeToNextBlock = 0
-            			SeraphFrame.activeController.blocking = false
-            			SeraphFrame.activeController.hitboxMagnitude = 80
-            			SeraphFrame.activeController.increment = 4
-            			game:GetService'VirtualUser':CaptureController()
-            			game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-            			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 2, "") --3
-            		    debug.setupvalue(ac.attack, 5, 55495)
-						debug.setupvalue(ac.attack, 6, 1892665)
-						debug.setupvalue(ac.attack, 4, 907772)
-						debug.setupvalue(ac.attack, 7, 14)
-						AttackFunction()
-						repeat wait()
-							ac.timeToNextBlock = 0
-							ac.blocking = false
-							ac.hitboxMagnitude = 80
-							ac.increment = 4
-						until not _G.FastAttack2
-					end
-                end
-                Attack()
-                AttackFunction()
-            end)
-        end
-    end
-end)
 
 b = tick()
 spawn(function()
@@ -11230,7 +11195,7 @@ end)
 						if Hits then
 							if  _G.FastAttack2 then
 								STOP.play = function() end
-								a:Play(1,1,1)
+								a:Play(0.1,0.01,0.001)
 								func(Hits)
 								STOP.play = shared.cpc
 								a:Stop()
