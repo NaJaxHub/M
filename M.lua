@@ -11007,16 +11007,13 @@ end
 Attack = function()
 	local ac = SeraphFrame.activeController
 	if _G.FastAttack2 and ac and ac.equipped then
-		if tick() - cdnormal > 0.9 then
-			Attack()
-			wait(0)
-			Boost()
+		if tick() - cdnormal > 1 then
 			ac:attack()
 			cdnormal = tick()
 		else
 			Animation.AnimationId = ac.anims.basic[2]
 			ac.humanoid:LoadAnimation(Animation):Play(1, 1) --ท่าไม่ทำงานแก้เป็น (1,1)
-			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(60), 1, "")
+			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(60), 2, "")
 			if AttackRandom == 2 then
 				debug.setupvalue(ac.attack, 5, 55495)
 				debug.setupvalue(ac.attack, 6, 1892665)
@@ -11024,17 +11021,11 @@ Attack = function()
 				debug.setupvalue(ac.attack, 7, 14)
 			end
 			if AttackRandom == 1 or AttackRandom == 3 or AttackRandom == 4 then
-				Attack()
-				wait(0)
-				Boost()
-				wait(0.2)
 				AttackFunction()
 			elseif AttackRandom == 2 then
 				Attack()
 				wait(0)
 				Boost()
-				wait(0.09)
-				AttackFunction()
 			end
 		end
 		for _,x in pairs(game:GetService("Players"):GetChildren()) do
@@ -11042,13 +11033,11 @@ Attack = function()
 				if y.Name == x.Name and y.Name ~= game.Players.LocalPlayer.Name then
 					if (y.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
 						if m >= 1 then
-							wait(0)
 							AttackFunction()
 						else
 							Attack()
 							wait(0)
 							Boost()
-							AttackFunction()
 						end
 					end
 				end
