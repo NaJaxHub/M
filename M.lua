@@ -10817,7 +10817,7 @@ print("CombatFramework")
 
 spawn(function()
       while wait() do
-      if _G.FastAttack2 or _G.FastAttack then
+      if _G.FastAttack2 or _G.FastAttack1 then
         for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
             if v.Name == "CurvedRing" or v.Name == "SlashHit" or v.Name == "DamageCounter" or v.Name == "SwordSlash" or v.Name == "SlashTail" or v.Name == "Sounds" then
                 v:Destroy() 
@@ -10923,7 +10923,7 @@ task.spawn(function()
 				end
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
                     if game:GetService("Workspace").Enemies:FindFirstChild(MobName) then
-                        while task.wait() do
+                        pcall(function()
 							if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Select_Weapon) then
 								wait()
 								EquipWeapon(_G.Select_Weapon)
@@ -10935,7 +10935,7 @@ task.spawn(function()
 								game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
 							end
 							game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
-						end
+						end)
                     else
                         Tween(CFramePosMonNaJaHubNew)
                         UnEquipWeapon(_G.Select_Weapon)
@@ -11048,29 +11048,6 @@ Attack = function()
     end
 end
 
-b = tick()
-spawn(function()
-	while wait(0) do
-		if  _G.FastAttack2 then
-			if b - tick() > 1.75 then
-				wait(.01)
-				b = tick()
-			end
-			pcall(function()
-				for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-					if v.Humanoid.Health > 0 then
-						if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 45 then
-							Attack()
-							wait(0)
-							Boost()
-						end
-					end
-				end
-			end)
-		end
-	end
-end)
-
 local Time = 1
 local AttackRandom = 2
 spawn(function()
@@ -11087,80 +11064,81 @@ function Boost()
 	end)
 end
 
-	Attack = function()
-		local ac = SeraphFrame.activeController
-		if ac and ac.equipped then
-            if tick() - cdnormal > 0.9 then
-                ac:attack()
-                cdnormal = tick()
-            else
-                Animation.AnimationId = ac.anims.basic[2]
-                ac.humanoid:LoadAnimation(Animation):Play(1, 1) --ท่าไม่ทำงานแก้เป็น (1,1)
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(60), 1, "")
-                if AttackRandom == 2 then
-                    debug.setupvalue(ac.attack, 5, 55495)
-                    debug.setupvalue(ac.attack, 6, 1892665)
-                    debug.setupvalue(ac.attack, 4, 907772)
-                    debug.setupvalue(ac.attack, 7, 14)
-                end
-                if AttackRandom == 1 or AttackRandom == 3 or AttackRandom == 4 then
-                    wait(0.2)
-                elseif AttackRandom == 2 then
-                    wait(0.09)
-                end
-            end
-            for _,x in pairs(game:GetService("Players"):GetChildren()) do
-                for m,y in pairs(workspace.Characters:GetChildren()) do
-                    if y.Name == x.Name and y.Name ~= game.Players.LocalPlayer.Name then
-                        if (y.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
-                            if m >= 1 then
-                                wait(0)
-                            end
-                        end
-                    end
-                end
-            end
-		end
-	end
-    
-	b = tick()
-	spawn(function()
-		while wait() do task.wait()
-			if _G.FastAttack2 then
-				if b - tick() > 0.9 then
-					b = tick()
-				end
-				local ac = SeraphFrame.activeController
-				pcall(function()
-					for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-						if v.Humanoid.Health > 0 then
-							if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
-								Attack()
-								wait()
-								Boost()
-							end
-							for _,x in pairs(game:GetService("Players"):GetChildren()) do
-								for m,y in pairs(workspace.Characters:GetChildren()) do
-									if y.Name == x.Name and y.Name ~= game.Players.LocalPlayer.Name then
-										if (y.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
-											if m >= 3 then
-												if _G.SuperFastAttack then
-													AttackFunction()
-												end
-											else
-												if _G.SuperFastAttack then
-													AttackFunction()
-												end
-											end
-										end
-									end
-								end
-							end
-						end
-					end
-				end)
+Attack = function()
+	local ac = SeraphFrame.activeController
+	if _G.FastAttack2 and ac and ac.equipped then
+		if tick() - cdnormal > 0.9 then
+			Attack()
+			wait(0)
+			Boost()
+			ac:attack()
+			cdnormal = tick()
+		else
+			Animation.AnimationId = ac.anims.basic[2]
+			ac.humanoid:LoadAnimation(Animation):Play(1, 1) --ท่าไม่ทำงานแก้เป็น (1,1)
+			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(60), 1, "")
+			if AttackRandom == 2 then
+				debug.setupvalue(ac.attack, 5, 55495)
+				debug.setupvalue(ac.attack, 6, 1892665)
+				debug.setupvalue(ac.attack, 4, 907772)
+				debug.setupvalue(ac.attack, 7, 14)
+			end
+			if AttackRandom == 1 or AttackRandom == 3 or AttackRandom == 4 then
+				Attack()
+				wait(0)
+				Boost()
+				wait(0.2)
+				AttackFunction()
+			elseif AttackRandom == 2 then
+				Attack()
+				wait(0)
+				Boost()
+				wait(0.09)
+				AttackFunction()
 			end
 		end
-	end)
+		for _,x in pairs(game:GetService("Players"):GetChildren()) do
+			for m,y in pairs(workspace.Characters:GetChildren()) do
+				if y.Name == x.Name and y.Name ~= game.Players.LocalPlayer.Name then
+					if (y.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
+						if m >= 1 then
+							wait(0)
+							AttackFunction()
+						else
+							Attack()
+							wait(0)
+							Boost()
+							AttackFunction()
+						end
+					end
+				end
+			end
+		end
+	end
+end
+
+b = tick()
+spawn(function()
+	while wait(0) do
+		if  _G.FastAttack2 then
+			if b - tick() > 1.75 then
+				wait(.01)
+				b = tick()
+			end
+			pcall(function()
+				for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+					if v.Humanoid.Health > 0 then
+						if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
+							Attack()
+							wait(0)
+							Boost()
+						end
+					end
+				end
+			end)
+		end
+	end
+end)
+
 
 print("/0/011/10/01/010101/101/010/1101/010/10/01/010/10/1//1/01/01/010/1010/")
