@@ -10838,8 +10838,12 @@ coroutine.wrap(function()
 		if ac and ac.equipped then
 			if _G.FastAttack2 then
 				AttackFunction()
+					if tick() - cooldownfastattack > 1.75 then
+						task.wait(0.175)
+						cooldownfastattack = tick()
+					end
 				--if _G.Settings.Configs["Fast Attack Type"] == "Normal" then
-					if tick() - cooldownfastattack > .9 then wait(.1) cooldownfastattack = tick() end
+					--if tick() - cooldownfastattack > .9 then wait(.1) cooldownfastattack = tick() end
 				--elseif _G.Settings.Configs["Fast Attack Type"] == "Fast" then
 				--	if tick() - cooldownfastattack > 1.5 then wait(.01) cooldownfastattack = tick() end
 				--elseif _G.Settings.Configs["Fast Attack Type"] == "Slow" then
@@ -10919,17 +10923,19 @@ task.spawn(function()
 				end
                 if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
                     if game:GetService("Workspace").Enemies:FindFirstChild(MobName) then
-                        if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Select_Weapon) then
-                            wait()
-                            EquipWeapon(_G.Select_Weapon)
-                        end
-                        if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
-                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
-                        end
-                        if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
-                            game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
-                        end
-                        game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
+                        while task.wait() do
+							if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Select_Weapon) then
+								wait()
+								EquipWeapon(_G.Select_Weapon)
+							end
+							if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
+								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+							end
+							if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
+								game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
+							end
+							game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
+						end
                     else
                         Tween(CFramePosMonNaJaHubNew)
                         UnEquipWeapon(_G.Select_Weapon)
@@ -10964,7 +10970,6 @@ end)
 													Attack()
 													game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,25) _G.SuperFastAttack = true
 												else
-													
 													game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,30,0) _G.SuperFastAttack = false
 												end
 												if v.Humanoid.Health <= 0 then
@@ -11066,7 +11071,7 @@ spawn(function()
 	end
 end)
 
-local Time = 0.09
+local Time = 1
 local AttackRandom = 2
 spawn(function()
 	while wait(0.5) do
