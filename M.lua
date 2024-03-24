@@ -10963,9 +10963,9 @@ v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide
 							end
 						else 
 							UnEquipWeapon(_G.Select_Weapon)
+							Tween(CFramePosMonNaJaHubNew)
 							_G.SuperFastAttack = false
 							_G.MrMaxNaJaPosMon = true
-							Tween(CFramePosMonNaJaHubNew)
 							if _G.Settings.Bypass and (CFramePosMonNaJaHubNew.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 2500 then
 								BTP(CFramePosMonNaJaHubNew)
 							end
@@ -11091,7 +11091,7 @@ b = tick()
 spawn(function()
 	while wait(0) do
 		if  _G.FastAttack2 then
-			if b - tick() > 1.5 then
+			if b - tick() > 0.5 then
 				wait(.01)
 				b = tick()
 			end
@@ -11108,28 +11108,6 @@ spawn(function()
 			end)
 		end
 	end
-end)
-
-k = tick()
-spawn(function()
-    while wait() do
-        if  _G.FastAttack2 then
-            if tick() - cooldownfastattack > tonumber(0.9) then
-                cooldownfastattack = tick()
-            end
-            pcall(function()
-                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if v.Humanoid.Health > 0 then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 45 then
-                            Attack()
-                            wait(.1)
-                            Unboost()
-                        end
-                    end
-                end
-            end)
-        end
-    end
 end)
 
 local Time = 0.09
@@ -11152,7 +11130,7 @@ end)
 		local ac = SeraphFrame.activeController
 		if ac and ac.equipped then
 			task.spawn(function()
-				if tick() - cdnormal > 1.79 then
+				if tick() - cdnormal > 0.9 then
 					ac:attack()
 					cdnormal = tick()
 				else
