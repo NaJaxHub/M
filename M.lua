@@ -10919,7 +10919,33 @@ task.spawn(function()
 		end
 	end
 end)
-
+	task.spawn(function() 
+		while task.wait() do
+			if _G.Auto_Farm_Level then 
+				pcall(function()
+					QuestCheck()
+					if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+						if game:GetService("Workspace").Enemies:FindFirstChild(MobName) then
+							if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Select_Weapon) then
+								wait()
+								EquipWeapon(_G.Select_Weapon)
+							end
+							if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
+								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+							end
+							if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
+								game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
+							end
+							game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
+						else 
+							Tween(CFramePosMonNaJaHubNew)
+							UnEquipWeapon(_G.Select_Weapon)
+						end
+					end
+				end)
+			end
+		end
+	end)
 	task.spawn(function() 
 		while task.wait() do
 			if _G.Auto_Farm_Level then 
@@ -10931,10 +10957,6 @@ end)
 								if v.Name == MobName then --and v:FindFirstChild("HumanoidRootPart") 
 									if v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 										repeat task.wait()
-											if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
-												game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
-											end
-											EquipWeapon(_G.Select_Weapon)
 											PosMon = v.HumanoidRootPart.CFrame
 											if (v.HumanoidRootPart.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
 												if v.Humanoid.Health <= v.Humanoid.MaxHealth * 25/100 then
@@ -10950,20 +10972,15 @@ end)
 											else
 												Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
 											end
+											game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 											BringMobFarm = true
 											--_G.MrMaxNaJaPosMon = false
-											game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide = false v.HumanoidRootPart.Size = Vector3.new(150,150,150)
-											if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
-												game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
-											end
 										until not _G.Auto_Farm_Level or v.Humanoid.Health <= 0 or QuestC.Visible == false
 									end
 								end
 							end
 						else 
-							UnEquipWeapon(_G.Select_Weapon)
-							Tween(CFramePosMonNaJaHubNew)
 							_G.SuperFastAttack = false
 							_G.MrMaxNaJaPosMon = true
 							if _G.Settings.Bypass and (CFramePosMonNaJaHubNew.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 2500 then
@@ -11016,20 +11033,18 @@ spawn(function()
     while wait() do
         if _G.FastAttack2 then
 			local ac = CombatFrameworkR.activeController
-			if v.Humanoid.Health > 0 then
-				if SeraphFrame.activeController then
-					if tick() - cooldownfastattack > 0.3 then
-						AttackFunction()
-						wait(.7)
-						cooldownfastattack = tick()
-					end
-					SeraphFrame.activeController.timeToNextBlock = 0
-					SeraphFrame.activeController.blocking = false
-					SeraphFrame.activeController.hitboxMagnitude = 80
-					SeraphFrame.activeController.increment = 3
-					game:GetService'VirtualUser':CaptureController()
-					game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+			if SeraphFrame.activeController then
+				if tick() - cooldownfastattack > 0.3 then
+					AttackFunction()
+					wait(.7)
+					cooldownfastattack = tick()
 				end
+				SeraphFrame.activeController.timeToNextBlock = 0
+				SeraphFrame.activeController.blocking = false
+				SeraphFrame.activeController.hitboxMagnitude = 80
+				SeraphFrame.activeController.increment = 3
+				game:GetService'VirtualUser':CaptureController()
+				game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
 			end
         end
     end
@@ -11047,7 +11062,7 @@ Attack = function()
 		else
 			Animation.AnimationId = ac.anims.basic[2]
 			ac.humanoid:LoadAnimation(Animation):Play(0.01, 0.01)
-			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 2, "") --3
+			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 3, "") --3
 		end
     end
 end
@@ -11083,13 +11098,13 @@ spawn(function()
 	end
 end)
 
-	function Boost()
-		spawn(function()
-			if SeraphFrame.activeController and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
-				game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(CurrentWeapon()))
-			end
-		end)
-	end
+function Boost()
+	spawn(function()
+		if SeraphFrame.activeController and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
+			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(CurrentWeapon()))
+		end
+	end)
+end
 
 	Attack = function()
 		local ac = SeraphFrame.activeController
@@ -11152,18 +11167,15 @@ end)
 									if y.Name == x.Name and y.Name ~= game.Players.LocalPlayer.Name then
 										if (y.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
 											if m >= 3 then
-												Attack()
-												wait()
-												Boost()
 												if _G.SuperFastAttack then
 													AttackFunction()
 												end
 											else
-												Attack()
-												wait()
-												Boost()
 												if _G.SuperFastAttack then
 													AttackFunction()
+													Attack()
+													wait()
+													Boost()
 												end
 											end
 										end
