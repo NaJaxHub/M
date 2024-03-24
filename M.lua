@@ -10,19 +10,31 @@ until game:GetService("Players").LocalPlayer.PlayerGui
 repeat wait()
 until game:GetService("ReplicatedStorage").Effect.Container
 
-if not game:IsLoaded() then
-	local IsLoaded = Instance.new("Message", workspace)
-	IsLoaded.Text = "Wait Game Loading"
-	game.Loaded:Wait()
-	IsLoaded:Destroy()
-	wait()--10
-end
 --setfpscap(999)
 loadstring(game:HttpGet("https://pastebin.com/raw/QwxceBi7"))()
 
 -- KzSystem(getgenv().PCMode)| คุณใช้ PC ใช้มั้ย ใช้เปลี่ยนเป็น true แต่ถ้าคุณใช้มือถือเปลี่ยนเป็น false
 -- KzSystem(getgenv().UIHit)| ปิดการแสดงของ UI false ต้องการดูเปลี่ยนเป็น true
-
+-- [Place Id Check]
+local PlaceId = game.PlaceId
+if PlaceId == 2753915549 then
+	World1 = true;
+	print("Place Id Check : World1")
+elseif PlaceId == 4442272183 then
+	World2 = true;
+	print("Place Id Check : World2")
+elseif PlaceId == 7449423635 then
+	World3 = true;
+	print("Place Id Check : World3")
+else
+    game:GetService("Players").LocalPlayer:Kick("รันได้แค่ BF")
+    print("รันได้แค่ BF")
+    wait(1)
+    game.Players.LocalPlayer:kick("(/00/210/5815//151/5/151/51/15)")
+    wait(1.5)
+    game:Shutdown()
+    kickcash("//a/a//a//a//a///a///s///s//s//d/a//jsdfjghlkfdhgjcxbzvn//0001/01")
+end
 getgenv().PCMode = false -- true / false 
 getgenv().UIHit = false -- true / false 
 
@@ -49,19 +61,18 @@ getgenv().TextUI_IIII = "Wallet : xxx-xxx-xxxx | 20/3/2567" --19-3-2567--28/4/25
 				
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/NaJaxHub/ser/main/UI-Kz"))()
 print("library..Set")
-	if game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Death") then
-		game:GetService("ReplicatedStorage").Effect.Container.Death:Destroy()
-	end
-	if game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Respawn") then
-		game:GetService("ReplicatedStorage").Effect.Container.Respawn:Destroy()
-	end--[[
+if game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Death") then
+	game:GetService("ReplicatedStorage").Effect.Container.Death:Destroy()
+end
+--[[
 if game:IsLoaded() then
         repeat wait()
             if game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Death") then
 				game:GetService("ReplicatedStorage").Effect.Container.Death:Destroy()
 			end
         until not game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Death")
-end]]
+end 
+]]
 
 _G.Settings = {
 	SelectTeam = "Pirate",
@@ -240,7 +251,6 @@ function SaveSettings()
 end
 
 LoadSettings()
-
 
 -- [No Stun]
 
@@ -1202,6 +1212,7 @@ local function GetIsLand(...)
 		end 
 	end
 end
+
 	local function tweenModel(model, goToCFrame)
 		local owner = model:FindFirstChild("Owner")
 		if owner and owner:IsA("ObjectValue") and owner.Value then
@@ -1530,7 +1541,6 @@ function Chest_17500()
 	end
 end
 
-
 local LocalPlayer = game:GetService'Players'.LocalPlayer
 local originalstam = LocalPlayer.Character.Energy.Value
 function InfinitEnergy()
@@ -1562,29 +1572,31 @@ spawn(function()
 					Noclip.MaxForce = Vector3.new(100000,100000,100000)
 					Noclip.Velocity = Vector3.new(0,0,0)
 				end
-			else	
-				if game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
-					game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
-				end
-			end
-		end)
-	end)
-end)
-
-spawn(function()
-	pcall(function()
-		game:GetService("RunService").Stepped:Connect(function()
-			if _G.Settings.Auto_Farm_Boss_Hallow or _G.Settings.Auto_Farm_Bone or _G.Settings.Auto_Buddy_Swords or _G.Settings.Auto_Cake_Prince or _G.AutoFactory or _G.Settings.Auto_Raids or _G.Settings.Auto_Next_Place or _G.Settings.Auto_Raids_Kill_Mon or _G.AutoFarmBounty or _G.Safe_Mode or _G.Auto_Kill_Ply or _G.TeleportPly or _G.NOCLIP or getgenv().AutoObservation or getgenv().Auto_Farm_Chest or getgenv().FarmChestTween or getgenv().ChestFarm or _G.Evo_Race_V2 or _G.Auto_Dark_Coat or _G.Auto_Farm_law_Sword or _G.Auto_Bartilo_Quest or _G.Auto_New_World2 or _G.Settings.Auto_Raids or _G.Settings.Auto_Next_Place or _G.Auto_Farm_Level or _G.AutoObservation or _G.TPNPCDF or _G.Auto_Kill_Player or AutoFarmMaterial or _G.AutoBuddySwords or _G.Bboat or _G.TPTOBOAT or _G.AutoEvent or _G.QRepairBoat or _G.QRepairBoat2 or _G.WoodPlank or _G.AutoCavander or _G.TPNPCDF or _G.AutoMirageIsland or _G.Auto_Gear or _G.TptoKisuneIsland or _G.NeareastFarm or _G.TptoKisuneshrine or _G.AutoFarmBossHallow or _G.Auto_Yama or _G.Auto_Sea_King or _G.Auto_Dack_Coat or _G.Auto_Rip_Indar or _G.Auto_Farm_Mastery_Gun or _G.Auto_Farm_All_Sword or _G.Auto_Awakening_One_Quest or _G.Auto_Farm_Mastery_Fruit or _G.Auto_Lever_UnLock or _G.Auto_Complete_Trial or Auto_Mirage_Island or Auto_Gear or _G.Auto_Farm_All_Boss or _G.Auto_New_World or _G.Auto_Third_World or _G.Auto_Farm_Chest or _G.Auto_Farm_Boss or _G.Auto_Castle_Raid or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Farm_All_Boss or _G.Auto_Saber or _G.Auto_Pole or _G.Auto_Farm_Scrap_and_Leather or _G.Auto_Farm_Angel_Wing or _G.Auto_Factory_Farm or _G.Auto_Farm_Ectoplasm or _G.Auto_Bartilo_Quest or _G.Auto_Rengoku or _G.Auto_Farm_Radioactive or _G.Auto_Farm_Vampire_Fang or _G.Auto_Farm_Mystic_Droplet or _G.Auto_Farm_GunPowder or _G.Auto_Farm_Dragon_Scales or _G.Auto_Evo_Race_V2 or _G.Auto_Swan_Glasses or _G.Auto_Dragon_Trident or _G.Auto_Soul_Reaper or _G.Auto_Farm_Fish_Tail or _G.Auto_Farm_Mini_Tusk or _G.Auto_Farm_Magma_Ore or _G.Auto_Farm_Bone or _G.Auto_Farm_Conjured_Cocoa or _G.Auto_Open_Dough_Dungeon or _G.Auto_Rainbow_Haki or _G.Auto_Musketeer_Hat or _G.Auto_Holy_Torch or _G.Auto_Canvander or _G.Auto_Twin_Hook or _G.Auto_Serpent_Bow or _G.Auto_Fully_Death_Step or _G.Auto_Fully_SharkMan_Karate or _G.Teleport_to_Player or _G.Auto_Kill_Player_Melee or _G.Auto_Kill_Player_Gun or _G.Start_Tween_Island or _G.Auto_Next_Island or _G.Auto_Kill_Law then
 				for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
 					if v:IsA("BasePart") then
 						v.CanCollide = false    
 					end
 				end
+			else	
+				if game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+					game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip"):Destroy()
+				end
 			end
+
 		end)
 	end)
 end)
 
+--[[spawn(function()
+	pcall(function()
+		game:GetService("RunService").Stepped:Connect(function()
+			if _G.Settings.Auto_Farm_Boss_Hallow or _G.Settings.Auto_Farm_Bone or _G.Settings.Auto_Buddy_Swords or _G.Settings.Auto_Cake_Prince or _G.AutoFactory or _G.Settings.Auto_Raids or _G.Settings.Auto_Next_Place or _G.Settings.Auto_Raids_Kill_Mon or _G.AutoFarmBounty or _G.Safe_Mode or _G.Auto_Kill_Ply or _G.TeleportPly or _G.NOCLIP or getgenv().AutoObservation or getgenv().Auto_Farm_Chest or getgenv().FarmChestTween or getgenv().ChestFarm or _G.Evo_Race_V2 or _G.Auto_Dark_Coat or _G.Auto_Farm_law_Sword or _G.Auto_Bartilo_Quest or _G.Auto_New_World2 or _G.Settings.Auto_Raids or _G.Settings.Auto_Next_Place or _G.Auto_Farm_Level or _G.AutoObservation or _G.TPNPCDF or _G.Auto_Kill_Player or AutoFarmMaterial or _G.AutoBuddySwords or _G.Bboat or _G.TPTOBOAT or _G.AutoEvent or _G.QRepairBoat or _G.QRepairBoat2 or _G.WoodPlank or _G.AutoCavander or _G.TPNPCDF or _G.AutoMirageIsland or _G.Auto_Gear or _G.TptoKisuneIsland or _G.NeareastFarm or _G.TptoKisuneshrine or _G.AutoFarmBossHallow or _G.Auto_Yama or _G.Auto_Sea_King or _G.Auto_Dack_Coat or _G.Auto_Rip_Indar or _G.Auto_Farm_Mastery_Gun or _G.Auto_Farm_All_Sword or _G.Auto_Awakening_One_Quest or _G.Auto_Farm_Mastery_Fruit or _G.Auto_Lever_UnLock or _G.Auto_Complete_Trial or Auto_Mirage_Island or Auto_Gear or _G.Auto_Farm_All_Boss or _G.Auto_New_World or _G.Auto_Third_World or _G.Auto_Farm_Chest or _G.Auto_Farm_Boss or _G.Auto_Castle_Raid or _G.Auto_Elite_Hunter or _G.Auto_Cake_Prince or _G.Auto_Farm_All_Boss or _G.Auto_Saber or _G.Auto_Pole or _G.Auto_Farm_Scrap_and_Leather or _G.Auto_Farm_Angel_Wing or _G.Auto_Factory_Farm or _G.Auto_Farm_Ectoplasm or _G.Auto_Bartilo_Quest or _G.Auto_Rengoku or _G.Auto_Farm_Radioactive or _G.Auto_Farm_Vampire_Fang or _G.Auto_Farm_Mystic_Droplet or _G.Auto_Farm_GunPowder or _G.Auto_Farm_Dragon_Scales or _G.Auto_Evo_Race_V2 or _G.Auto_Swan_Glasses or _G.Auto_Dragon_Trident or _G.Auto_Soul_Reaper or _G.Auto_Farm_Fish_Tail or _G.Auto_Farm_Mini_Tusk or _G.Auto_Farm_Magma_Ore or _G.Auto_Farm_Bone or _G.Auto_Farm_Conjured_Cocoa or _G.Auto_Open_Dough_Dungeon or _G.Auto_Rainbow_Haki or _G.Auto_Musketeer_Hat or _G.Auto_Holy_Torch or _G.Auto_Canvander or _G.Auto_Twin_Hook or _G.Auto_Serpent_Bow or _G.Auto_Fully_Death_Step or _G.Auto_Fully_SharkMan_Karate or _G.Teleport_to_Player or _G.Auto_Kill_Player_Melee or _G.Auto_Kill_Player_Gun or _G.Start_Tween_Island or _G.Auto_Next_Island or _G.Auto_Kill_Law then
+				
+			end
+		end)
+	end)
+end)
+]]
 
 local function Bypass(Position)
 	local CFramePos = Position
@@ -1645,27 +1657,6 @@ function Check_Sword(Sword_Name)
 			end
 		end
 	end
-end
-
--- [Place Id Check]
-local PlaceId = game.PlaceId
-if PlaceId == 2753915549 then
-	World1 = true;
-	print("Place Id Check : World1")
-elseif PlaceId == 4442272183 then
-	World2 = true;
-	print("Place Id Check : World2")
-elseif PlaceId == 7449423635 then
-	World3 = true;
-	print("Place Id Check : World3")
-else
-    game:GetService("Players").LocalPlayer:Kick("รันได้แค่ BF")
-    print("รันได้แค่ BF")
-    wait(1)
-    game.Players.LocalPlayer:kick("(/00/210/5815//151/5/151/51/15)")
-    wait(1.5)
-    game:Shutdown()
-    kickcash("//a/a//a//a//a///a///s///s//s//d/a//jsdfjghlkfdhgjcxbzvn//0001/01")
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------
 print("UI.Lo")
@@ -2633,7 +2624,7 @@ spawn(function()
 		end
 	end
 end)
--- [Remove Quest Dead]
+-- [Remove Quest Dead] 
 spawn(function()
 	while wait() do
 		pcall(function()
@@ -2647,30 +2638,6 @@ spawn(function()
 	end
 end)
 
--- [Sit]
-
-function AntiSeat()
-    pcall(function()
-        if game.Players.LocalPlayer.Character.Humanoid:GetState() == Enum.HumanoidStateType.Seated then 
-            game.Players.LocalPlayer.Character.Humanoid.Jump = true
-        end
-    end)
-end
-AntiSeat()
-
-spawn(function()
-    while true do
-        pcall(function()
-            for i,v in pairs(game.workspace:GetDescendants()) do
-                if v:IsA("Seat") then
-                    AntiSeat()
-                    v.Disabled = true
-                end
-            end
-        end)
-        task.wait(180)
-    end
-end)
 
 L_22_:Button("Ultra Boost Fps",function(d)
 	game.Players.LocalPlayer.PlayerScripts.WaterCFrame.Disabled = true
@@ -2931,43 +2898,19 @@ end)
 
 function DP(Pos)
     Distance = (Pos.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-if DP then
-    if Distance < 45 then
-        Speed = 250.000
+	if Distance < 45 then
+		Speed = 250.000
 	elseif Distance < 379 then
-        Speed = 299.99
+		Speed = 299.99
 	elseif Distance < 383 then
-        Speed = 380.00
+		Speed = 380.00
 	elseif Distance < 400 then
-        Speed = 375.95
+		Speed = 375.95
 	elseif Distance < 500 then
-        Speed = 370.99
-    elseif Distance >= 850 then
-        Speed = 365.00
-    else
-        if Distance < 80 then
-        Speed = 250.00 --100
-    elseif Distance < 200 then
-        Speed = 500.00 --100
-    elseif Distance < 450 then
-        Speed = 379.50 --385
-    elseif Distance < 750 then
-        Speed = 380.00 --385
-    elseif Distance >= 850 then
-        Speed =  379.00 --378.5--379
-    elseif Distance > 100 then
-        Speed = 380.00 --100
-    elseif Distance < 200 then
-        Speed = 800.00 --100
-    elseif Distance < 300 then
-        Speed = 800.00 --385
-    elseif Distance < 500 then
-        Speed = 800.00 --385
-    elseif Distance >= 800 then
-        Speed =  800.00 --378.5--379
-    end
-end
-end
+		Speed = 370.99
+	elseif Distance >= 850 then
+		Speed = 365.00
+	end
     game:GetService("TweenService"):Create(
         game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
         TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
@@ -2977,6 +2920,7 @@ end
     wait(Distance/Speed)
     getgenv().XX = false
 end
+
 L_18_:Button("Teleport Select",function(L_422_arg0)
     
 		if World1 then
@@ -10819,7 +10763,7 @@ spawn(function()
       while wait() do
       if _G.FastAttack2 or _G.FastAttack1 then
         for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
-            if v.Name == "CurvedRing" or v.Name == "SlashHit" or v.Name == "DamageCounter" or v.Name == "SwordSlash" or v.Name == "SlashTail" or v.Name == "Sounds" then
+            if v.Name == "CurvedRing" or v.Name == "SlashHit" or v.Name == "SwordSlash" or v.Name == "SlashTail" or v.Name == "Sounds" then
                 v:Destroy() 
             end
         end
@@ -10863,25 +10807,21 @@ end)()
 coroutine.wrap(function()
 	while task.wait() do --.1
 		local ac = CombatFrameworkR.activeController
-		if ac and ac.equipped then
-			if _G.FastAttack then
+		if _G.FastAttack and ac and ac.equipped then
+			--if _G.FastAttack then
 				AttackFunction()
 				--if _G.Settings.Configs["Fast Attack Type"] == "Normal" then
 					if tick() - cooldownfastattack > .9 then wait() cooldownfastattack = tick() end
 				--elseif _G.Settings.Configs["Fast Attack Type"] == "Fast" then
-					if tick() - cooldownfastattack > 1.5 then wait(.01) cooldownfastattack = tick() end
+					--if tick() - cooldownfastattack > 1.5 then wait(.01) cooldownfastattack = tick() end
 				--elseif _G.Settings.Configs["Fast Attack Type"] == "Slow" then
-					if tick() - cooldownfastattack > .3 then wait(.7) cooldownfastattack = tick() end
+					--if tick() - cooldownfastattack > .3 then wait(.7) cooldownfastattack = tick() end
 				--end
-			elseif _G.FastAttack == false then
-				if ac.hitboxMagnitude ~= 55 then
-					ac.hitboxMagnitude = 55
-				end
-				--ac:attack()
-			end
+			--end
 		end
 	end
 end)()
+
 
 print("End script")
 --loadstring(game:HttpGet("https://raw.githubusercontent.com/NaJaxHub/ser/main/OBF-Fast.lua"))() -- fast |  ตีเร็ว
