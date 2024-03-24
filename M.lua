@@ -54,14 +54,14 @@ print("library..Set")
 	end
 	if game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Respawn") then
 		game:GetService("ReplicatedStorage").Effect.Container.Respawn:Destroy()
-	end
+	end--[[
 if game:IsLoaded() then
         repeat wait()
             if game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Death") then
 				game:GetService("ReplicatedStorage").Effect.Container.Death:Destroy()
 			end
         until not game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Death")
-end
+end]]
 
 _G.Settings = {
 	SelectTeam = "Pirate",
@@ -3766,13 +3766,13 @@ spawn(function()
 					for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 						if string.find(v.Name, MobName) then
 							repeat task.wait()                                                                                                 --1               
-								if (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 5 and (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 99999999 then --<= 
+								if (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 99999999 and (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1 then --<= 
 									if _G.MrMaxNaJaPosMon then
 										CFramePosMonNaJaHubNew = v.CFrame * CFrame.new(0,77,0)
 									end
 								end
 								--task.wait(1)
-							until _G.MrMaxNaJaPosMon -- or game:GetService("Workspace").Enemies:FindFirstChild(MobName)
+							until not _G.MrMaxNaJaPosMon or _G.Auto_Farm_Level -- or game:GetService("Workspace").Enemies:FindFirstChild(MobName)
 						end
 					end
 				--end
@@ -10855,6 +10855,7 @@ coroutine.wrap(function()
 		end
 	end
 end)()
+
 coroutine.wrap(function()
 	while task.wait() do --.1
 		local ac = CombatFrameworkR.activeController
@@ -10915,37 +10916,29 @@ task.spawn(function()
 						game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestName, QuestLevel)
 					end
 				end
+                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+                    if game:GetService("Workspace").Enemies:FindFirstChild(MobName) then
+                        if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Select_Weapon) then
+                            wait()
+                            EquipWeapon(_G.Select_Weapon)
+                        end
+                        if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+                        end
+                        if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
+                            game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
+                        end
+                        game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
+                    else 
+                        Tween(CFramePosMonNaJaHubNew)
+                        UnEquipWeapon(_G.Select_Weapon)
+                    end
+                end
             end)
 		end
 	end
 end)
-	task.spawn(function() 
-		while task.wait() do
-			if _G.Auto_Farm_Level then 
-				pcall(function()
-					QuestCheck()
-					if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-						if game:GetService("Workspace").Enemies:FindFirstChild(MobName) then
-							if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Select_Weapon) then
-								wait()
-								EquipWeapon(_G.Select_Weapon)
-							end
-							if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
-								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
-							end
-							if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
-								game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
-							end
-							game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
-						else 
-							Tween(CFramePosMonNaJaHubNew)
-							UnEquipWeapon(_G.Select_Weapon)
-						end
-					end
-				end)
-			end
-		end
-	end)
+
 	task.spawn(function() 
 		while task.wait() do
 			if _G.Auto_Farm_Level then 
@@ -11062,7 +11055,7 @@ Attack = function()
 		else
 			Animation.AnimationId = ac.anims.basic[2]
 			ac.humanoid:LoadAnimation(Animation):Play(0.01, 0.01)
-			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 3, "") --3
+			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 1, "") --3
 		end
     end
 end
@@ -11109,40 +11102,39 @@ end
 	Attack = function()
 		local ac = SeraphFrame.activeController
 		if ac and ac.equipped then
-			task.spawn(function()
-				if tick() - cdnormal > 0.9 then
-					ac:attack()
-					cdnormal = tick()
-				else
-					Animation.AnimationId = ac.anims.basic[2]
-					ac.humanoid:LoadAnimation(Animation):Play(1, 1) --ท่าไม่ทำงานแก้เป็น (1,1)
-					game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(60), 2, "")
-					if AttackRandom == 2 then
-						debug.setupvalue(ac.attack, 5, 55495)
-						debug.setupvalue(ac.attack, 6, 1892665)
-						debug.setupvalue(ac.attack, 4, 907772)
-						debug.setupvalue(ac.attack, 7, 14)
-					end
-					if AttackRandom == 1 or AttackRandom == 3 or AttackRandom == 4 then
-						wait(0.2)
-					elseif AttackRandom == 2 then
-						wait(0.09)
-					end
-				end
-				for _,x in pairs(game:GetService("Players"):GetChildren()) do
-					for m,y in pairs(workspace.Characters:GetChildren()) do
-						if y.Name == x.Name and y.Name ~= game.Players.LocalPlayer.Name then
-							if (y.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
-								if m >= 1 then
-									wait(0)
-								end
-							end
-						end
-					end
-				end
-			end)
+            if tick() - cdnormal > 0.9 then
+                ac:attack()
+                cdnormal = tick()
+            else
+                Animation.AnimationId = ac.anims.basic[2]
+                ac.humanoid:LoadAnimation(Animation):Play(1, 1) --ท่าไม่ทำงานแก้เป็น (1,1)
+                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(60), 2, "")
+                if AttackRandom == 2 then
+                    debug.setupvalue(ac.attack, 5, 55495)
+                    debug.setupvalue(ac.attack, 6, 1892665)
+                    debug.setupvalue(ac.attack, 4, 907772)
+                    debug.setupvalue(ac.attack, 7, 14)
+                end
+                if AttackRandom == 1 or AttackRandom == 3 or AttackRandom == 4 then
+                    wait(0.2)
+                elseif AttackRandom == 2 then
+                    wait(0.09)
+                end
+            end
+            for _,x in pairs(game:GetService("Players"):GetChildren()) do
+                for m,y in pairs(workspace.Characters:GetChildren()) do
+                    if y.Name == x.Name and y.Name ~= game.Players.LocalPlayer.Name then
+                        if (y.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
+                            if m >= 1 then
+                                wait(0)
+                            end
+                        end
+                    end
+                end
+            end
 		end
 	end
+    
 	b = tick()
 	spawn(function()
 		while wait() do task.wait()
@@ -11188,6 +11180,7 @@ end
 			end
 		end
 	end)
+
 	local Client = game.Players.LocalPlayer
 	local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
 	local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
