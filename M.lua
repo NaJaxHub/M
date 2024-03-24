@@ -11099,7 +11099,6 @@ spawn(function()
 							ac.blocking = false
 							ac.hitboxMagnitude = 80
 							ac.increment = 4
-							ac.attack()
 						until not _G.FastAttack2
 					end
                 end
@@ -11192,7 +11191,7 @@ end)
 		local ac = SeraphFrame.activeController
 		if ac and ac.equipped then
 			task.spawn(function()
-				if tick() - cdnormal > 0.1 then
+				if tick() - cdnormal > 1.79 then
 					ac:attack()
 					cdnormal = tick()
 				else
@@ -11286,48 +11285,11 @@ end)
 							cooldownfastattack = tick()
 							wait()
 						end
-					until not _G.FastAttack1
+					until not _G.FastAttack2
 				end)
 			end
 		end
 	end)
-	spawn(function()
-		while wait() do
-			if  _G.FastAttack1 then
-				if SeraphFrame.activeController then
-					SeraphFrame.activeController.timeToNextAttack = 3
-					SeraphFrame.activeController.focusStart = 0
-					SeraphFrame.activeController.hitboxMagnitude = 80
-					SeraphFrame.activeController.humanoid.AutoRotate = true
-					SeraphFrame.activeController.increment = 4
-					game:GetService'VirtualUser':CaptureController()
-					game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-				end
-			end
-		end
-	end)
-	task.spawn(function()
-		while wait() do
-			if _G.FastAttack1 then
-				pcall(function()
-					repeat task.wait()
-						AttackFunction()
-						Attack()
-						if tick() - cooldownfastattack > 0.9 then
-							AttackFunction()
-							wait()
-							cooldownfastattack = tick()
-							wait()
-						end
-					until not _G.FastAttack1
-				end)
-			end
-		end
-	end)
-
-	local CameRa = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.CameraShaker)
-	CameRa.CameraShakeInstance.CameraShakeState = {FadingIn = 3,FadingOut = 2,Sustained = 0,Inactive =1}
-	
 	local Client = game.Players.LocalPlayer
 	local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
 	local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
