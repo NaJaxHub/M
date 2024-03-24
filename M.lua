@@ -10936,32 +10936,28 @@ end)
 											end
 											EquipWeapon(_G.Select_Weapon)
 											PosMon = v.HumanoidRootPart.CFrame
-											pcall(function()
-												if (v.HumanoidRootPart.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-													if v.Humanoid.Health <= v.Humanoid.MaxHealth * 25/100 then
-														_G.SuperFastAttack = true
-														game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,25)
-													else
-														_G.SuperFastAttack = false
-														game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,30,0)
-													end
+											if (v.HumanoidRootPart.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
+												if v.Humanoid.Health <= v.Humanoid.MaxHealth * 25/100 then
+													_G.SuperFastAttack = true
+													game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,25)
 												else
-													Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+													_G.SuperFastAttack = false
+													game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,30,0)
 												end
-											end)
-												BringMobFarm = true
-												--_G.MrMaxNaJaPosMon = false
-												game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
+												if v.Humanoid.Health <= 0 then
+													v:Destroy()
+												end
+											else
+												Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+											end
+											BringMobFarm = true
+											--_G.MrMaxNaJaPosMon = false
+											game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide = false v.HumanoidRootPart.Size = Vector3.new(150,150,150)
 											if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
 												game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
 											end
 										until not _G.Auto_Farm_Level or v.Humanoid.Health <= 0 or QuestC.Visible == false
-									else
-										if v.Humanoid.Health <= 0 then
-											v:Destroy()
-											Tween(CFramePosMonNaJaHubNew)
-										end
 									end
 								end
 							end
@@ -11002,24 +10998,6 @@ v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide
 		end
 	end)
 
-coroutine.wrap(function()
-	while task.wait() do
-		local ac = CombatFrameworkR.activeController
-		if ac and ac.equipped then
-			if _G.FastAttack2 then
-				pcall(function()
-					repeat task.wait(.01)
-						AttackFunction()
-						if tick() - cooldownfastattackk > 0.9 then 
-							cooldownfastattackk = tick()
-						end
-					until not _G.FastAttack2
-				end)
-			end
-		end
-	end
-end)()
-
 local SeraphFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
 local VirtualUser = game:GetService('VirtualUser')
 local RigControllerR = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.RigController))[2]
@@ -11040,9 +11018,9 @@ spawn(function()
 			local ac = CombatFrameworkR.activeController
 			if v.Humanoid.Health > 0 then
 				if SeraphFrame.activeController then
-					if tick() - cooldownfastattack > 1.5 then
+					if tick() - cooldownfastattack > 0.3 then
 						AttackFunction()
-						wait()
+						wait(.7)
 						cooldownfastattack = tick()
 					end
 					SeraphFrame.activeController.timeToNextBlock = 0
@@ -11057,13 +11035,13 @@ spawn(function()
     end
 end)
 
-local cdnormal = 0.99
+local cdnormal = 0.3
 local Animation = Instance.new("Animation")
-local CooldownFastAttack = 1.75
+local CooldownFastAttack = 0.3
 Attack = function()
     local ac = SeraphFrame.activeController
     if _G.FastAttack2 and ac and ac.equipped then
-		if tick() - cdnormal > 1.75 then
+		if tick() - cdnormal > 0.9 then
 			ac:Attack()
 			cdnormal = tick()
 		else
@@ -11079,13 +11057,13 @@ spawn(function()
             pcall(function()
                 local ac = SeraphFrame.activeController
                 if ac and ac.equipped then
-            		if tick() - cdnormala > 0.9 then
+            		if tick() - cdnormala > 0.3 then
             			ac:Attack()
             			cdnormala = tick
             			SeraphFrame.activeController.timeToNextBlock = 0
             			SeraphFrame.activeController.blocking = false
             			SeraphFrame.activeController.hitboxMagnitude = 80
-            			SeraphFrame.activeController.increment = 2
+            			SeraphFrame.activeController.increment = 4
             			game:GetService'VirtualUser':CaptureController()
             			game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
             			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 2, "") --3
@@ -11108,12 +11086,13 @@ spawn(function()
         end
     end
 end)
+
 b = tick()
 spawn(function()
 	while wait(0) do
 		if  _G.FastAttack2 then
 			if b - tick() > 1.5 then
-				wait(.1)
+				wait(.01)
 				b = tick()
 			end
 			pcall(function()
@@ -11130,30 +11109,12 @@ spawn(function()
 		end
 	end
 end)
-b = tick()
-spawn(function()
-    while wait(0) do
-        if  _G.FastAttack2 then
-            pcall(function()
-                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if v.Humanoid.Health > 0 then
-                        if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
-                            Attack()
-                            wait(.1)
-                            Boost()
-                        end
-                    end
-                end
-            end)
-        end
-    end
-end)
 
 k = tick()
 spawn(function()
     while wait() do
         if  _G.FastAttack2 then
-            if tick() - cooldownfastattack > tonumber(0.5) then
+            if tick() - cooldownfastattack > tonumber(0.9) then
                 cooldownfastattack = tick()
             end
             pcall(function()
@@ -11196,8 +11157,8 @@ end)
 					cdnormal = tick()
 				else
 					Animation.AnimationId = ac.anims.basic[2]
-					ac.humanoid:LoadAnimation(Animation):Play(0.01, 0.01) --ท่าไม่ทำงานแก้เป็น (1,1)
-					game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(60), 1, "")
+					ac.humanoid:LoadAnimation(Animation):Play(1, 1) --ท่าไม่ทำงานแก้เป็น (1,1)
+					game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(60), 2, "")
 					if AttackRandom == 2 then
 						debug.setupvalue(ac.attack, 5, 55495)
 						debug.setupvalue(ac.attack, 6, 1892665)
@@ -11272,24 +11233,6 @@ end)
 			end
 		end
 	end)
-	task.spawn(function()
-		while wait() do
-			if _G.FastAttack2 then
-				pcall(function()
-					repeat task.wait()
-						AttackFunction()
-						Attackk()
-						if tick() - cooldownfastattack > 0.5 then
-							AttackFunction()
-							wait()
-							cooldownfastattack = tick()
-							wait()
-						end
-					until not _G.FastAttack2
-				end)
-			end
-		end
-	end)
 	local Client = game.Players.LocalPlayer
 	local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
 	local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
@@ -11309,7 +11252,7 @@ end)
 						if Hits then
 							if  _G.FastAttack2 then
 								STOP.play = function() end
-								a:Play(21,29,30)
+								a:Play(1,1,1)
 								func(Hits)
 								STOP.play = shared.cpc
 								a:Stop()
