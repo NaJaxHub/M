@@ -10836,7 +10836,7 @@ coroutine.wrap(function()
 	while task.wait() do --.1
 		local ac = CombatFrameworkR.activeController
 		if ac and ac.equipped then
-			if _G.FastAttack2 or _G.FastAttack1 then
+			if _G.FastAttack2 then
 				AttackFunction()
 				--if _G.Settings.Configs["Fast Attack Type"] == "Normal" then
 					if tick() - cooldownfastattack > .9 then wait(.1) cooldownfastattack = tick() end
@@ -11055,7 +11055,7 @@ Attack = function()
 		else
 			Animation.AnimationId = ac.anims.basic[2]
 			ac.humanoid:LoadAnimation(Animation):Play(0.01, 0.01)
-			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 1, "") --3
+			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 3, "") --3
 		end
     end
 end
@@ -11071,7 +11071,7 @@ spawn(function()
 			pcall(function()
 				for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
 					if v.Humanoid.Health > 0 then
-						if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
+						if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 45 then
 							Attack()
 							wait(0)
 							Boost()
@@ -11108,7 +11108,7 @@ end
             else
                 Animation.AnimationId = ac.anims.basic[2]
                 ac.humanoid:LoadAnimation(Animation):Play(1, 1) --ท่าไม่ทำงานแก้เป็น (1,1)
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(60), 2, "")
+                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(60), 1, "")
                 if AttackRandom == 2 then
                     debug.setupvalue(ac.attack, 5, 55495)
                     debug.setupvalue(ac.attack, 6, 1892665)
@@ -11179,41 +11179,6 @@ end
 				end)
 			end
 		end
-	end)
-
-	local Client = game.Players.LocalPlayer
-	local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
-	local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
-	task.spawn(function()
-		pcall(function()
-			if not shared.orl then
-				shared.orl = STOPRL.wrapAttackAnimationAsync
-			end
-			if not shared.cpc then
-				shared.cpc = STOP.play 
-			end
-			spawn(function()
-				require(game.ReplicatedStorage.Util.CameraShaker):Stop()
-				game:GetService("RunService").Stepped:Connect(function()
-					STOPRL.wrapAttackAnimationAsync = function(a,b,c,d,func)
-						local Hits = STOPRL.getBladeHits(b,c,d)
-						if Hits then
-							if  _G.FastAttack2 then
-								STOP.play = function() end
-								a:Play(0.1,0.01,0.001)
-								func(Hits)
-								STOP.play = shared.cpc
-								a:Stop()
-							else
-								func(Hits)
-								STOP.play = shared.cpc
-								a:Stop()
-							end
-						end
-					end
-				end)
-			end)
-		end)
 	end)
 
 print("/0/011/10/01/010101/101/010/1101/010/10/01/010/10/1//1/01/01/010/1010/")
