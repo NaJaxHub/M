@@ -306,6 +306,7 @@ local CombatFrameworkR = getupvalues(CombatFramework)[2]
 local SeraphFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
 local cooldownfastattack = tick()
 local CameraShakerR = require(game.ReplicatedStorage.Util.CameraShaker)
+
 --[Function RmFzdCBBdHRhY2s=]
 
 function CurrentWeapon()
@@ -1141,9 +1142,7 @@ local function TweenM(...)
 end
 
 function Tween(...)
-	local RealtargetPos = {
-		...
-	}
+	local RealtargetPos = {...}
 	local targetPos = RealtargetPos[1]
 	local p
 	if type(targetPos) == "vector" then
@@ -1160,30 +1159,54 @@ function Tween(...)
 		repeat
 			wait()
 		until game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Health > 0;
-		wait(0.2)
 	end
-		if game:GetService("Players").LocalPlayer:DistanceFromCharacter(p.Position) <= 80 then 
-			game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = p
-		end
-		local tweenfunc = {}
-		local U = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-p.Position).Magnitude
-		local z = game:service("TweenService")
-		local B = TweenInfo.new((p.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).Magnitude/378,Enum.EasingStyle.Linear)--425
-		local S,g = pcall(function()
-		local q = z:Create(game.Players.LocalPlayer.Character["HumanoidRootPart"],B,{CFrame = p})
-			q:Play()
-		end)
-		if not S then 
-			return g
-		end
-		function tweenfunc:Stop()
-			q:Cancel()
-		end 
-		function tweenfunc:Wait()
-			q.Completed:Wait()
-		end 
-		return tweenfunc
+	if game:GetService("Players").LocalPlayer:DistanceFromCharacter(p.Position) <= 50 then 
+		game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = p
 	end
+	local tweenfunc = {}
+	local Distance = (p.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).Magnitude
+	local U = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-p.Position).Magnitude
+	local z = game:service("TweenService")
+	local B = TweenInfo.new((p.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).Magnitude/375,Enum.EasingStyle.Linear)--425
+	local S,g = pcall(function()
+	local q = z:Create(game.Players.LocalPlayer.Character["HumanoidRootPart"],B,{CFrame = p})
+		q:Play()
+	end)
+	if _G.Settings.Bypass then
+		if Distance > 2500 and not AutoFarmMaterial and not _G.Settings.Auto_God_Human and not _G.Settings.Auto_Raids and not (game.Players.LocalPlayer.Backpack:FindFirstChild("Special Microchip") or game.Players.LocalPlayer.Character:FindFirstChild("Special Microchip") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Backpack:FindFirstChild("Hallow Essence") or game.Players.LocalPlayer.Character:FindFirstChild("Hallow Essence") or game.Players.LocalPlayer.Character:FindFirstChild("Sweet Chalice") or game.Players.LocalPlayer.Backpack:FindFirstChild("Sweet Chalice")) and not (Name == "Fishman Commando" or Name == "Fishman Warrior") then
+			pcall(function()
+				tween:Cancel()
+				fkwarp = false
+				if game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 then
+					if fkwarp == false then
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
+					end
+					fkwarp = true
+				end
+				wait(.08)
+				game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
+				repeat wait()
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
+					Com("F_", "SetspawnPoint")
+				until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
+				wait(.1)
+				Com("F_", "SetspawnPoint")
+				wait(0.2)
+				return
+			end)
+		end
+	end
+	if not S then 
+		return g
+	end
+	function tweenfunc:Stop()
+		q:Cancel()
+	end 
+	function tweenfunc:Wait()
+		q.Completed:Wait()
+	end 
+	return tweenfunc
+end
 
 local function GetIsLand(...)
 	local RealtargetPos = {...}
@@ -11045,6 +11068,30 @@ Attack = function()
 		end
 	end
 end
+	
+task.spawn(function()
+	while true do task.wait()
+		pcall(function()
+			if _G.FastAttack then
+				if SeraphFrame.activeController then
+					SeraphFrame.activeController.timeToNextAttack = -(math.huge^math.huge^math.huge)
+					SeraphFrame.activeController.timeToNextAttack = 0
+					SeraphFrame.activeController.focusStart = 0
+					SeraphFrame.activeController.hitboxMagnitude = 80
+					SeraphFrame.activeController.humanoid.AutoRotate = true
+					SeraphFrame.activeController.increment = 4
+				else
+					SeraphFrame.activeController.timeToNextAttack = -(math.huge^math.huge^math.huge)
+					SeraphFrame.activeController.timeToNextAttack = 0
+					SeraphFrame.activeController.focusStart = 0
+					SeraphFrame.activeController.hitboxMagnitude = 80
+					SeraphFrame.activeController.humanoid.AutoRotate = true
+					SeraphFrame.activeController.increment = 4
+				end
+			end
+		end)
+	end
+end)
 
 b = tick()
 spawn(function()
