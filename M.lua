@@ -3753,19 +3753,25 @@ spawn(function()
 	while wait() do
 		if _G.Auto_Farm_Levelxx then 
 			pcall(function() QuestCheck()
-				for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
-					if string.find(v.Name, MobName) then
-						if _G.Auto_Farm_Levelxx then
-							local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-							repeat wait()
-								--if MagnitudePosMonLv >= 1 and MagnitudePosMonLv <= 9999999999 then
-									PosMonLv = v.CFrame * CFrame.new(0,80,0)
-									Tween(PosMonLv)
-									--wait(1)
-								--end
-							until not _G.Auto_Farm_Levelxx
+				if game:GetService("Workspace").Enemies:FindFirstChild(MobName) then
+					for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
+						if string.find(v.Name, MobName) then
+							--if _G.Auto_Farm_Levelxx then
+								--local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+								repeat wait()
+									--if MagnitudePosMonLv >= 1 and MagnitudePosMonLv <= 9999999999 then
+										PosMonLv = v.CFrame * CFrame.new(0,80,0)
+										--wait(1)
+									--end
+								until not _G.Auto_Farm_Levelxx or MagnitudePosMonLv >= 1 or MagnitudePosMonLv <= 9999999999
+							--end
+						else
+							if v.Name == MobName then
+								PosMonLv = v.CFrame * CFrame.new(0,80,0)
+							end
 						end
 					end
+					Tween(PosMonLv)
 				end
 			end)
 		end
