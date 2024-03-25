@@ -11175,7 +11175,7 @@ local RigController = require(game.Players.LocalPlayer.PlayerScripts.CombatFrame
 local RigControllerR = getupvalues(RigController)[2]
 local realbhit = require(game.ReplicatedStorage.CombatFramework.RigLib)
 
-local cdnormal = 0
+local cdnormal = 9.9
 local Animation = Instance.new("Animation")
 local CooldownFastAttack = 0.00000000000000
 Attack = function()
@@ -11295,10 +11295,11 @@ task.spawn(function()
 		end)
 	end
 end)
+
 task.spawn(function()
 	while task.wait() do
 		pcall(function()
-			if _G.FastAttack2 or _G.FastAttack1 then
+			if _G.FastAttack2 then
 				SeraphFrame.activeController.timeToNextAttack = -(math.huge^math.huge^math.huge)
 				SeraphFrame.activeController.timeToNextAttack = 0
 				SeraphFrame.activeController.focusStart = 0
@@ -11362,7 +11363,7 @@ end)
 b = tick()
 spawn(function()
 	while wait(0) do
-		if  _G.FastAttack2 or _G.FastAttack1 then
+		if  _G.FastAttack2 then
 			if b - tick() > 1.75 then
 				wait(.01)
 				b = tick()
