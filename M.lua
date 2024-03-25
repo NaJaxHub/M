@@ -3745,28 +3745,24 @@ if W1 then
 		end
 	end)
 end	
-Main:Toggle('Tween test',_G.Auto_Farm_Levelxx,function(value)
-	_G.Auto_Farm_Levelxx = value
-end)
 
 spawn(function() 
 	while wait() do
-		if _G.Auto_Farm_Levelxx then 
+		if _G.Auto_Farm_Level then 
 			pcall(function() QuestCheck()
-				if game:GetService("Workspace").Enemies:FindFirstChild(MobName) then
+				if not game:GetService("Workspace").Enemies:FindFirstChild(MobName) then
 					for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 						if string.find(v.Name, MobName) then
 							local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
 							repeat wait()
-									PosMonLv = v.CFrame * CFrame.new(0,80,0)
-							until not _G.Auto_Farm_Levelxx or MagnitudePosMonLv >= 1 or MagnitudePosMonLv <= 9999999999
+								PosMonLv = v.CFrame * CFrame.new(0,80,0)
+							until not _G.Auto_Farm_Level or MagnitudePosMonLv >= 1 or MagnitudePosMonLv <= 9999999999
 						else
 							if v.Name == MobName then
 								PosMonLv = v.CFrame * CFrame.new(0,80,0)
 							end
 						end
 					end
-					Tween(PosMonLv)
 				end
 			end)
 		end
@@ -11109,8 +11105,7 @@ v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide
 								end
 							end
 						else
-							
-							Tween(CFrameAutoFarmPos * CFrame.new(0,89,0))
+							Tween(PosMonLv)
 						--_G.MrMaxNaJaPosMon = true
 							UnEquipWeapon(_G.Select_Weapon)
 							--_G.SuperFastAttack = false
