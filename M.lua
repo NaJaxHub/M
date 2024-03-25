@@ -3748,17 +3748,17 @@ end
 
 spawn(function() 
 	while wait() do
-		pcall(function()
-			if _G.Auto_Farm_Level then 
+		if _G.Auto_Farm_Level then 
+			pcall(function()
 				_G.Auto_Farm_Levela = true
 				for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 					if string.find(v.Name, QuestCheck()[3]) then
-						local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude 
+						--local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude 
 						repeat wait()
-							if (MagnitudePosMonLv >= 1 and MagnitudePosMonLv <= 999999) then
+							--if (MagnitudePosMonLv >= 1 and MagnitudePosMonLv <= 999999) then
 								PosMonLv = v.CFrame * CFrame.new(0,80,0)
-							end
-						until _G.Auto_Farm_Levela
+							--end
+						until not _G.Auto_Farm_Level
 						--wait(.9)
 					else
 						if v.Name == QuestCheck()[3] then
@@ -3766,10 +3766,10 @@ spawn(function()
 						end
 					end
 				end
-			else
-				_G.Auto_Farm_Levela = false
-			end
-		end)
+			end)
+		else
+			_G.Auto_Farm_Levela = false
+		end
 	end
 end)
 
