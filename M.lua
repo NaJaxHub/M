@@ -11037,6 +11037,7 @@ spawn(function()
 	while task.wait() do
         if _G.Auto_Farm_Level then
             pcall(function()
+				CheckQuest()
 				for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 					if string.find(v.Name, MobName) then
 						repeat task.wait()                                                                                                 --1               
