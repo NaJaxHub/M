@@ -1177,6 +1177,7 @@ function Tween(...)
 			pcall(function()
 				tween:Cancel()
 				fkwarp = false
+				game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health = 0
 				if game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 then
 					if fkwarp == false then
 						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
@@ -5329,7 +5330,7 @@ end
             if _G.Settings.Auto_Farm_law_Sword then
                 pcall(function()
                     local CFrameAutoFarmlaw = CFrame.new(-6376.86523, 36.8663483, -4916.42578, -0.666728556, 9.02954369e-08, -0.745300651, 2.75599383e-08, 1, 9.64985674e-08, 0.745300651, 4.37979075e-08, -0.666728556)--(-5856.8501, 19.1629562, -5029.56934, -0.0522800684, 0, -0.998632431, 0, 1, 0, 0.998632431, 0, -0.0522800684)
-                    if _G.Settings.Auto_Farm_law_Sword and (CFrameAutoFarmlaw.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 1200 then
+                    if _G.Settings.Auto_Farm_law_Sword and (CFrameAutoFarmlaw.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 1200 and not game.Players.LocalPlayer.Backpack:FindFirstChild("BlackbeardReward") or not game.Players.LocalPlayer.Backpack:FindFirstChild("Microchip") then
                         
                         BTP(CFrameAutoFarmlaw) --BTP(CFrameSetPoint)
                         game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
@@ -5355,18 +5356,14 @@ end
                             if v.Name == "Order" then
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                     repeat task.wait()
-                                        Tween(v.HumanoidRootPart.CFrame * CFrame.new(25,30,25))
+                                        Tween(v.HumanoidRootPart.CFrame * CFrame.new(-35,-38,0))
                                         if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
                                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
                                         end
-                                        if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Select_Weapon) then
-                                            wait()
-                                            EquipWeapon(_G.Select_Weapon)
-                                        end EquipWeapon(_G.Select_Weapon)
-                                        v.Humanoid:ChangeState(20)
+										EquipWeapon(_G.Select_Weapon)
                                         v.HumanoidRootPart.CanCollide = false
                                         v.Humanoid.WalkSpeed = 0
-                                        v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                                        v.HumanoidRootPart.Size = Vector3.new(80,80,80)
                                         game:GetService("VirtualUser"):CaptureController()
                                         game:GetService("VirtualUser"):Button1Down(Vector2.new(1280,672))
                                         sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
@@ -5376,9 +5373,9 @@ end
                         end
                     else
                         if game:GetService("ReplicatedStorage"):FindFirstChild("Order") then
-                            Tween(game:GetService("ReplicatedStorage"):FindFirstChild("Order").HumanoidRootPart.CFrame * CFrame.new(2,20,2))
+                            Tween(game:GetService("ReplicatedStorage"):FindFirstChild("Order").HumanoidRootPart.CFrame * CFrame.new(2,50,2))
                         else
-                            if  _G.AutoOderSwordHop then
+                            if _G.AutoOderSwordHop then
                                 Hop()
                             end
                         end
@@ -8038,7 +8035,16 @@ L_20_:Toggle("Auto Raids",_G.Settings.Auto_Raids,function(a)
 	end
 	SaveSettings()
 end)
-L_20_:Toggle("Auto Raids Kill Mon Bug",_G.Settings.Auto_Raids_Kill_Mon,function(a)
+L_20_:Toggle("Auto Raids Kill Mon[1]",_G.Settings.Auto_Raids_Kill_Mon1,function(a)
+	_G.Settings.Auto_Raids_Kill_Mon1 = a
+	if a == false then
+	wait()
+		Tween(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+		wait()
+	end
+	SaveSettings()
+end)
+L_20_:Toggle("Auto Raids Kill Mon[2] Bug",_G.Settings.Auto_Raids_Kill_Mon,function(a)
 	_G.Settings.Auto_Raids_Kill_Mon = a
 	if a == false then
 	wait()
@@ -8048,6 +8054,126 @@ L_20_:Toggle("Auto Raids Kill Mon Bug",_G.Settings.Auto_Raids_Kill_Mon,function(
 	end
 	SaveSettings()
 end)
+
+
+spawn(function()
+	while wait() do
+		if _G.Settings.Auto_Raids_Kill_Mon1 and not _G.Settings.Auto_Farm_Level then 
+			if game.Players.LocalPlayer.Backpack:FindFirstChild("Special Microchip") or game.Players.LocalPlayer.Character:FindFirstChild("Special Microchip") or game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") or game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") or game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") or game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") or game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
+				if game.Players.LocalPlayer.Backpack:FindFirstChild("Special Microchip") or game.Players.LocalPlayer.Character:FindFirstChild("Special Microchip") and game.Players.LocalPlayer.PlayerGui.Main.Timer.Visible == false then
+					if World2 then
+						fireclickdetector(Workspace.Map.CircleIsland.RaidSummon2.Button.Main.ClickDetector)
+					end
+					if World3 then
+						fireclickdetector(Workspace.Map["Boat Castle"].RaidSummon2.Button.Main.ClickDetector)
+					end
+				end
+				    if game.Players.LocalPlayer.PlayerGui.Main.Timer.Visible == true then				
+					pcall(function()
+						repeat wait()
+							if game.Players.LocalPlayer.PlayerGui.Main.Timer.Visible == false then 
+							elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
+								game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame = CFrame.new(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame.x, 60, game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame.z)
+								if (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 350 then
+									Farmtween = Tween(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame)
+									if _G.Settings.Auto_Raids_Kill_Mon1 and ((game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 1200 then
+                                        Tween((game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame))
+                                    end
+								elseif (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 350 then
+									if Farmtween then
+										Farmtween:Stop()
+									end
+									if _G.Settings.Auto_Raids_Kill_Mon1 and ((game:GetService("Workspace")["_WorldOrigin"].Locations["Island 5"].CFrame * CFrame.new(4, 65, 10)).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 1200 then
+                                        Tween((game:GetService("Workspace")["_WorldOrigin"].Locations["Island 5"].CFrame * CFrame.new(4, 65, 10)))
+                                    end
+									Tween(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 5"].CFrame * CFrame.new(4, 65, 10))
+								end
+							elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") then
+								game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").CFrame = CFrame.new(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").CFrame.x, 60, game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").CFrame.z)
+								if (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 350 then
+									Farmtween = Tween(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").CFrame)
+								elseif (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 350 then
+									if Farmtween then
+										Farmtween:Stop()
+									end
+									Tween(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 4"].CFrame * CFrame.new(4, 65, 10))
+								end
+							elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") then
+								game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").CFrame = CFrame.new(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").CFrame.x, 60, game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").CFrame.z)
+								if (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 350 then
+									Farmtween = Tween(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").CFrame)
+								elseif (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 350 then
+									if Farmtween then
+										Farmtween:Stop()
+									end
+									Tween(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 3"].CFrame * CFrame.new(4, 65, 10))
+								end
+							elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") then
+								game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").CFrame = CFrame.new(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").CFrame.x, 60, game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").CFrame.z)
+								if (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 350 then
+									Farmtween = Tween(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").CFrame)
+								elseif (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 350 then
+									if Farmtween then
+										Farmtween:Stop()
+									end
+									Tween(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 2"].CFrame * CFrame.new(4, 65, 10))
+								end
+							elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
+								game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame = CFrame.new(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame.x, 60, game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame.z)
+								if (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 350 then
+									Farmtween = Tween(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame)
+								elseif (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 350 then
+									if Farmtween then
+										Farmtween:Stop()
+									end
+									Tween(game:GetService("Workspace")["_WorldOrigin"].Locations["Island 1"].CFrame * CFrame.new(4, 65, 10))
+								end
+							end
+							for i, L_459_forvar1 in pairs(game.Workspace.Enemies:GetChildren()) do
+								if _G.Settings.Auto_Raids_Kill_Mon1 and game.Players.LocalPlayer.PlayerGui.Main.Timer.Visible == true and L_459_forvar1:FindFirstChild("Humanoid") and L_459_forvar1:FindFirstChild("HumanoidRootPart") and (L_459_forvar1.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 500 then
+									repeat wait() --.3
+										EquipWeapon(_G.Select_Weapon)
+										L_459_forvar1.Head.CanCollide = false
+										L_459_forvar1.Humanoid.JumpPower = 0
+										L_459_forvar1.Humanoid.WalkSpeed = 0
+										L_459_forvar1.Humanoid.NameDisplayDistance = 0
+										if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
+											game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+										end 
+										game:GetService 'VirtualUser':CaptureController()
+										game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
+                                        L_459_forvar1.HumanoidRootPart.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,-38,0)
+                                        L_459_forvar1.Humanoid:ChangeState(12)
+										L_459_forvar1.HumanoidRootPart.CanCollide = false
+                                        L_459_forvar1.HumanoidRootPart.Size = Vector3.new(77,77,77)
+										sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+									until not _G.Settings.Auto_Raids_Kill_Mon1 or L_459_forvar1.Humanoid.Health <= 0 or not L_459_forvar1.Parent
+								end
+							end
+							if _G.Settings.Auto_Awakened then	
+								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Awakener", "Awaken")
+							end
+						until not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") or not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") or not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") or not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") or not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") or game.Players.LocalPlayer.PlayerGui.Main.Timer.Visible == false
+						if _G.Settings.Auto_Awakened then	
+							game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Awakener", "Awaken")
+						end
+					end)
+				end           
+			else
+				if _G.Settings.Auto_Awakened then	
+					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Awakener", "Awaken")
+				end
+				local L_460_ = {
+					[1] = "RaidsNpc",
+					[2] = "Select",
+					[3] = tostring(_G.Settings.Select_Raids)
+				}
+				game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(L_460_))
+			end
+		end
+	end
+end)
+
 L_20_:Toggle("Auto Buy Chips",_G.Settings.Auto_Buy_Chips,function(L_453_arg0)
 	_G.Settings.Auto_Buy_Chips = L_453_arg0
 	SaveSettings()
@@ -8284,6 +8410,32 @@ spawn(function()
 	end
 end)
 
+task.spawn(function()
+	while task.wait() do
+		pcall(function()
+			if _G.Settings.Auto_Raids_Kill_Mon then
+				for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 240 then
+							v.HumanoidRootPart.CFrame = PosMon
+							v.Humanoid.JumpPower = 0
+							v.Humanoid.WalkSpeed = 0
+							v.Humanoid.NameDisplayDistance = 0
+							v.HumanoidRootPart.Size = Vector3.new(77, 77, 77)
+							v.HumanoidRootPart.CanCollide = false
+							v.Head.CanCollide = false
+							if v.Humanoid:FindFirstChild("Animator") then
+								v.Humanoid.Animator:Destroy()
+							end
+							sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+							sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius", math.huge)
+							v.Humanoid:ChangeState(13) --12
+						--end
+                    end
+				end
+			end
+		end)
+	end
+end)
 spawn(function()
 	while wait() do
 		if _G.Settings.Auto_Raids and not _G.Settings.Auto_Farm_Level then 
@@ -8458,8 +8610,9 @@ spawn(function()
 	end)
 end)
 
-
-
+    L_20_:Button("Awakener",function()
+		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Awakener", "Awaken")
+    end)
 
 
 local plyserv = Combat:Label("Players")
@@ -10952,9 +11105,6 @@ v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide
 						else 
 							_G.SuperFastAttack = false
 							_G.MrMaxNaJaPosMon = true
-							if _G.Settings.Bypass and (CFramePosMonNaJaHubNew.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 2500 then
-								BTP(CFramePosMonNaJaHubNew)
-							end
 							if World1 and (Name == "Fishman Commando" or Name == "Fishman Warrior") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 50000 then
 								if Modstween then Modstween:Stop() end wait(.5)
 								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
@@ -10994,9 +11144,9 @@ local RigController = require(game.Players.LocalPlayer.PlayerScripts.CombatFrame
 local RigControllerR = getupvalues(RigController)[2]
 local realbhit = require(game.ReplicatedStorage.CombatFramework.RigLib)
 
-local cdnormal = 0.1
+local cdnormal = 0
 local Animation = Instance.new("Animation")
-local CooldownFastAttack = 0
+local CooldownFastAttack = 0.00000000000000
 Attack = function()
     local ac = SeraphFrame.activeController
     if _G.FastAttack2 and ac and ac.equipped then
@@ -11006,7 +11156,7 @@ Attack = function()
 		else
 			Animation.AnimationId = ac.anims.basic[2]
 			ac.humanoid:LoadAnimation(Animation):Play(0.01, 0.01)
-			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 3, "") --3
+			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 2, "") --3
 		end
     end
 end
@@ -11036,7 +11186,7 @@ Attack = function()
 		else
 			Animation.AnimationId = ac.anims.basic[2]
 			ac.humanoid:LoadAnimation(Animation):Play(1, 1) --ท่าไม่ทำงานแก้เป็น (1,1)
-			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(60), 2, "")
+			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(60), 1, "")
 			if AttackRandom == 2 then
 				debug.setupvalue(ac.attack, 5, 55495)
 				debug.setupvalue(ac.attack, 6, 1892665)
@@ -11068,7 +11218,38 @@ Attack = function()
 		end
 	end
 end
-	
+tjw1 = true
+task.spawn(
+	function()
+		local a = game.Players.LocalPlayer
+		local b = require(a.PlayerScripts.CombatFramework.Particle)
+		local c = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
+		if not shared.orl then
+			shared.orl = c.wrapAttackAnimationAsync
+		end
+		if not shared.cpc then
+			shared.cpc = b.play
+		end
+		if tjw1 then
+			pcall(
+				function()
+					c.wrapAttackAnimationAsync = function(d, e, f, g, h)
+						local i = c.getBladeHits(e, f, g)
+						if i then
+							b.play = function()
+							end
+							d:Play(0.01,0.01,0.01)
+							h(i)
+							b.play = shared.cpc
+							wait(0.1)
+							d:Stop()
+						end
+					end
+				end
+			)
+		end
+	end
+)
 task.spawn(function()
 	while true do task.wait()
 		pcall(function()
