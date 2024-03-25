@@ -59,7 +59,7 @@ getgenv().TextUI_IIII = "Wallet : xxx-xxx-xxxx | 20/3/2567" --19-3-2567--28/4/25
     end)]]
 			  --loadstring(game:HttpGet("https://pastebin.com/raw/3Ry5iz2M"))() --_G.VeryFast = a
 			  print("UI Loading")
-			  local library = {}
+			  --local library = {}
 			  
 			  _G.Color = Color3.fromRGB(80, 80, 80) -- สี Gui
 			  _G.imageLogo = "rbxassetid://12940626152"  --9295892168" -- Logo Gui
