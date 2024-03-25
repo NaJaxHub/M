@@ -11090,10 +11090,7 @@ end)
 									if v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 										repeat task.wait()
 											--pcall(function()
-                                            if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Select_Weapon) then
-                                                wait()
-                                                EquipWeapon(_G.Select_Weapon)
-                                            end
+                                            EquipWeapon(_G.Select_Weapon)
                                             if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
                                                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
                                             end
@@ -11127,7 +11124,6 @@ v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide
 										if (c.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1  and (c.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 999999 then --<= 
 											Tween(c.CFrame * CFrame.new(0,77,0))
 										end
-										UnEquipWeapon(_G.Select_Weapon)
 										--task.wait(.5)
 									until not _G.MrMaxNaJaPosMon
 								end
