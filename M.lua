@@ -1208,13 +1208,16 @@ function Tween(...)
 				game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health = 0
 				if game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 then
 					if fkwarp == false then
-						game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
-						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
+						game.Players.LocalPlayer.Character.Head:Destroy()
 						repeat wait()
 							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
-							Com("F_", "SetspawnPoint")
+							game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetspawnPoint") 
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
+							game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetspawnPoint") 
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
+							game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetspawnPoint")
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
 						until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
-						Com("F_", "SetspawnPoint")
 					end
 					fkwarp = true
 				end
@@ -3767,10 +3770,11 @@ spawn(function()
 				--_G.Auto_Farm_Levela = true
 				for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 					if string.find(v.Name, QuestCheck()[3]) then
-						local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude 
-						repeat task.wait(2)
-							if (MagnitudePosMonLv >= 1 and MagnitudePosMonLv <= 2500) then
-								if _G.PosMonFarmLv == false then
+						--local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude 
+						repeat task.wait()
+							if string.find(v.CFrame , (game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 15) then
+							--if (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1 and (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 2500 then
+								if _G.PosMonFarmLv == true then
 									PosMonLv = v.CFrame * CFrame.new(0,80,0)
 								end
 							end
@@ -11089,23 +11093,22 @@ end)
 						game:GetService("ReplicatedStorage").Remotes.CommF:InvokeServer("AbandonQuest")
 					end
 					if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-						if game:GetService("Workspace").Enemies:FindFirstChild(MobName) then
+						if game:GetService("Workspace").Enemies:FindFirstChild(MobName) then EquipWeapon(_G.Select_Weapon)
 							for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 								if v.Name == MobName then
 									if v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 										repeat task.wait()
-											_G.PosMonFarmLv = true
+											EquipWeapon(_G.Select_Weapon)
+											_G.PosMonFarmLv = false
 											if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
 												game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
 											end
-                                            EquipWeapon(_G.Select_Weapon)
 											PosMon = v.HumanoidRootPart.CFrame
-											if (v.HumanoidRootPart.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 189 then
+											if (v.HumanoidRootPart.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
 												Attack()
 												if v.Humanoid.Health <= 0 then
 													v:Destroy()
 												end
-												EquipWeapon(_G.Select_Weapon)
 												game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,30,0) _G.SuperFastAttack = false
 											else
 												Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
@@ -11122,7 +11125,7 @@ v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide
 								end
 							end
 						else
-							_G.PosMonFarmLv = false
+							_G.PosMonFarmLv = true
 							Tween(PosMonLv)
 							UnEquipWeapon(_G.Select_Weapon)
 							if World1 and (Name == "Fishman Commando" or Name == "Fishman Warrior") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 50000 then
@@ -11177,12 +11180,12 @@ local RigController = require(game.Players.LocalPlayer.PlayerScripts.CombatFrame
 local RigControllerR = getupvalues(RigController)[2]
 local realbhit = require(game.ReplicatedStorage.CombatFramework.RigLib)
 
-local cdnormal = 9.9
+local cdnormal = 9e9
 local Animation = Instance.new("Animation")
-local CooldownFastAttack = 0.00000000000000
+local CooldownFastAttack = 0.999
 Attack = function()
     local ac = SeraphFrame.activeController
-    if _G.FastAttack2 and ac and ac.equipped then
+    if ac and ac.equipped then
 		if tick() - cdnormal > 1.75 then
 			ac:Attack()
 			cdnormal = tick()
@@ -11193,24 +11196,7 @@ Attack = function()
 		end
     end
 end
-local cdnormal = 9e9
-local Animation = Instance.new("Animation")
-local CooldownFastAttack = 0
-Attack = function()
-	local ac = SeraphFrame.activeController
-	if ac and ac.equipped then
-		spawn(function()
-			if tick() - cdnormal > 0.9 then
-				ac:attack()
-				cdnormal = tick()
-			else
-				Animation.AnimationId = ac.anims.basic[2]
-				ac.humanoid:LoadAnimation(Animation):Play(0.1, 0.1) --ท่าไม่ทำงานแก้เป็น (1,1)
-				game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(120), 2, "")
-			end
-		end)
-	end
-end
+
 local Time = 1
 local AttackRandom = 2
 spawn(function()
@@ -11227,7 +11213,7 @@ function Boost()
 	end)
 end
 
---[[Attack = function()
+Attack = function()
 	local ac = SeraphFrame.activeController
 	if _G.FastAttack2 and ac and ac.equipped then
 		if tick() - cdnormal > 1.5 then
@@ -11249,6 +11235,11 @@ end
 				Attack()
 				wait(0)
 				Boost()
+				if _G.SuperFastAttack or _G.FastAttack2 then
+				pcall(function()
+					AttackFunction()
+				end)
+				end
 			end
 		end
 		for _,x in pairs(game:GetService("Players"):GetChildren()) do
@@ -11261,13 +11252,16 @@ end
 							Attack()
 							wait(0)
 							Boost()
+							if _G.SuperFastAttack or _G.FastAttack2 then
+								AttackFunction()
+							end
 						end
 					end
 				end
 			end
 		end
 	end
-end]]
+end
 
 task.spawn(function()
 	local a = game.Players.LocalPlayer
