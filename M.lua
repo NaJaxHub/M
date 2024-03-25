@@ -1140,7 +1140,23 @@ local function TweenM(...)
 	end 
 	return tweenfunc
 end
-
+function bBTPP(xxxxx)
+	if _G.Settings.Bypass and not _G.Settings.Fast_Farm_Level and (xxxxx.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 2500 and not AutoFarmMaterial and not _G.Settings.Auto_God_Human and not _G.Settings.Auto_Raids and not (game.Players.LocalPlayer.Backpack:FindFirstChild("Special Microchip") or game.Players.LocalPlayer.Character:FindFirstChild("Special Microchip") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Backpack:FindFirstChild("Hallow Essence") or game.Players.LocalPlayer.Character:FindFirstChild("Hallow Essence") or game.Players.LocalPlayer.Character:FindFirstChild("Sweet Chalice") or game.Players.LocalPlayer.Backpack:FindFirstChild("Sweet Chalice")) and not (Name == "Fishman Commando" or Name == "Fishman Warrior") then
+		BTP(xxxxx)
+		game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
+		wait(0.1)
+		game.Players.LocalPlayer.Character.Head:Destroy()
+		repeat wait()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = xxxxx
+			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetspawnPoint") 
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = xxxxx
+			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetspawnPoint") 
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = xxxxx
+			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetspawnPoint")
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = xxxxx
+		until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
+	end
+end
 function Tween(...)
 	local RealtargetPos = {...}
 	local targetPos = RealtargetPos[1]
@@ -1188,22 +1204,20 @@ function Tween(...)
 			pcall(function()
 				tween:Cancel()
 				fkwarp = false
+				bBTPP(p)
 				game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health = 0
 				if game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 then
 					if fkwarp == false then
+						game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
 						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
+						repeat wait()
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
+							Com("F_", "SetspawnPoint")
+						until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
+						Com("F_", "SetspawnPoint")
 					end
 					fkwarp = true
 				end
-				wait(.08)
-				game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
-				repeat wait()
-					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
-					Com("F_", "SetspawnPoint")
-				until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
-				wait(.1)
-				Com("F_", "SetspawnPoint")
-				wait(0.2)
 				return
 			end)
 		end
@@ -3750,25 +3764,17 @@ spawn(function()
 	while wait() do
 		if _G.Auto_Farm_Level then 
 			pcall(function()
-				_G.Auto_Farm_Levela = true
+				--_G.Auto_Farm_Levela = true
 				for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
-					if _G.Auto_Farm_Levela or string.find(v.Name, QuestCheck()[3]) then
+					if string.find(v.Name, QuestCheck()[3]) then
 						local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude 
-						repeat wait()
-							if string.find(v.Name, MobName) then
-								if (MagnitudePosMonLv >= 81 and MagnitudePosMonLv <= 999) then
-									PosMonLv = v.CFrame * CFrame.new(0,80,0)
-								else
-									if v.Name == QuestCheck()[3] then
-										PosMonLv = v.CFrame * CFrame.new(0,80,0)
-									end
-								end
-							else
-								if v.Name == QuestCheck()[3] then
+						repeat task.wait(2)
+							if (MagnitudePosMonLv >= 1 and MagnitudePosMonLv <= 2500) then
+								if _G.PosMonFarmLv == true then
 									PosMonLv = v.CFrame * CFrame.new(0,80,0)
 								end
 							end
-						until _G.Auto_Farm_Levela
+						until _G.PosMonFarmLv
 					else
 						if v.Name == QuestCheck()[3] then
 							PosMonLv = v.CFrame * CFrame.new(0,80,0)
@@ -3776,8 +3782,8 @@ spawn(function()
 					end
 				end
 			end)
-		else
-			_G.Auto_Farm_Levela = false
+		--else
+			--_G.Auto_Farm_Levela = false
 		end
 	end
 end)
@@ -7360,23 +7366,7 @@ spawn(function()
         end)
     end
 end)
-		function bBTPP(xxxxx)
-			if _G.Settings.Bypass and not _G.Settings.Fast_Farm_Level and (xxxxx.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 2500 and not AutoFarmMaterial and not _G.Settings.Auto_God_Human and not _G.Settings.Auto_Raids and not (game.Players.LocalPlayer.Backpack:FindFirstChild("Special Microchip") or game.Players.LocalPlayer.Character:FindFirstChild("Special Microchip") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Backpack:FindFirstChild("Hallow Essence") or game.Players.LocalPlayer.Character:FindFirstChild("Hallow Essence") or game.Players.LocalPlayer.Character:FindFirstChild("Sweet Chalice") or game.Players.LocalPlayer.Backpack:FindFirstChild("Sweet Chalice")) and not (Name == "Fishman Commando" or Name == "Fishman Warrior") then
-                BTP(xxxxx)
-				game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
-				wait(0.1)
-				game.Players.LocalPlayer.Character.Head:Destroy()
-				repeat wait()
-				    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = xxxxx
-	                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetspawnPoint") 
-	                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = xxxxx
-	                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetspawnPoint") 
-	                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = xxxxx
-	                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetspawnPoint")
-	                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = xxxxx
-				until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
-            end
-		end
+
 Settings:Toggle("Auto Open Haki\nออโต้เปิดฮาคิ", _G.Settings.Auto_Haki ,function(value)
 _G.Settings.Auto_Haki = value
 _G.AUTOHAKI = value
@@ -11104,6 +11094,7 @@ end)
 								if v.Name == MobName then
 									if v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 										repeat task.wait()
+											_G.PosMonFarmLv = false
 											if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
 												game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
 											end
@@ -11114,6 +11105,7 @@ end)
 												if v.Humanoid.Health <= 0 then
 													v:Destroy()
 												end
+												EquipWeapon(_G.Select_Weapon)
 												game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,30,0) _G.SuperFastAttack = false
 											else
 												Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
@@ -11130,6 +11122,7 @@ v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide
 								end
 							end
 						else
+							_G.PosMonFarmLv = true
 							Tween(PosMonLv)
 							UnEquipWeapon(_G.Select_Weapon)
 							if World1 and (Name == "Fishman Commando" or Name == "Fishman Warrior") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 50000 then
