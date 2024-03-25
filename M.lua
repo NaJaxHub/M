@@ -59,7 +59,7 @@ getgenv().TextUI_IIII = "Wallet : xxx-xxx-xxxx | 20/3/2567" --19-3-2567--28/4/25
     end)]]
 			  --loadstring(game:HttpGet("https://pastebin.com/raw/3Ry5iz2M"))() --_G.VeryFast = a
 			  print("UI Loading")
-			  --local library = {}
+			  local library = {}
 			  
 			  _G.Color = Color3.fromRGB(80, 80, 80) -- สี Gui
 			  _G.imageLogo = "rbxassetid://12940626152"  --9295892168" -- Logo Gui
@@ -238,10 +238,10 @@ getgenv().TextUI_IIII = "Wallet : xxx-xxx-xxxx | 20/3/2567" --19-3-2567--28/4/25
 				  syn.protect_gui(UI)
 			  end
 			  
-			  --[[function library:Destroy()
+			  function library:Destroy()
 				  library:Destroy()
 				  game:GetService("CoreGui").ScreenGui:Destroy()
-			  end]]
+			  end
 			  
 			  function library:NaJa()
 				  local Main = Instance.new("Frame")
@@ -1851,7 +1851,7 @@ getgenv().TextUI_IIII = "Wallet : xxx-xxx-xxxx | 20/3/2567" --19-3-2567--28/4/25
 			  
 			  ----------------------------------------------------------------------------------------------------------------------------------------------
 			  print("UI.Lo")
-			  --return library
+			  --
 --local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/NaJaxHub/ser/main/UI-Kz"))()
 print("library..Set")
 if game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Death") then
@@ -13140,3 +13140,4 @@ end)
 
 
 print("/0/011/10/01/010101/101/010/1101/010/10/01/010/10/1//1/01/01/010/1010/")
+return library
