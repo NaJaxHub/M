@@ -11034,64 +11034,38 @@ game:GetService("Players").LocalPlayer.Idled:connect(function()
 	vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
 
-task.spawn(function()
-	while task.wait() do
-		if _G.Auto_Farm_Level then 
-			pcall(function()
-				local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
-				if not string.find(QuestTitle, MobName) then
-					game:GetService("ReplicatedStorage").Remotes.CommF:InvokeServer("AbandonQuest")
-				end
-				if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-					BringMobFarm = false
-					if _G.TweentoQuest then
-						CheckQuest()
-						Tween(NPCPosition) 
-						if (NPCPosition.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then
-							game:GetService("ReplicatedStorage").Remotes.CommF:InvokeServer("StartQuest",QuestName,QuestLevel)
-							--print("GetTweenQuest"..QuestName..":"..QuestLevel.." ")
-						end
-					else --_G.MrMaxNaJaPosMon = true
-						game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestName, QuestLevel)
-					end
-				elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-					if game:GetService("Workspace").Enemies:FindFirstChild(MobName) then
-						repeat task.wait()
-							if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Select_Weapon) then
-								wait()
-								EquipWeapon(_G.Select_Weapon)
-							end
-							if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
-								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
-							end
-							if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
-								game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
-							end
-							game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
-						until not _G.Auto_Farm_Level
-					end
-				end
-            end)
-		end
-	end
-end)
-
 	task.spawn(function() 
 		while task.wait() do
 			if _G.Auto_Farm_Level then 
 				pcall(function()
 					QuestCheck()
-					if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+					if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+						local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
+						if not string.find(QuestTitle, MobName) then
+							game:GetService("ReplicatedStorage").Remotes.CommF:InvokeServer("AbandonQuest")
+						end
+						BringMobFarm = false
+						if _G.TweentoQuest then
+							CheckQuest()
+							Tween(NPCPosition) 
+							if (NPCPosition.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 30 then
+								game:GetService("ReplicatedStorage").Remotes.CommF:InvokeServer("StartQuest",QuestName,QuestLevel)
+								--print("GetTweenQuest"..QuestName..":"..QuestLevel.." ")
+							end
+						else --_G.MrMaxNaJaPosMon = true
+							game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestName, QuestLevel)
+						end
+					elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
 						if game:GetService("Workspace").Enemies:FindFirstChild(MobName) then
 							for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
 								if v.Name == MobName then --and v:FindFirstChild("HumanoidRootPart") 
 									if v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 										repeat task.wait()
 											--pcall(function()
+											if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
+												game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+											end
                                             EquipWeapon(_G.Select_Weapon)
-                                            if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
-                                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
-                                            end
 											PosMon = v.HumanoidRootPart.CFrame
 											if (v.HumanoidRootPart.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 189 then
 												if v.Humanoid.Health <= v.Humanoid.MaxHealth * 25/100 then
@@ -11108,23 +11082,26 @@ end)
 											end
 											game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 											BringMobFarm = true
-											_G.MrMaxNaJaPosMon = false
+											--_G.MrMaxNaJaPosMon = false
 v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide = false v.HumanoidRootPart.Size = Vector3.new(150,150,150)
 											--end)
+											if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
+												game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
+											end
 										until not _G.Auto_Farm_Level or v.Humanoid.Health <= 0 or QuestC.Visible == false
 									end
 								end
 							end
-						else _G.MrMaxNaJaPosMon = true
+						else --_G.MrMaxNaJaPosMon = true
 							UnEquipWeapon(_G.Select_Weapon)
 							for i , c in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 								if string.find(c.Name, MobName) then
-									repeat task.wait()                                                                                                 --1               
+									--repeat task.wait()                                                                                                 --1               
 										if (c.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1  and (c.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 999999 then --<= 
-											Tween(c.CFrame * CFrame.new(0,77,0))
+											Tween(c.CFrame * CFrame.new(0,89,0))
 										end
 										--task.wait(.5)
-									until not _G.MrMaxNaJaPosMon
+									--until not _G.MrMaxNaJaPosMon
 								end
 							end
 							_G.SuperFastAttack = false
