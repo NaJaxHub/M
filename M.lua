@@ -1206,6 +1206,7 @@ function Tween(...)
 				fkwarp = false
 				bBTPP(p)
 				game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health = 0
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = p
 				if game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 then
 					if fkwarp == false then
 						game.Players.LocalPlayer.Character.Head:Destroy()
@@ -3768,25 +3769,23 @@ spawn(function()
 		if _G.Auto_Farm_Level then 
 			pcall(function()
 				--_G.Auto_Farm_Levela = true
-				for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
-					if string.find(v.Name, QuestCheck()[3]) then
-						_G.PosMonFarmLvSetCFarme = 1
-						--local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude 
-						if _G.PosMonFarmLvSetCFarme == 1 then
-							repeat task.wait()
-								--if (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1 and (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 2500 then
-									if _G.PosMonFarmLv == true then
+				if game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren() then
+					for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
+						if string.find(v.Name, QuestCheck()[3]) then
+							_G.PosMonFarmLvSetCFarme = 1
+							--local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude 
+								repeat task.wait()
+									--if (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1 and (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 2500 then
 										PosMonLv = v.CFrame * CFrame.new(0,80,0)
-										task.wait(0.175)
+										task.wait(0.5)
 										_G.PosMonFarmLvSetCFarme = 2
-									end
-								--end
-							until not _G.PosMonFarmLvSetCFarme == 1
+									--end
+								until not _G.Auto_Farm_Level or _G.PosMonFarmLvSetCFarme == 2
+						--[[else
+							if v.Name == QuestCheck()[3] then
+								PosMonLv = v.CFrame * CFrame.new(0,80,0)
+							end]]
 						end
-					--[[else
-						if v.Name == QuestCheck()[3] then
-							PosMonLv = v.CFrame * CFrame.new(0,80,0)
-						end]]
 					end
 				end
 			end)
@@ -11102,7 +11101,7 @@ end)
 									if v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 										repeat task.wait()
 											EquipWeapon(_G.Select_Weapon)
-											_G.PosMonFarmLv = false
+											--_G.PosMonFarmLv = false
 											if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
 												game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
 											end
@@ -11128,7 +11127,7 @@ v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide
 								end
 							end
 						else
-							_G.PosMonFarmLv = true
+							--_G.PosMonFarmLv = true
 							Tween(PosMonLv)
 							UnEquipWeapon(_G.Select_Weapon)
 							if World1 and (Name == "Fishman Commando" or Name == "Fishman Warrior") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 50000 then
