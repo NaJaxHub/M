@@ -3753,19 +3753,13 @@ spawn(function()
 	while wait() do
 		if _G.Auto_Farm_Levelx then 
 			pcall(function() QuestCheck()
-				for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
-					if string.find(v.Name, MobName) then
-						--local Magnitudex = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-						repeat task.wait()                                                                                                 --1               
-							if (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1 and (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 9999999 then --<= 
-								CFramePosMonNaJaHubNew = v.CFrame * CFrame.new(0,80,0)
-								wait(.1)
-							end
-							Tween(CFramePosMonNaJaHubNew)
-							--task.wait(1)
-						until not _G.Auto_Farm_Levelx -- or game:GetService("Workspace").Enemies:FindFirstChild(MobName)
+				repeat task.wait()
+					for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
+						if string.find(v.Name, MobName) then
+							Tween(v.CFrame * CFrame.new(0,80,0))
+						end
 					end
-				end
+				until not _G.Auto_Farm_Levelx
 			end)
 		end
 	end
