@@ -3752,12 +3752,12 @@ spawn(function()
 			pcall(function()
 				_G.Auto_Farm_Levela = true
 				for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
-					if string.find(v.Name, QuestCheck()[3]) then
-						--local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude 
+					if _G.Auto_Farm_Levela or string.find(v.Name, QuestCheck()[3]) then
+						local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude 
 						repeat wait()
-							--if (MagnitudePosMonLv >= 1 and MagnitudePosMonLv <= 999999) then
+							if (MagnitudePosMonLv >= 1 and MagnitudePosMonLv <= 999999) then
 								PosMonLv = v.CFrame * CFrame.new(0,80,0)
-							--end
+							end
 						until not _G.Auto_Farm_Level
 						--wait(.9)
 					else
@@ -10982,8 +10982,8 @@ coroutine.wrap(function()
 		if ac and ac.equipped then
 			if _G.FastAttack2 then
 				AttackFunction()
-					if tick() - cooldownfastattack > 1.75 then
-						task.wait(0.175)
+					if tick() - cooldownfastattack > 1.5 then
+						task.wait(0.01)
 						cooldownfastattack = tick()
 					end
 				--if _G.Settings.Configs["Fast Attack Type"] == "Normal" then
@@ -10994,7 +10994,7 @@ coroutine.wrap(function()
 				--	if tick() - cooldownfastattack > .3 then wait(.7) cooldownfastattack = tick() end
 				--end
 				--ac:attack()--
-			elseif _G.FastAttack == false then
+			elseif _G.FastAttack2 == false then
 				if ac.hitboxMagnitude ~= 55 then
 					ac.hitboxMagnitude = 55
 				end
@@ -11003,11 +11003,54 @@ coroutine.wrap(function()
 		end
 	end
 end)()
+require(game.ReplicatedStorage.Util.CameraShaker):Stop()
+xShadowFastAttackx = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+xShadowx = debug.getupvalues(xShadowFastAttackx)[2]
+task.spawn(function()
+	while true do task.wait()
+		if _G.FastAttack1 or _G.FastAttack2 then
+			if typeof(xShadowx) == "table" then
+				pcall(function()
+					xShadowx.activeController.timeToNextAttack = -(math.huge^math.huge^math.huge)
+					xShadowx.activeController.timeToNextAttack = 0
+					xShadowx.activeController.hitboxMagnitude = 110
+					xShadowx.activeController.active = false
+					xShadowx.activeController.timeToNextBlock = 0
+					xShadowx.activeController.focusStart = 0
+					xShadowx.activeController.increment = 4
+					xShadowx.activeController.blocking = false
+					xShadowx.activeController.attacking = false
+					xShadowx.activeController.humanoid.AutoRotate = true
+				end)
+			end
+		end
+	end
+end)
+local Module = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+local CombatFramework = debug.getupvalues(Module)[2]
+local CameraShakerR = require(game.ReplicatedStorage.Util.CameraShaker)
 
+task.spawn(function()
+	while true do task.wait()
+		if _G.FastAttack1 or _G.FastAttack2 then
+			pcall(function()
+				CameraShakerR:Stop()
+				CombatFramework.activeController.attacking = false
+				CombatFramework.activeController.timeToNextAttack = 0
+				CombatFramework.activeController.increment = 4
+				CombatFramework.activeController.hitboxMagnitude = 100
+				CombatFramework.activeController.blocking = false
+				CombatFramework.activeController.timeToNextBlock = 0
+				CombatFramework.activeController.focusStart = 0
+				CombatFramework.activeController.humanoid.AutoRotate = true
+			end)
+		end
+	end
+end)
 coroutine.wrap(function()
 	while task.wait() do --.1
 		local ac = CombatFrameworkR.activeController
-		if _G.FastAttack and ac and ac.equipped then
+		if _G.FastAttack1 and ac and ac.equipped then
 			--if _G.FastAttack then
 				AttackFunction()
 				--if _G.Settings.Configs["Fast Attack Type"] == "Normal" then
@@ -11138,17 +11181,35 @@ local CooldownFastAttack = 0.00000000000000
 Attack = function()
     local ac = SeraphFrame.activeController
     if _G.FastAttack2 and ac and ac.equipped then
-		if tick() - cdnormal > 0.9 then
+		if tick() - cdnormal > 1.75 then
 			ac:Attack()
 			cdnormal = tick()
 		else
 			Animation.AnimationId = ac.anims.basic[2]
 			ac.humanoid:LoadAnimation(Animation):Play(0.01, 0.01)
-			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 2, "") --3
+			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 3, "") --3
 		end
     end
 end
-
+local cdnormal = 9e9
+local Animation = Instance.new("Animation")
+local CooldownFastAttack = 0
+Attack = function()
+	local ac = SeraphFrame.activeController
+	if _G.FastAttack1 and ac and ac.equipped then
+		task.spawn(
+			function()
+			if tick() - cdnormal > 1.5 then
+				ac:attack()
+				cdnormal = tick()
+			else
+				Animation.AnimationId = ac.anims.basic[2]
+				ac.humanoid:LoadAnimation(Animation):Play(0.1, 0.1) --ท่าไม่ทำงานแก้เป็น (1,1)
+				game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(120), 2, "")
+			end
+		end)
+	end
+end
 local Time = 1
 local AttackRandom = 2
 spawn(function()
@@ -11168,13 +11229,13 @@ end
 Attack = function()
 	local ac = SeraphFrame.activeController
 	if _G.FastAttack2 and ac and ac.equipped then
-		if tick() - cdnormal > 1 then
+		if tick() - cdnormal > 1.5 then
 			ac:attack()
 			cdnormal = tick()
 		else
 			Animation.AnimationId = ac.anims.basic[2]
-			ac.humanoid:LoadAnimation(Animation):Play(1, 1) --ท่าไม่ทำงานแก้เป็น (1,1)
-			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(60), 1, "")
+			ac.humanoid:LoadAnimation(Animation):Play(0.01, 0.01) --ท่าไม่ทำงานแก้เป็น (1,1)
+			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(60), 2, "")
 			if AttackRandom == 2 then
 				debug.setupvalue(ac.attack, 5, 55495)
 				debug.setupvalue(ac.attack, 6, 1892665)
@@ -11235,33 +11296,73 @@ task.spawn(function()
 	end
 end)
 task.spawn(function()
-	while true do task.wait()
+	while task.wait() do
 		pcall(function()
-			if _G.FastAttack2 or _G.FastAttack then
-				if SeraphFrame.activeController then
-					SeraphFrame.activeController.timeToNextAttack = -(math.huge^math.huge^math.huge)
-					SeraphFrame.activeController.timeToNextAttack = 0
-					SeraphFrame.activeController.focusStart = 0
-					SeraphFrame.activeController.hitboxMagnitude = 80
-					SeraphFrame.activeController.humanoid.AutoRotate = true
-					SeraphFrame.activeController.increment = 4
-				else
-					SeraphFrame.activeController.timeToNextAttack = -(math.huge^math.huge^math.huge)
-					SeraphFrame.activeController.timeToNextAttack = 0
-					SeraphFrame.activeController.focusStart = 0
-					SeraphFrame.activeController.hitboxMagnitude = 80
-					SeraphFrame.activeController.humanoid.AutoRotate = true
-					SeraphFrame.activeController.increment = 4
-				end
+			if _G.FastAttack2 or _G.FastAttack1 then
+				SeraphFrame.activeController.timeToNextAttack = -(math.huge^math.huge^math.huge)
+				SeraphFrame.activeController.timeToNextAttack = 0
+				SeraphFrame.activeController.focusStart = 0
+				SeraphFrame.activeController.hitboxMagnitude = 80
+				SeraphFrame.activeController.humanoid.AutoRotate = true
+				SeraphFrame.activeController.increment = 4
 			end
 		end)
 	end
 end)
 
+	b = tick()
+	spawn(function()
+		while task.wait() do task.wait()
+			if _G.FastAttack1 or _G.FastAttack2 then
+				if b - tick() > 1.75 then
+					b = tick()
+				end
+				local ac = SeraphFrame.activeController
+				pcall(function()
+					for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+						if v.Humanoid.Health > 0 then
+							if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
+								Attack()
+								wait()
+								Boost()
+								if _G.SuperFastAttack then
+									AttackFunction()
+								end
+							end
+							for _,x in pairs(game:GetService("Players"):GetChildren()) do
+								for m,y in pairs(workspace.Characters:GetChildren()) do
+									if y.Name == x.Name and y.Name ~= game.Players.LocalPlayer.Name then
+										if (y.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
+											if m >= 3 then
+												Attack()
+												wait()
+												Boost()
+												if _G.SuperFastAttack then
+													AttackFunction()
+												end
+											else
+												Attack()
+												wait()
+												Boost()
+												if _G.SuperFastAttack then
+													AttackFunction()
+												end
+												wait(0.05)
+											end
+										end
+									end
+								end
+							end
+						end
+					end
+				end)
+			end
+		end
+	end)
 b = tick()
 spawn(function()
 	while wait(0) do
-		if  _G.FastAttack2 then
+		if  _G.FastAttack2 or _G.FastAttack1 then
 			if b - tick() > 1.75 then
 				wait(.01)
 				b = tick()
