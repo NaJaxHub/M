@@ -11082,7 +11082,7 @@ end)
 											end
 											game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 											BringMobFarm = true
-											--_G.MrMaxNaJaPosMon = false
+											_G.MrMaxNaJaPosMon = false
 v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide = false v.HumanoidRootPart.Size = Vector3.new(150,150,150)
 											--end)
 											if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
@@ -11092,21 +11092,23 @@ v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide
 									end
 								end
 							end
-						else --_G.MrMaxNaJaPosMon = true
-							if not game:GetService("Workspace").Enemies:FindFirstChild(MobName) then
-								for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
-									if string.find(v.Name, MobName) then
+						else _G.MrMaxNaJaPosMon = true
+							for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
+								if string.find(v.Name, MobName) then
+									if _G.MrMaxNaJaPosMon == true then
 										repeat task.wait()                                                                                                 --1               
-											--if (c.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1  and (c.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 999999 then --<= 
-											CFrameAutoFarmPos = v.CFrame * CFrame.new(0,89,0)
-											--end
+											if (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1 and (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 6500 then --<= 
+												CFrameAutoFarmPos = v.CFrame * CFrame.new(0,89,0)
+											else
+												CFrameAutoFarmPos = v.CFrame * CFrame.new(0,89,0)
+											end
 											--task.wait(.5)
-										until not _G.Auto_Farm_Level or game:GetService("Workspace").Enemies:FindFirstChild(MobName)
+										until _G.MrMaxNaJaPosMon
 									end
 								end
-								Tween(CFrameAutoFarmPos)
-								UnEquipWeapon(_G.Select_Weapon)
 							end
+							Tween(CFrameAutoFarmPos)
+							UnEquipWeapon(_G.Select_Weapon)
 							_G.SuperFastAttack = false
 							if World1 and (Name == "Fishman Commando" or Name == "Fishman Warrior") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 50000 then
 								if Modstween then Modstween:Stop() end wait(.5)
