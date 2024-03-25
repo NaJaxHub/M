@@ -11048,10 +11048,8 @@ task.spawn(function()
 						CheckQuest()
 						Tween(NPCPosition) 
 						if (NPCPosition.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 then
-							task.wait(1.2)
 							game:GetService("ReplicatedStorage").Remotes.CommF:InvokeServer("StartQuest",QuestName,QuestLevel)
-							print("GetTweenQuest"..QuestName..":"..QuestLevel.." ")
-							task.wait(1.5)
+							--print("GetTweenQuest"..QuestName..":"..QuestLevel.." ")
 						end
 					else --_G.MrMaxNaJaPosMon = true
 						game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestName, QuestLevel)
@@ -11118,6 +11116,7 @@ v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide
 								end
 							end
 						else _G.MrMaxNaJaPosMon = true
+							UnEquipWeapon(_G.Select_Weapon)
 							for i , c in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 								if string.find(c.Name, MobName) then
 									repeat task.wait()                                                                                                 --1               
@@ -11211,6 +11210,38 @@ function Boost()
 		end
 	end)
 end
+
+xShadowFastAttackx = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+SeraphFramed = debug.getupvalues(xShadowFastAttackx)[2]
+
+spawn(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
+		while true do task.wait()
+        	if _G.FastAttack2 then
+                pcall(function()
+					if SeraphFramed.activeController then
+						SeraphFramed.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
+						SeraphFramed.activeController.timeToNextAttack = 0
+						SeraphFramed.activeController.hitboxMagnitude = 111
+						SeraphFramed.activeController.active = false
+						SeraphFramed.activeController.timeToNextBlock = 0
+						SeraphFramed.activeController.focusStart = 0
+						SeraphFramed.activeController.increment = 4
+						SeraphFramed.activeController.blocking = false
+						SeraphFramed.activeController.attacking = false
+						SeraphFramed.activeController.humanoid.AutoRotate = 50
+						game:GetService'VirtualUser':CaptureController()
+						game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+						require(game.ReplicatedStorage.Util.CameraShaker):Stop()
+					else
+						Attack()
+					end
+                end)
+        	end
+			task.wait()
+		end
+    end)
+end)
 
 Attack = function()
 	local ac = SeraphFrame.activeController
