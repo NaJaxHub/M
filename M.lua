@@ -3745,30 +3745,30 @@ if W1 then
 		end
 	end)
 end	
+Main:Toggle('Tween test',_G.Auto_Farm_Levelx,function(value)
+	_G.Auto_Farm_Levelx = value
+end)
 
---[[_G.MrMaxNaJaPosMon = true
 spawn(function() 
 	while wait() do
-		if _G.Auto_Farm_Level then 
+		if _G.Auto_Farm_Levelx then 
 			pcall(function() QuestCheck()
-				--if not game:GetService("Workspace").Enemies:FindFirstChild(MobName) then
-					for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
-						if string.find(v.Name, MobName) then
-							repeat task.wait()                                                                                                 --1               
-								if not game:GetService("Workspace").Enemies:FindFirstChild(MobName) and (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 99999999 and (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1 then --<= 
-									if _G.MrMaxNaJaPosMon then
-										CFramePosMonNaJaHubNew = v.CFrame * CFrame.new(0,77,0)
-									end
-								end
-								--task.wait(1)
-							until not _G.MrMaxNaJaPosMon -- or game:GetService("Workspace").Enemies:FindFirstChild(MobName)
+				for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
+					if string.find(v.Name, MobName) then
+					local Magnitudex = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+					repeat task.wait()                                                                                                 --1               
+						if Magnitudex >= 1 and Magnitudex <= 9999999 then --<= 
+							CFramePosMonNaJaHubNew = v.CFrame * CFrame.new(0,80,0)
+							wait(.1)
 						end
-					end
-				--end
+						Tween(CFramePosMonNaJaHubNew)
+						--task.wait(1)
+					until not _G.Auto_Farm_Levelx -- or game:GetService("Workspace").Enemies:FindFirstChild(MobName)
+				end
 			end)
 		end
 	end
-end)]]
+end) 
 
 if W1 then 
 --	_G.Fast_Farm_Level = true
@@ -11106,15 +11106,7 @@ v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide
 								end
 							end
 						else
-							for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
-								if string.find(v.Name, QuestCheck()[3]) then
-									--repeat task.wait()
-										if v.CFrame == QuestCheck()[3]  then
-											CFrameAutoFarmPos = v.CFrame
-										end
-									--until not _G.Auto_Farm_Level
-								end
-							end 
+							
 							Tween(CFrameAutoFarmPos * CFrame.new(0,89,0))
 						--_G.MrMaxNaJaPosMon = true
 							UnEquipWeapon(_G.Select_Weapon)
