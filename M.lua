@@ -11195,38 +11195,6 @@ function Boost()
 	end)
 end
 
-xShadowFastAttackx = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
-SeraphFramed = debug.getupvalues(xShadowFastAttackx)[2]
-
-spawn(function()
-    --game:GetService("RunService").RenderStepped:Connect(function()
-		while true do task.wait()
-        	if _G.FastAttack2 then
-                pcall(function()
-					if SeraphFramed.activeController then
-						SeraphFramed.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
-						SeraphFramed.activeController.timeToNextAttack = 0
-						SeraphFramed.activeController.hitboxMagnitude = 88
-						SeraphFramed.activeController.active = false
-						SeraphFramed.activeController.timeToNextBlock = 0
-						SeraphFramed.activeController.focusStart = 0
-						SeraphFramed.activeController.increment = 4
-						SeraphFramed.activeController.blocking = false
-						SeraphFramed.activeController.attacking = false
-						SeraphFramed.activeController.humanoid.AutoRotate = 50
-						game:GetService'VirtualUser':CaptureController()
-						game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-						require(game.ReplicatedStorage.Util.CameraShaker):Stop()
-					else
-						Attack()
-					end
-                end)
-        	end
-			task.wait(.001)
-		end
-    --end)
-end)
-
 Attack = function()
 	local ac = SeraphFrame.activeController
 	if _G.FastAttack2 and ac and ac.equipped then
