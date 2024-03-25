@@ -11192,14 +11192,14 @@ xShadowFastAttackx = require(game:GetService("Players").LocalPlayer.PlayerScript
 SeraphFramed = debug.getupvalues(xShadowFastAttackx)[2]
 
 spawn(function()
-    game:GetService("RunService").RenderStepped:Connect(function()
+    --game:GetService("RunService").RenderStepped:Connect(function()
 		while true do task.wait()
         	if _G.FastAttack2 then
                 pcall(function()
 					if SeraphFramed.activeController then
 						SeraphFramed.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
 						SeraphFramed.activeController.timeToNextAttack = 0
-						SeraphFramed.activeController.hitboxMagnitude = 111
+						SeraphFramed.activeController.hitboxMagnitude = 88
 						SeraphFramed.activeController.active = false
 						SeraphFramed.activeController.timeToNextBlock = 0
 						SeraphFramed.activeController.focusStart = 0
@@ -11215,9 +11215,9 @@ spawn(function()
 					end
                 end)
         	end
-			task.wait()
+			task.wait(.001)
 		end
-    end)
+    --end)
 end)
 
 Attack = function()
