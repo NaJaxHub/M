@@ -11205,9 +11205,8 @@ local Animation = Instance.new("Animation")
 local CooldownFastAttack = 0
 Attack = function()
 	local ac = SeraphFrame.activeController
-	if _G.FastAttack1 and ac and ac.equipped then
-		task.spawn(
-			function()
+	if ac and ac.equipped then
+		spawn(function()
 			if tick() - cdnormal > 1.5 then
 				ac:attack()
 				cdnormal = tick()
@@ -11235,7 +11234,7 @@ function Boost()
 	end)
 end
 
-Attack = function()
+--[[Attack = function()
 	local ac = SeraphFrame.activeController
 	if _G.FastAttack2 and ac and ac.equipped then
 		if tick() - cdnormal > 1.5 then
@@ -11275,7 +11274,7 @@ Attack = function()
 			end
 		end
 	end
-end
+end]]
 
 task.spawn(function()
 	local a = game.Players.LocalPlayer
@@ -11335,7 +11334,7 @@ end)
 								Attack()
 								wait()
 								Boost()
-								if _G.SuperFastAttack then
+								if _G.SuperFastAttack or _G.FastAttack2 then
 									AttackFunction()
 								end
 							end
@@ -11347,7 +11346,7 @@ end)
 												Attack()
 												wait()
 												Boost()
-												if _G.SuperFastAttack then
+												if _G.FastAttack2 then
 													AttackFunction()
 												end
 											else
@@ -11369,11 +11368,12 @@ end)
 			end
 		end
 	end)
+
 b = tick()
 spawn(function()
 	while wait(0) do
 		if  _G.FastAttack2 then
-			if b - tick() > 1.75 then
+			if b - tick() > 0.75 then
 				wait(.01)
 				b = tick()
 			end
