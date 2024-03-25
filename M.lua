@@ -3755,9 +3755,9 @@ spawn(function()
 			pcall(function() QuestCheck()
 				for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 					if string.find(v.Name, MobName) then
-						local Magnitudex = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+						--local Magnitudex = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
 						repeat task.wait()                                                                                                 --1               
-							if Magnitudex >= 1 and Magnitudex <= 9999999 then --<= 
+							if (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1 and (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 9999999 then --<= 
 								CFramePosMonNaJaHubNew = v.CFrame * CFrame.new(0,80,0)
 								wait(.1)
 							end
