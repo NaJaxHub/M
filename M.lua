@@ -280,25 +280,58 @@ end
 local Module = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
 local CombatFramework = debug.getupvalues(Module)[2]
 local CameraShakerR = require(game.ReplicatedStorage.Util.CameraShaker)
+
+task.spawn(function()
+	while true do task.wait()
+		if _G.Auto_Farm_Mastery_Fruit or _G.FastAttack1 or _G.FastAttack2 then
+			pcall(function()
+				CameraShakerR:Stop()
+				CombatFramework.activeController.attacking = false
+				CombatFramework.activeController.timeToNextAttack = 0
+				CombatFramework.activeController.increment = 4
+				CombatFramework.activeController.hitboxMagnitude = 80
+				CombatFramework.activeController.blocking = false
+				CombatFramework.activeController.timeToNextBlock = 0
+				CombatFramework.activeController.focusStart = 0
+				CombatFramework.activeController.humanoid.AutoRotate = true
+			end)
+		end
+	end
+end)
+require(game.ReplicatedStorage.Util.CameraShaker):Stop()
+xShadowFastAttackx = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+xShadowx = debug.getupvalues(xShadowFastAttackx)[2]
+task.spawn(function()
+	while true do task.wait()
+		if _G.FastAttack1 then
+			if typeof(xShadowx) == "table" then
+				pcall(function()
+					xShadowx.activeController.timeToNextAttack = -(math.huge^math.huge^math.huge)
+					xShadowx.activeController.timeToNextAttack = 0
+					xShadowx.activeController.hitboxMagnitude = 85
+					xShadowx.activeController.active = false
+					xShadowx.activeController.timeToNextBlock = 0
+					xShadowx.activeController.focusStart = 0
+					xShadowx.activeController.increment = 4
+					xShadowx.activeController.blocking = false
+					xShadowx.activeController.attacking = false
+					xShadowx.activeController.humanoid.AutoRotate = true
+				end)
+			end
+		end
+	end
+end)
 spawn(function()
-    while wait() do
-        if _G.Auto_Farm_Mastery_Fruit or _G.FastAttack1 or _G.FastAttack2 then
-            pcall(function()
-                CameraShakerR:Stop()
-                CombatFramework.activeController.attacking = false
-                CombatFramework.activeController.timeToNextAttack = 0 --0
-                CombatFramework.activeController.increment = 3  --3
-                CombatFramework.activeController.hitboxMagnitude = 80
-                CombatFramework.activeController.blocking = false
-                CombatFramework.activeController.timeToNextBlock = 0 --0
-                CombatFramework.activeController.focusStart = 0
-                CombatFramework.activeController.humanoid.AutoRotate = true
-            end)
+      while wait() do
+      if _G.FastAttack2 or _G.FastAttack1 then
+        for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
+            if v.Name == "CurvedRing" or v.Name == "SlashHit" or v.Name == "SwordSlash" or v.Name == "SlashTail" or v.Name == "Sounds" then
+                v:Destroy() 
+            end
         end
     end
+    end
 end)
-
-
 -- [require module]
 
 local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
@@ -3752,7 +3785,7 @@ spawn(function()
 								repeat task.wait()
 									--if (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1 and (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 2500 then
 										PosMonLv = v.CFrame * CFrame.new(0,80,0)
-										task.wait(0.5)
+										task.wait(1.5)
 										_G.PosMonFarmLvSetCFarme = 2
 									--end
 								until not _G.Auto_Farm_Level or _G.PosMonFarmLvSetCFarme == 2
@@ -10931,39 +10964,20 @@ print("CombatFramework")
 ----loadstring(game:HttpGet("https://raw.githubusercontent.com/NaJaxHub/ser/main/fast-obf-3"))() --open
 --loadstring(game:HttpGet("https://raw.githubusercontent.com/NaJaxHub/ser/main/fast-obf-2"))()
 
-
-
-spawn(function()
-      while wait() do
-      if _G.FastAttack2 or _G.FastAttack1 then
-        for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
-            if v.Name == "CurvedRing" or v.Name == "SlashHit" or v.Name == "SwordSlash" or v.Name == "SlashTail" or v.Name == "Sounds" then
-                v:Destroy() 
-            end
-        end
-    end
-    end
-end)
-
-print("Framework Ok")
------------------------------------------------------------------------
-
-print("require")
-
 coroutine.wrap(function()
 	while task.wait() do --.1
 		local ac = CombatFrameworkR.activeController
 		if ac and ac.equipped then
 			if _G.FastAttack2 then
 				AttackFunction()
-					if tick() - cooldownfastattack > 1.5 then
+					if tick() - cooldownfastattack > 1.75 then
 						task.wait(0.01)
 						cooldownfastattack = tick()
 					end
 				--if _G.Settings.Configs["Fast Attack Type"] == "Normal" then
 					--if tick() - cooldownfastattack > .9 then wait(.1) cooldownfastattack = tick() end
 				--elseif _G.Settings.Configs["Fast Attack Type"] == "Fast" then
-				--	if tick() - cooldownfastattack > 1.5 then wait(.01) cooldownfastattack = tick() end
+					if tick() - cooldownfastattack > 1.5 then wait(.01) cooldownfastattack = tick() end
 				--elseif _G.Settings.Configs["Fast Attack Type"] == "Slow" then
 				--	if tick() - cooldownfastattack > .3 then wait(.7) cooldownfastattack = tick() end
 				--end
@@ -10977,50 +10991,13 @@ coroutine.wrap(function()
 		end
 	end
 end)()
-require(game.ReplicatedStorage.Util.CameraShaker):Stop()
-xShadowFastAttackx = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
-xShadowx = debug.getupvalues(xShadowFastAttackx)[2]
-task.spawn(function()
-	while true do task.wait()
-		if _G.FastAttack1 or _G.FastAttack2 then
-			if typeof(xShadowx) == "table" then
-				pcall(function()
-					xShadowx.activeController.timeToNextAttack = -(math.huge^math.huge^math.huge)
-					xShadowx.activeController.timeToNextAttack = 0
-					xShadowx.activeController.hitboxMagnitude = 110
-					xShadowx.activeController.active = false
-					xShadowx.activeController.timeToNextBlock = 0
-					xShadowx.activeController.focusStart = 0
-					xShadowx.activeController.increment = 4
-					xShadowx.activeController.blocking = false
-					xShadowx.activeController.attacking = false
-					xShadowx.activeController.humanoid.AutoRotate = true
-				end)
-			end
-		end
-	end
-end)
-local Module = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
-local CombatFramework = debug.getupvalues(Module)[2]
-local CameraShakerR = require(game.ReplicatedStorage.Util.CameraShaker)
+print("Framework Ok")
+-----------------------------------------------------------------------
 
-task.spawn(function()
-	while true do task.wait()
-		if _G.FastAttack1 or _G.FastAttack2 then
-			pcall(function()
-				CameraShakerR:Stop()
-				CombatFramework.activeController.attacking = false
-				CombatFramework.activeController.timeToNextAttack = 0
-				CombatFramework.activeController.increment = 4
-				CombatFramework.activeController.hitboxMagnitude = 100
-				CombatFramework.activeController.blocking = false
-				CombatFramework.activeController.timeToNextBlock = 0
-				CombatFramework.activeController.focusStart = 0
-				CombatFramework.activeController.humanoid.AutoRotate = true
-			end)
-		end
-	end
-end)
+print("require")
+
+
+
 coroutine.wrap(function()
 	while task.wait() do --.1
 		local ac = CombatFrameworkR.activeController
@@ -11038,14 +11015,6 @@ coroutine.wrap(function()
 		end
 	end
 end)()
-
-
-print("End script")
---loadstring(game:HttpGet("https://raw.githubusercontent.com/NaJaxHub/ser/main/OBF-Fast.lua"))() -- fast |  ตีเร็ว
-
---[[
-loadstring(game:HttpGet("https://pastebin.com/raw/7FwSam5m"))()
-]]--script
 
 local vu = game:GetService("VirtualUser")
 game:GetService("Players").LocalPlayer.Idled:connect(function()
@@ -11087,7 +11056,7 @@ end)
 												end
 												game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 												BringMobFarm = true
-	v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide = false v.HumanoidRootPart.Size = Vector3.new(150,150,150)
+	v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide = false v.HumanoidRootPart.Size = Vector3.new(80,80,80)
 												if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
 													game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
 												end
@@ -11142,6 +11111,15 @@ end)
 		end
 	end)
 
+print("End script")
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/NaJaxHub/ser/main/OBF-Fast.lua"))() -- fast |  ตีเร็ว
+
+--[[
+loadstring(game:HttpGet("https://pastebin.com/raw/7FwSam5m"))()
+]]--script
+
+
+
 local SeraphFrame = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework")))[2]
 local VirtualUser = game:GetService('VirtualUser')
 local RigControllerR = debug.getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.RigController))[2]
@@ -11152,13 +11130,13 @@ local RigController = require(game.Players.LocalPlayer.PlayerScripts.CombatFrame
 local RigControllerR = getupvalues(RigController)[2]
 local realbhit = require(game.ReplicatedStorage.CombatFramework.RigLib)
 
-local cdnormal = 0
+local cdnormal = 9e9
 local Animation = Instance.new("Animation")
-local CooldownFastAttack = 0
+local CooldownFastAttack = 9e9
 Attack = function()
     local ac = SeraphFrame.activeController
     if ac and ac.equipped then
-		if tick() - cdnormal > 1.75 then
+		if tick() - cdnormal > 9e9 then
 			ac:Attack()
 			cdnormal = tick()
 		else
@@ -11168,7 +11146,31 @@ Attack = function()
 		end
     end
 end
-
+spawn(function()
+	while wait(0) do
+		if _G.FastAttack2 then
+			if b - tick() > 0.75 then
+				b = tick()
+			end
+			pcall(function()
+				for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+					if v.Humanoid.Health > 0 then
+						if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
+							local ac = SeraphFrame.activeController
+							if ac and ac.equipped then
+								ac:Attack()
+								cdnormal = tick()
+								Animation.AnimationId = ac.anims.basic[2]
+								ac.humanoid:LoadAnimation(Animation):Play(0.01, 0.01)
+								game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 2, "") --3
+							end
+						end
+					end
+				end
+			end)
+		end
+	end
+end)
 local Time = 1
 local AttackRandom = 2
 spawn(function()
@@ -11187,8 +11189,8 @@ end
 
 Attack = function()
 	local ac = SeraphFrame.activeController
-	if _G.FastAttack2 and ac and ac.equipped then
-		if tick() - cdnormal > 1.5 then
+	if ac and ac.equipped then
+		if tick() - cdnormal > 9e9 then
 			ac:attack()
 			cdnormal = tick()
 		else
@@ -11207,10 +11209,8 @@ Attack = function()
 				Attack()
 				wait(0)
 				Boost()
-				if _G.SuperFastAttack or _G.FastAttack2 then
-				pcall(function()
+				if _G.SuperFastAttack then
 					AttackFunction()
-				end)
 				end
 			end
 		end
@@ -11224,9 +11224,6 @@ Attack = function()
 							Attack()
 							wait(0)
 							Boost()
-							if _G.SuperFastAttack or _G.FastAttack2 then
-								AttackFunction()
-							end
 						end
 					end
 				end
