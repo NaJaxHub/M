@@ -11056,9 +11056,7 @@ task.spawn(function()
 					else --_G.MrMaxNaJaPosMon = true
 						game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestName, QuestLevel)
 					end
-				--end
-				else
-				--if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+				elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
 					if game:GetService("Workspace").Enemies:FindFirstChild(MobName) then
 						repeat task.wait()
 							if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Select_Weapon) then
@@ -11073,8 +11071,6 @@ task.spawn(function()
 							end
 							game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 						until not _G.Auto_Farm_Level
-					else
-						UnEquipWeapon(_G.Select_Weapon)
 					end
 				end
             end)
@@ -11127,12 +11123,13 @@ v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide
 						else 
 							for i , c in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 								if string.find(c.Name, MobName) then
-									repeat task.wait()                                                                                                 --1               
-										if not game:GetService("Workspace").Enemies:FindFirstChild(MobName) and (c.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1  and (c.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 99999999 then --<= 
+									--repeat task.wait()                                                                                                 --1               
+										if (c.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1  and (c.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 99999999 then --<= 
 											Tween(c.CFrame * CFrame.new(0,77,0))
 										end
-										task.wait(.5)
-									until not _G.Auto_Farm_Level
+										UnEquipWeapon(_G.Select_Weapon)
+										--task.wait(.5)
+									--until not _G.Auto_Farm_Level
 								end
 							end
 							_G.SuperFastAttack = false
