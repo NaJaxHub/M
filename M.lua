@@ -11041,7 +11041,7 @@ spawn(function()
 				for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 					if string.find(v.Name, MobName) then
 						repeat task.wait()
-							if (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= -1 then
+							if (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 50 then
 								_G.CFrameAutoFarmPos = v.CFrame * CFrame.new(0,89,0)
 							end
 							task.wait(.15)
