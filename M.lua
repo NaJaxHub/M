@@ -3770,18 +3770,18 @@ spawn(function()
 				--_G.Auto_Farm_Levela = true
 				for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 					if string.find(v.Name, QuestCheck()[3]) then
-						PosMonFarmLvSetCFarme = ''
+						PosMonFarmLvSetCFarme = 1
 						--local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude 
-						if PosMonFarmLvSetCFarme == nil or PosMonFarmLvSetCFarme == '' then
+						if PosMonFarmLvSetCFarme == 1 then
 							repeat task.wait()
 								--if (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1 and (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 2500 then
 									if _G.PosMonFarmLv == true then
 										PosMonLv = v.CFrame * CFrame.new(0,80,0)
 										task.wait(0.175)
-										SetCFarme = 1
+										PosMonFarmLvSetCFarme = 2
 									end
 								--end
-							until not _G.Auto_Farm_Level or PosMonFarmLvSetCFarme == 1
+							until not _G.Auto_Farm_Level or PosMonFarmLvSetCFarme == 2
 						end
 					--[[else
 						if v.Name == QuestCheck()[3] then
