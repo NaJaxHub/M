@@ -3781,7 +3781,7 @@ spawn(function()
 										SetCFarme = 1
 									end
 								--end
-							until not _G.PosMonFarmLv or PosMonFarmLvSetCFarme = 1
+							until not _G.Auto_Farm_Level or PosMonFarmLvSetCFarme == 1
 						end
 					--[[else
 						if v.Name == QuestCheck()[3] then
