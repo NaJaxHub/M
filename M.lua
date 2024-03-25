@@ -3770,15 +3770,15 @@ spawn(function()
 						local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude 
 						repeat task.wait(2)
 							if (MagnitudePosMonLv >= 1 and MagnitudePosMonLv <= 2500) then
-								if _G.PosMonFarmLv == true then
+								if _G.PosMonFarmLv == false then
 									PosMonLv = v.CFrame * CFrame.new(0,80,0)
 								end
 							end
 						until _G.PosMonFarmLv
-					else
+					--[[else
 						if v.Name == QuestCheck()[3] then
 							PosMonLv = v.CFrame * CFrame.new(0,80,0)
-						end
+						end]]
 					end
 				end
 			end)
@@ -11094,7 +11094,7 @@ end)
 								if v.Name == MobName then
 									if v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 										repeat task.wait()
-											_G.PosMonFarmLv = false
+											_G.PosMonFarmLv = true
 											if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
 												game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
 											end
@@ -11122,7 +11122,7 @@ v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide
 								end
 							end
 						else
-							_G.PosMonFarmLv = true
+							_G.PosMonFarmLv = false
 							Tween(PosMonLv)
 							UnEquipWeapon(_G.Select_Weapon)
 							if World1 and (Name == "Fishman Commando" or Name == "Fishman Warrior") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 50000 then
@@ -11200,7 +11200,7 @@ Attack = function()
 	local ac = SeraphFrame.activeController
 	if ac and ac.equipped then
 		spawn(function()
-			if tick() - cdnormal > 1.5 then
+			if tick() - cdnormal > 0.9 then
 				ac:attack()
 				cdnormal = tick()
 			else
@@ -11286,7 +11286,7 @@ task.spawn(function()
 				if i then
 					b.play = function()
 					end
-					d:Play(0.01,0.01,0.01)
+					d:Play(0.1,0.1,0.1)
 					h(i)
 					b.play = shared.cpc
 					wait(0.1)
@@ -11316,7 +11316,7 @@ end)
 	spawn(function()
 		while task.wait() do task.wait()
 			if _G.FastAttack1 or _G.FastAttack2 then
-				if b - tick() > 1.75 then
+				if b - tick() > 0.75 then
 					b = tick()
 				end
 				local ac = SeraphFrame.activeController
@@ -11367,7 +11367,7 @@ spawn(function()
 	while wait(0) do
 		if  _G.FastAttack2 then
 			if b - tick() > 0.75 then
-				wait(.01)
+				wait(.05)
 				b = tick()
 			end
 			pcall(function()
@@ -11375,7 +11375,7 @@ spawn(function()
 					if v.Humanoid.Health > 0 then
 						if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
 							Attack()
-							wait(0)
+							wait(0.05)
 							Boost()
 						end
 					end
