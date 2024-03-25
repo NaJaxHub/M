@@ -11068,15 +11068,11 @@ end)
                                             EquipWeapon(_G.Select_Weapon)
 											PosMon = v.HumanoidRootPart.CFrame
 											if (v.HumanoidRootPart.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 189 then
-												if v.Humanoid.Health <= v.Humanoid.MaxHealth * 25/100 then
-													Attack()
-													game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,25) _G.SuperFastAttack = true
-													if v.Humanoid.Health <= 0 then
-														v:Destroy()
-													end
-												else
-													game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,30,0) _G.SuperFastAttack = false
+												Attack()
+												if v.Humanoid.Health <= 0 then
+													v:Destroy()
 												end
+												game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,30,0) _G.SuperFastAttack = false
 											else
 												Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0)) game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
 											end
@@ -11095,19 +11091,19 @@ v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide
 						else _G.MrMaxNaJaPosMon = true
 							for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 								if string.find(v.Name, MobName) then
-									if _G.MrMaxNaJaPosMon == true then
-										repeat task.wait()                                                                                                 --1               
-											if (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1 and (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 6500 then --<= 
-												CFrameAutoFarmPos = v.CFrame * CFrame.new(0,89,0)
-											else
+									repeat task.wait()                                                                                                 --1               
+										if (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1 and (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 6500 then --<= 
+											if _G.MrMaxNaJaPosMon == true then
 												CFrameAutoFarmPos = v.CFrame * CFrame.new(0,89,0)
 											end
-											--task.wait(.5)
-										until _G.MrMaxNaJaPosMon
-									end
+										else
+											CFrameAutoFarmPos = v.CFrame * CFrame.new(0,89,0)
+										end
+										--task.wait(.5)
+										Tween(CFrameAutoFarmPos)
+									until _G.MrMaxNaJaPosMon
 								end
 							end
-							Tween(CFrameAutoFarmPos)
 							UnEquipWeapon(_G.Select_Weapon)
 							_G.SuperFastAttack = false
 							if World1 and (Name == "Fishman Commando" or Name == "Fishman Warrior") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 50000 then
