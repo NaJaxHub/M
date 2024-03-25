@@ -11109,7 +11109,7 @@ v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide
 							for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 								if string.find(v.Name, QuestCheck()[3]) then
 									--repeat task.wait()
-										if v.CFrame == QuestCheck()[3])  then
+										if v.CFrame == QuestCheck()[3]  then
 											CFrameAutoFarmPos = v.CFrame
 										end
 									--until not _G.Auto_Farm_Level
