@@ -3755,13 +3755,21 @@ spawn(function()
 			pcall(function() QuestCheck()
 				for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 					if string.find(v.Name, MobName) then
-						Tween(v.CFrame * CFrame.new(0,80,0))
+						repeat wait()
+							if (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1 and (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5500 then
+								PosMonLv = v.CFrame * CFrame.new(0,80,0)
+							end
+						until not _G.Auto_Farm_Levelx
+						repeat wait()
+							Tween(PosMonLv)
+							wait(.1)
+						until not _G.Auto_Farm_Levelx
 					end
 				end
 			end)
 		end
 	end
-end) 
+end)
 
 if W1 then 
 --	_G.Fast_Farm_Level = true
