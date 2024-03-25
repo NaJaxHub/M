@@ -3756,7 +3756,7 @@ spawn(function()
 						local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude 
 						repeat wait()
 							if string.find(v.Name, MobName) then
-								if (MagnitudePosMonLv >= 80 and MagnitudePosMonLv <= 1000) then
+								if (MagnitudePosMonLv >= 81 and MagnitudePosMonLv <= 999) then
 									PosMonLv = v.CFrame * CFrame.new(0,80,0)
 								else
 									if v.Name == QuestCheck()[3] then
@@ -3768,7 +3768,7 @@ spawn(function()
 									PosMonLv = v.CFrame * CFrame.new(0,80,0)
 								end
 							end
-						until not _G.Auto_Farm_Levela or _G.Auto_Farm_Level
+						until _G.Auto_Farm_Levela
 					else
 						if v.Name == QuestCheck()[3] then
 							PosMonLv = v.CFrame * CFrame.new(0,80,0)
