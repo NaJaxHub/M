@@ -3753,10 +3753,12 @@ spawn(function()
 				_G.Auto_Farm_Levela = true
 				for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 					if string.find(v.Name, QuestCheck()[3]) then
-						--local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+						local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude 
 						repeat wait()
-							PosMonLv = v.CFrame * CFrame.new(0,80,0)
-						until _G.Auto_Farm_Levela or (MagnitudePosMonLv >= 1 and MagnitudePosMonLv <= 9999999999)
+							if (MagnitudePosMonLv >= 1 and MagnitudePosMonLv <= 999999) then
+								PosMonLv = v.CFrame * CFrame.new(0,80,0)
+							end
+						until _G.Auto_Farm_Levela
 						--wait(.9)
 					else
 						if v.Name == QuestCheck()[3] then
