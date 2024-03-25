@@ -3748,8 +3748,9 @@ end
 
 spawn(function() 
 	while wait() do
-		if _G.Auto_Farm_Level then 
-			pcall(function()
+		pcall(function()
+			if _G.Auto_Farm_Level then 
+				_G.Auto_Farm_Levela = true
 				for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 					if string.find(v.Name, QuestCheck()[3]) then
 						--local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
@@ -3762,11 +3763,10 @@ spawn(function()
 						end
 					end
 				end
-			end)
-			_G.Auto_Farm_Levela = true
-		else
-			_G.Auto_Farm_Levela = false
-		end
+			else
+				_G.Auto_Farm_Levela = false
+			end
+		end)
 	end
 end)
 
@@ -11043,21 +11043,6 @@ end)
 					if not string.find(QuestTitle, MobName) then
 						game:GetService("ReplicatedStorage").Remotes.CommF:InvokeServer("AbandonQuest")
 					end
-					if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-						BringMobFarm = false
-						if _G.TweentoQuest then
-							Tween(QuestCheck()[2]) 
-							if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
-								game:GetService("ReplicatedStorage").Remotes.CommF:InvokeServer("StartQuest",QuestName,QuestLevel)
-								--print("GetTweenQuest"..QuestName..":"..QuestLevel.." ")
-							end
-						else
-							game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestName, QuestLevel)
-						end
-					end
-					if not game:GetService("Workspace").Enemies:FindFirstChild(MobName) then
-						Tween(PosMonLv)
-					end
 					if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
 						if game:GetService("Workspace").Enemies:FindFirstChild(MobName) then
 							for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
@@ -11116,11 +11101,17 @@ v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide
 							end
 						end
 					else
-						BringMobFarm = false
 						if _G.TweentoQuest then
-							Tween(NPCPosition)
+							Tween(QuestCheck()[2])
+							if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
+								BringMobFarm = false
+								wait(0.2)
+								game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5) 
+								Tween(QuestCheck()[7][1] * CFrame.new(0,28,8))
+							end
 						else
 							game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestName, QuestLevel)
+							Tween(PosMonLv)
 						end
 					end
 				end)
