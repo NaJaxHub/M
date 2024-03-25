@@ -11096,12 +11096,12 @@ v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide
 							if not game:GetService("Workspace").Enemies:FindFirstChild(MobName) then
 								for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 									if string.find(v.Name, MobName) then
-										--repeat task.wait()                                                                                                 --1               
+										repeat task.wait()                                                                                                 --1               
 											--if (c.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1  and (c.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 999999 then --<= 
-										CFrameAutoFarmPos = v.CFrame * CFrame.new(0,89,0)
+											CFrameAutoFarmPos = v.CFrame * CFrame.new(0,89,0)
 											--end
 											--task.wait(.5)
-										--until not _G.MrMaxNaJaPosMon
+										until not _G.Auto_Farm_Level or game:GetService("Workspace").Enemies:FindFirstChild(MobName)
 									end
 								end
 								Tween(CFrameAutoFarmPos)
