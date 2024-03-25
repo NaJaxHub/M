@@ -3770,7 +3770,7 @@ spawn(function()
 			pcall(function() QuestCheck()
 				for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 					if string.find(v.Name, MobName) then
-						if _G.Auto_Farm_Levelxx == true then
+						if _G.Auto_Farm_Levelxx then
 							local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
 							repeat wait()
 								--if MagnitudePosMonLv >= 1 and MagnitudePosMonLv <= 9999999999 then
@@ -3778,7 +3778,7 @@ spawn(function()
 									Tween(PosMonLv)
 									--wait(1)
 								--end
-							until _G.Auto_Farm_Levelxx
+							until not _G.Auto_Farm_Levelxx
 						end
 					end
 				end
