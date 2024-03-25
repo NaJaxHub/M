@@ -3770,15 +3770,19 @@ spawn(function()
 				--_G.Auto_Farm_Levela = true
 				for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
 					if string.find(v.Name, QuestCheck()[3]) then
+						PosMonFarmLvSetCFarme = ''
 						--local MagnitudePosMonLv = (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude 
-						repeat task.wait()
-							if string.find(v.CFrame , (game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 15) then
-							--if (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1 and (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 2500 then
-								if _G.PosMonFarmLv == true then
-									PosMonLv = v.CFrame * CFrame.new(0,80,0)
-								end
-							end
-						until _G.PosMonFarmLv
+						if PosMonFarmLvSetCFarme == nil or PosMonFarmLvSetCFarme == '' then
+							repeat task.wait()
+								--if (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 1 and (v.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 2500 then
+									if _G.PosMonFarmLv == true then
+										PosMonLv = v.CFrame * CFrame.new(0,80,0)
+										task.wait(0.175)
+										SetCFarme = 1
+									end
+								--end
+							until not _G.PosMonFarmLv or PosMonFarmLvSetCFarme = 1
+						end
 					--[[else
 						if v.Name == QuestCheck()[3] then
 							PosMonLv = v.CFrame * CFrame.new(0,80,0)
@@ -4406,7 +4410,6 @@ spawn(function()
 									print(SetCFarme)
 								end
 								SetCFarme =  SetCFarme + 1
-
 								print(SetCFarme)
 								wait(0.5)
 							end
@@ -11180,9 +11183,9 @@ local RigController = require(game.Players.LocalPlayer.PlayerScripts.CombatFrame
 local RigControllerR = getupvalues(RigController)[2]
 local realbhit = require(game.ReplicatedStorage.CombatFramework.RigLib)
 
-local cdnormal = 9e9
+local cdnormal = 0
 local Animation = Instance.new("Animation")
-local CooldownFastAttack = 0.999
+local CooldownFastAttack = 0
 Attack = function()
     local ac = SeraphFrame.activeController
     if ac and ac.equipped then
@@ -11309,7 +11312,7 @@ end)
 	b = tick()
 	spawn(function()
 		while task.wait() do task.wait()
-			if _G.FastAttack1 or _G.FastAttack2 then
+			if _G.FastAttack2 then
 				if b - tick() > 0.75 then
 					b = tick()
 				end
@@ -11321,7 +11324,7 @@ end)
 								Attack()
 								wait()
 								Boost()
-								if _G.SuperFastAttack or _G.FastAttack2 then
+								if _G.SuperFastAttack then
 									AttackFunction()
 								end
 							end
@@ -11333,9 +11336,6 @@ end)
 												Attack()
 												wait()
 												Boost()
-												if _G.FastAttack2 then
-													AttackFunction()
-												end
 											else
 												Attack()
 												wait()
