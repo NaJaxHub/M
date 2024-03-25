@@ -3745,23 +3745,8 @@ if W1 then
 		end
 	end)
 end	
-Main:Toggle('Tween test',_G.Auto_Farm_Levelx,function(value)
-	_G.Auto_Farm_Levelx = value
-end)
-
-spawn(function() 
-	while wait() do
-		if _G.Auto_Farm_Levelx then 
-			pcall(function()
-				_G.Auto_Farm_Levelxx = true
-				wait(1)
-				_G.Auto_Farm_Levelxx = false
-				wait(1)
-			end)
-		else
-			_G.Auto_Farm_Levelxx = false
-		end
-	end
+Main:Toggle('Tween test',_G.Auto_Farm_Levelxx,function(value)
+	_G.Auto_Farm_Levelxx = value
 end)
 
 spawn(function() 
