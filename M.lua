@@ -238,10 +238,10 @@ getgenv().TextUI_IIII = "Wallet : xxx-xxx-xxxx | 20/3/2567" --19-3-2567--28/4/25
 				  syn.protect_gui(UI)
 			  end
 			  
-			  function library:Destroy()
+			  --[[function library:Destroy()
 				  library:Destroy()
 				  game:GetService("CoreGui").ScreenGui:Destroy()
-			  end
+			  end]]
 			  
 			  function library:NaJa()
 				  local Main = Instance.new("Frame")
