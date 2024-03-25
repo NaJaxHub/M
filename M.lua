@@ -3753,13 +3753,11 @@ spawn(function()
 	while wait() do
 		if _G.Auto_Farm_Levelx then 
 			pcall(function() QuestCheck()
-				repeat task.wait()
-					for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
-						if string.find(v.Name, MobName) then
-							Tween(v.CFrame * CFrame.new(0,80,0))
-						end
+				for i , v in pairs(game:GetService("Workspace")._WorldOrigin.EnemySpawns:GetChildren()) do
+					if string.find(v.Name, MobName) then
+						Tween(v.CFrame * CFrame.new(0,80,0))
 					end
-				until not _G.Auto_Farm_Levelx
+				end
 			end)
 		end
 	end
