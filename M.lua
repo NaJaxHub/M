@@ -367,31 +367,32 @@ function getAllBladeHits(Sizes)
 end
 
 function AttackFunction()
-	local ac = CombatFrameworkR.activeController
-	if ac and ac.equipped then
-		local bladehit = getAllBladeHits(60)
-		if #bladehit > 0 then
-			local AcAttack8, AcAttack9, AcAttack7, AcAttack10 = debug.getupvalue(ac.attack, 5), debug.getupvalue(ac.attack, 6), debug.getupvalue(ac.attack, 4), debug.getupvalue(ac.attack, 7)
-			local NumberAc12 = (AcAttack8 * 798405 + AcAttack7 * 727595) % AcAttack9
-			local NumberAc13 = AcAttack7 * 798405
-			NumberAc12 = (NumberAc12 * AcAttack9 + NumberAc13) % 1099511627776
-			AcAttack8, AcAttack7 = math.floor(NumberAc12 / AcAttack9), NumberAc12 - AcAttack8 * AcAttack9
-			AcAttack10 = (AcAttack10 or 0) + 1
-			debug.setupvalue(ac.attack, 5, AcAttack8)
-			debug.setupvalue(ac.attack, 6, AcAttack9)
-			debug.setupvalue(ac.attack, 4, AcAttack7)
-			debug.setupvalue(ac.attack, 7, AcAttack10)
-			for _, v in pairs(ac.animator.anims.basic) do
-				v:Play(0.01, 0.01, 0.01)
-			end
-			if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] then 
-				game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", tostring(CurrentWeapon()))
-				game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(NumberAc12 / 1099511627776 * 16777215), AcAttack10)
-				game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "") 
-			end
-		end
-	end
+    local ac = CombatFrameworkR.activeController
+    if not ac or not ac.equipped then return end
+
+    local bladehit = getAllBladeHits(60)
+    if #bladehit == 0 then return end
+
+    local AcAttack8, AcAttack9, AcAttack7, AcAttack10 = debug.getupvalue(ac.attack, 5), debug.getupvalue(ac.attack, 6), debug.getupvalue(ac.attack, 4), debug.getupvalue(ac.attack, 7)
+    local NumberAc12 = (AcAttack8 * 798405 + AcAttack7 * 727595) % AcAttack9
+    local NumberAc13 = AcAttack7 * 798405
+    NumberAc12 = (NumberAc12 * AcAttack9 + NumberAc13) % 1099511627776
+    AcAttack8, AcAttack7 = math.floor(NumberAc12 / AcAttack9), NumberAc12 - AcAttack8 * AcAttack9
+    AcAttack10 = (AcAttack10 or 0) + 1
+    debug.setupvalue(ac.attack, 4, AcAttack7)
+    debug.setupvalue(ac.attack, 5, AcAttack8)
+    debug.setupvalue(ac.attack, 6, AcAttack9)
+    debug.setupvalue(ac.attack, 7, AcAttack10)
+    local character = game.Players.LocalPlayer.Character
+    if character and character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] then 
+        local weaponName = tostring(CurrentWeapon())
+        game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", weaponName)
+        local validatorValue = math.floor(NumberAc12 / 1099511627776 * 16777215) % 16777215
+        game.ReplicatedStorage.Remotes.Validator:FireServer(validatorValue, AcAttack10)
+        game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "") 
+    end
 end
+
 
 --[[function AttackFunction()
 	local ac = CombatFrameworkR.activeController
@@ -7511,12 +7512,48 @@ Settings:Toggle("Fast Attack[2] [Bug]\nโจมตีเร็วสอง บ�
 	_G.FastAttack = value
 	SaveSettings()
 end)
---[[
 Settings:Toggle("Fast Attack[3] [Bug]\nโจมตีเร็วสาม บัครออัพเดพ",_G.Settings.FastAttack3,function(value)
 	_G.Settings.FastAttack3 = value
-	
+	isAttackEnabled = value
 	SaveSettings()
-end)]]
+end)
+
+game:GetService("RunService").Stepped:Connect(function()
+    if isAttackEnabled then  -- ตรวจสอบว่าการโจมตีถูกเปิดหรือไม่
+        AttackFunctionHackByChatGPT()  -- เรียกใช้ฟังก์ชันโจมตี
+    end
+end)
+
+function AttackFunctionHackByChatGPT()
+    if not isAttackEnabled then
+        print("Attack function is currently disabled")
+        return  -- ถ้าการโจมตีถูกปิดให้หยุดการทำงานของฟังก์ชันทันที
+    end
+    local ac = CombatFrameworkR.activeController
+    if ac and ac.equipped then
+        local bladehit = getAllBladeHits(60)
+        if #bladehit > 0 then
+            local AcAttack8, AcAttack9, AcAttack7, AcAttack10 = debug.getupvalue(ac.attack, 5), debug.getupvalue(ac.attack, 6), debug.getupvalue(ac.attack, 4), debug.getupvalue(ac.attack, 7)
+            local NumberAc12 = (AcAttack8 * 798405 + AcAttack7 * 727595) % AcAttack9
+            local NumberAc13 = AcAttack7 * 798405
+            NumberAc12 = (NumberAc12 * AcAttack9 + NumberAc13) % 1099511627776
+            AcAttack8, AcAttack7 = math.floor(NumberAc12 / AcAttack9), NumberAc12 - AcAttack8 * AcAttack9
+            AcAttack10 = (AcAttack10 or 0) + 1
+            debug.setupvalue(ac.attack, 5, AcAttack8)
+            debug.setupvalue(ac.attack, 6, AcAttack9)
+            debug.setupvalue(ac.attack, 4, AcAttack7)
+            debug.setupvalue(ac.attack, 7, AcAttack10)
+            for _, v in pairs(ac.animator.anims.basic) do
+                v:Play(0.01, 0.01, 0.01)
+            end
+            if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] then 
+                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", tostring(CurrentWeapon()))
+                game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(NumberAc12 / 1099511627776 * 16777215), AcAttack10)
+                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "") 
+            end
+        end
+    end
+end
 
 local FastAttack3s = {
     "Level1\nระดับที่หนึ่ง",
@@ -11115,6 +11152,16 @@ coroutine.wrap(function()
 	end
 end)()
 
+function ContinuousAttack()
+    while true do
+        if _G.FastAttack2 or _G.FastAttack1 then
+            AttackFunctionHackByChatGPT()
+        end
+        task.wait(0.1) -- รอเวลา 0.1 วินาที ก่อนที่จะโจมตีใหม่อีกครั้ง
+    end
+end
+
+coroutine.wrap(ContinuousAttack)()
 
 print("End script")
 --loadstring(game:HttpGet("https://raw.githubusercontent.com/NaJaxHub/ser/main/OBF-Fast.lua"))() -- fast |  ตีเร็ว
