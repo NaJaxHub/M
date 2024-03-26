@@ -393,6 +393,77 @@ function AttackFunction()
     end
 end
 
+local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
+local CombatFrameworkR = getupvalues(CombatFramework)[2]
+
+function CurrentWeapon()
+	local ac = CombatFrameworkR.activeController
+	local ret = ac.blades[1]
+	if not ret then return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name end
+	pcall(function()
+		while ret.Parent~=game.Players.LocalPlayer.Character do ret=ret.Parent end
+	end)
+	if not ret then return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name end
+	return ret
+end
+
+function getAllBladeHits(Sizes)
+	local Hits = {}
+	local Client = game.Players.LocalPlayer
+	local Enemies = game:GetService("Workspace").Enemies:GetChildren()
+	for i=1,#Enemies do local v = Enemies[i]
+		local Human = v:FindFirstChildOfClass("Humanoid")
+		if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
+			table.insert(Hits,Human.RootPart)
+		end
+	end
+	return Hits
+end
+
+function AttackFunctionnChatGPT()
+    local ac = CombatFrameworkR.activeController
+    if not ac or not ac.equipped then return end
+
+    local bladehit = getAllBladeHits(60)
+    if #bladehit == 0 then return end
+
+    local AcAttack8, AcAttack9, AcAttack7, AcAttack10 = debug.getupvalue(ac.attack, 5), debug.getupvalue(ac.attack, 6), debug.getupvalue(ac.attack, 4), debug.getupvalue(ac.attack, 7)
+    local NumberAc12 = (AcAttack8 * 798405 + AcAttack7 * 727595) % AcAttack9
+    local NumberAc13 = AcAttack7 * 798405
+    NumberAc12 = (NumberAc12 * AcAttack9 + NumberAc13) % 1099511627776
+    AcAttack8, AcAttack7 = math.floor(NumberAc12 / AcAttack9), NumberAc12 - AcAttack8 * AcAttack9
+    AcAttack10 = (AcAttack10 or 0) + 1
+    debug.setupvalue(ac.attack, 4, AcAttack7)
+    debug.setupvalue(ac.attack, 5, AcAttack8)
+    debug.setupvalue(ac.attack, 6, AcAttack9)
+    debug.setupvalue(ac.attack, 7, AcAttack10)
+
+    for _, v in pairs(ac.animator.anims.basic) do
+        v:Play(1, 1, 1)
+    end
+
+    local weaponName = tostring(CurrentWeapon())
+    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", weaponName)
+    
+    -- ส่งค่าเลือดและความแรงของการโจมตีไปยังเซิร์ฟเวอร์
+    local monsterHealth = 100 -- จำลองค่าเลือดของมอนเตอร์
+    local attackPower = 50 -- จำลองความแรงของการโจมตี
+    game.ReplicatedStorage.Remotes.Validator:FireServer(monsterHealth, AcAttack10, attackPower)
+    
+    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "") 
+end
+
+-- เริ่มต้นโจมตีอัตโนมัติ
+
+-- ลูปตรวจสอบและเรียกใช้งานฟังก์ชัน AttackFunction() เพื่อโจมตีเรื่อย ๆ
+coroutine.wrap(function()
+    while true do
+        wait(0.05) -- ปรับความเร็วตามต้องการ 0.05 หมายถึงทุก 0.05 วินาที
+        if isAutoAttackEnabled then
+            AttackFunctionnChatGPT()
+        end
+    end
+end)()
 
 --[[function AttackFunction()
 	local ac = CombatFrameworkR.activeController
@@ -7515,6 +7586,7 @@ end)
 Settings:Toggle("Fast Attack[3] [Bug]\nโจมตีเร็วสาม บัครออัพเดพ",_G.Settings.FastAttack3,function(value)
 	_G.Settings.FastAttack3 = value
 	isAttackEnabled = value
+	isAutoAttackEnabled = value
 	SaveSettings()
 end)
 
