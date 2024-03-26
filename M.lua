@@ -10907,7 +10907,7 @@ Attack = function()
         return
     end
     
-    if tick() - cdnormal > 0.1 then  -- ปรับเวลาคูลดาวน์ลงมาเหมาะสม
+    if tick() - cdnormal > 0.9 then  -- ปรับเวลาคูลดาวน์ลงมาเหมาะสม
         ac:Attack()
         cdnormal = tick()
     else
@@ -10920,7 +10920,7 @@ end
 spawn(function()
     while wait(0) do
         if _G.FastAttack2 then
-            if b - tick() > 0.50 then
+            if b - tick() > 0.3 then
                 b = tick()
             end
             pcall(function()
@@ -10941,7 +10941,7 @@ end)
 local Time = 1
 local AttackRandom = 2
 spawn(function()
-	while wait(0.5) do
+	while wait(1) do
 		AttackRandom = math.random(1,4)
 	end
 end)
@@ -10962,7 +10962,7 @@ Attack = function()
 	if not ac or not ac.equipped then
 		return
 	end
-	if tick() - cdnormal > 0 then
+	if tick() - cdnormal > 1.5 then
 		ac:attack()
 		cdnormal = tick()
 	else
