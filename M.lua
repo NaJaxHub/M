@@ -661,33 +661,6 @@ local function QuestCheck()
 	}
 end
 
-
-	task.spawn(function() 
-		while task.wait() do
-			if _G.Fast_Farm_Level then 
-				pcall(function()
-					QuestCheck()
-					local MyLevel = game.Players.LocalPlayer.Data.Level.Value
-					if (MyLevel >= 15 and MyLevel <= 210) then
-						Fast_Farm_Lv()
-						_G.Auto_Farm_Level = false
-					else
-						_G.Auto_Farm_Level = true
-					end
-				end)
-			end
-		end
-	end)
-
-if World2 and _G.Fast_Farm_Level == true then
-	_G.Fast_Farm_Level = false
-	SaveSettings()
-end
-if World3 and _G.Fast_Farm_Level == true then
-	_G.Fast_Farm_Level = false
-	SaveSettings()
-end
-
 	task.spawn(function() 
 		while task.wait() do
 			if _G.Auto_Farm_Level then 
@@ -3855,25 +3828,6 @@ spawn(function()
 	end
 end)
 
-if W1 then
-	spawn(function() 
-		while wait() do
-			if _G.Fast_Farm_Level then QuestCheck()
-				pcall(function()
-					local MyLevel = game.Players.LocalPlayer.Data.Level.Value
-					--local QuestC = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
-					if (MyLevel >= 15 and MyLevel <= 210) then -- == true 
-						if MyLevel >= 15 and MyLevel <= 210 then
-							Fast_Farm_Lv()
-							return
-						end
-					end
-				end)
-			end
-		end
-	end)
-end	
-
 spawn(function() 
 	while wait() do
 		if _G.Auto_Farm_Level then 
@@ -3896,18 +3850,6 @@ spawn(function()
 		end
 	end
 end)
-
-if W1 then 
---	_G.Fast_Farm_Level = true
---	_G.Settings.Fast_Farm_Level = true
-Main:Toggle('Fast Farm Level BUG',_G.Fast_Farm_Level,function(value)
-	_G.Fast_Farm_Level = value
-	if value == false then
-		wait(.2)
-		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-	end
-end)
-end 
 
 Main:Toggle('Auto Farm Nearest',_G.NeareastFarm,function(value)
 	_G.NeareastFarm = value
@@ -3945,164 +3887,6 @@ Random_CFrame = 1
 		end
 	end)
 
-	spawn(function()
-		while wait() do 
-			if _G.Settings.Fast_Farm_Level and _G.Fast_Farm_Level_Num == 1 then
-				_G.Fast_Farm_Level = false
-			end
-		end
-	end)
-
-	local SetCFarme = 1
-
-_G.MrMaxNaJaPosMon = false
-
-	Type2 = getgenv().Mode
-
-
-if W1 then
-	_G.ChackPlayer = 0
-	_G.ChackPlayer2 = _G.ChackPlayer
-	function Fast_Farm_Lv()
-		local PlayersAll = game.Players:GetPlayers()
-		local PlayerLevel = game.Players.LocalPlayer.Data.Level.Value
-		local quest = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
-		local Player = string.split(quest," ")[2]
-		getgenv().SelectPly = string.split(quest," ")[2]
-		pcall(function()
-			local MyLevel = game.Players.LocalPlayer.Data.Level.Value
-			local QuestC = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
-			CFrameMon = CFrame.new(-4837.64258, 850.10199, -1840.58374, -0.430530697, -4.42848638e-08, -0.90257591, -3.08042516e-08, 1, -3.43712756e-08, 0.90257591, 1.30052875e-08, -0.430530697)
-			if MyLevel >= 15 and MyLevel <= 69 then
-				for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-					if v.Name == "God's Guard" then
-						if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-							repeat task.wait()
-								if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
-                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
-                                end
-								local MonHealth = v.Humanoid.MaxHealth * 50/100
-								if v.Humanoid.Health <= MonHealth then
-									game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(1.5,8,-1.78)
-                                    Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 8) * CFrame.Angles(math.rad(90), 0, 0))
-									_G.SupGodFastAttack = true
-									_G.VeryFast = true
-									AttackFunction()
-									Attack()
-								else
-									Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 8) * CFrame.Angles(math.rad(90), 0, 0))
-									_G.SupGodFastAttack = false
-									_G.VeryFast = false
-								end
-								v.HumanoidRootPart.CanCollide = false
-								v.Humanoid.WalkSpeed = 0
-								v.Head.CanCollide = false
-								StartMagnetFast_Farm_Lv = true
-								EquipWeapon(_G.Select_Weapon)
-								if MyLevel >= 70 and MyLevel <= 210 then
-									if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-										game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter")
-									end
-								end
-								PosMon = v.HumanoidRootPart.CFrame
-								v.HumanoidRootPart.Size = Vector3.new(77,77,77)
-								v.HumanoidRootPart.Transparency = 1
-								Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
-								game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
-							until not v.Parent or not _G.Fast_Farm_Level or v.Humanoid.Health < 0
-						end
-					else
-						StartMagnetFast_Farm_Lv = false
-						if _G.Auto_Farm_Level and (CFrameMon.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 500 then
-							game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
-						end
-						Tween(CFrameMon)
-					end
-				end
-			elseif MyLevel >= 70 and MyLevel <= 210 then
-				if QuestC.Visible == false then
-					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter")
-				elseif QuestC.Visible == true then
-					if game:GetService("Players").LocalPlayer.PlayerGui.Main.PvpDisabled.Visible == true then
-						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
-					end
-					if string.find(quest,"Defeat") then
-						if game.Players[getgenv().SelectPly].Data.Level.Value >= 20 and game.Players[getgenv().SelectPly].Data.Level.Value <= MyLevel * 2 then
-							repeat task.wait()
-								if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
-                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
-                                end
-								--AttackPlayers()
-								EquipWeapon(_G.Select_Weapon)
-								Tween(game:GetService("Players")[getgenv().SelectPly].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,5))
-								game:GetService("Players")[getgenv().SelectPly].Character.HumanoidRootPart.Size = Vector3.new(120,120,120)
-								if (game:GetService("Players")[getgenv().SelectPly].Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 220 then
-									game:service('VirtualInputManager'):SendKeyEvent(true, "X", false, game)
-									game:service('VirtualInputManager'):SendKeyEvent(false, "X", false, game)
-									game:service('VirtualInputManager'):SendKeyEvent(true, "Z", false, game)
-									game:service('VirtualInputManager'):SendKeyEvent(false, "Z", false, game)
-								end
-
-								if game:GetService("Players")[getgenv().SelectPly].Character.Humanoid.Health <= 0 then
-									_G.Fast_Farm_Level_Num = 1
-									_G.Fast_Farm_Level = false
-								end
-							until game.Players[getgenv().SelectPly].Character.Humanoid.Health <= 0 or not Auto_Farm_Level_Fast() or _G.Fast_Farm_Level_Num == 1
-							_G.Fast_Farm_Level_Num = 1
-							_G.Fast_Farm_Level = false
-							if not game.Players:FindFirstChild(Player) then
-								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter")
-							end
-						else
-							for i,v in pairs(PlayersAll) do
-								if v.Data.Level.Value >= 20 and v.Data.Level.Value <= PlayerLevel * 2 then
-									game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PlayerHunter")
-									print(v)
-								else
-									_G.ChackPlayer = _G.ChackPlayer + 1
-									if _G.ChackPlayer >= 12 then
-										Hop()
-									else
-										print("Chack Player ".._G.ChackPlayer)
-									end
-								end
-							end
-						end
-					end
-				end
-			elseif MyLevel >= 211 then --311 
-				_G.Fast_Farm_Level = false 
-				_G.Auto_Farm_Level = true
-			end
-		end)
-	end
-spawn(function()
-	while wait() do
-		pcall(function()
-			if _G.Fast_Farm_Level and StartMagnetFast_Farm_Lv then
-				for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-					if v.Name ==  "God's Guard" and (v.HumanoidRootPart.Position - PosMon.Position).magnitude <= 250 then
-						v.HumanoidRootPart.CFrame = PosMon
-						v.Humanoid.JumpPower = 0
-						v.Humanoid.WalkSpeed = 0
-						v.HumanoidRootPart.Size = Vector3.new(60,60,60)
-						v.HumanoidRootPart.Transparency = 1
-						v.HumanoidRootPart.CanCollide = false
-						v.Head.CanCollide = false
-						if v.Humanoid:FindFirstChild("Animator") then
-							v.Humanoid.Animator:Destroy()
-						end
-						v.Humanoid:ChangeState(11)
-						v.Humanoid:ChangeState(14)
-						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
-					end
-				end
-			end
-		end)
-	end
-end)
-
-end
 Main:Label(" [ Mastery ] ")
 
 Main:Toggle('Auto Farm Mastery Fruit',_G.Settings.Auto_Farm_Mastery_Fruit,function(value)
@@ -11083,15 +10867,15 @@ local function AttackFunction()
 end
 
 coroutine.wrap(function()
-    game:GetService("RunService").Stepped:Connect(function()
+	while task.wait() do --.1
         local activeControllerCHATGPT = getupvalue(CombatFrameworkCHATGPT, 2)['activeController']
         if _G.FastAttack3 and activeControllerCHATGPT and activeControllerCHATGPT.timeToNextAttack then
             activeControllerCHATGPT.timeToNextAttack = 0
-            activeControllerCHATGPT.hitboxMagnitude = 50
+            activeControllerCHATGPT.hitboxMagnitude = 31
             activeControllerCHATGPT:attack()
 			AttackFunction()  -- เรียกใช้ AttackFunction() ใน coroutine
         end
-    end)
+    end
 end)()
 
 local CombatFrameworkkkkkkkkkkkkkkkkkkkk = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
@@ -11106,22 +10890,11 @@ local function UpdateAttackSettings(controllerrrrrrrrrrrrrrrrrrrrr)
     controllerrrrrrrrrrrrrrrrrrrrr.currentAttackTrack = 0
     sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRaxNerous", math.huge)
 end
-local function EnableFastAttack()
-    game:GetService("RunService").RenderStepped:Connect(function()
-        if _G.FastAttack3 then
-            local controllerrrrrrrrrrrrrrrrrrrrr = CombatFrameworkkkkkkkkkkkkkkkkkkkk.activeController
-            if controllerrrrrrrrrrrrrrrrrrrrr then
-                UpdateAttackSettings(controllerrrrrrrrrrrrrrrrrrrrr)
-            end
-        end
-    end)
-end
-
-coroutine.wrap(EnableFastAttack)()
-
+	
 coroutine.wrap(function()
 	while task.wait() do
 		local ac = CombatFrameworkR.activeController
+		local controllerrrrrrrrrrrrrrrrrrrrr = CombatFrameworkkkkkkkkkkkkkkkkkkkk.activeController
 		if ac and ac.equipped then
 			if _G.FastAttack1 then
 				AttackFunction()
@@ -11139,8 +10912,12 @@ coroutine.wrap(function()
 				end
 			end
 		end
+		if _G.FastAttack3 and controllerrrrrrrrrrrrrrrrrrrrr then
+            UpdateAttackSettings(controllerrrrrrrrrrrrrrrrrrrrr)
+        end
 	end
 end)()
+
 
 print("End script")
 --loadstring(game:HttpGet("https://raw.githubusercontent.com/NaJaxHub/ser/main/OBF-Fast.lua"))() -- fast |  ตีเร็ว
@@ -11215,6 +10992,32 @@ function Boost()
 			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(CurrentWeapon()))
 		end
 	end)
+end
+for _, func in pairs(getreg()) do
+    if typeof(func) == "function" and getfenv(func).script == game.Players.LocalPlayer.PlayerScripts.CombatFramework then
+        for _, upvalue in pairs(debug.getupvalues(func)) do
+            if typeof(upvalue) == "table" then
+                spawn(function()
+                    game:GetService("RunService").RenderStepped:Connect(function()
+                        if _G.FastAttack1 or _G.FastAttack2 or _G.FastAttack3 then
+                            local controller = upvalue.activeController
+                            if controller then
+                                controller.increment = 3
+                                controller.timeToNextAttack = -math.huge
+                                controller.attacking = false
+                                controller.timeToNextBlock = 0
+                                controller.blocking = false
+                                controller.hitboxMagnitude = 50
+                                controller.humanoid.AutoRotate = true
+                                controller.focusStart = 0
+                                controller:attack()
+                            end
+                        end
+                    end)
+                end)
+            end
+        end
+    end
 end
 
 local cdnormal = 0
