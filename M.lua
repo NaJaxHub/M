@@ -7486,6 +7486,7 @@ Settings:Toggle("Fast Attack[2] [Bug]\nโจมตีเร็วสอง บ�
 end)
 Settings:Toggle("Fast Attack[3] [Bug]\nโจมตีเร็วสาม บัครออัพเดพ",_G.Settings.FastAttack3,function(value)
 	_G.Settings.FastAttack3 = value
+	_G.FastAttack3 = value
 	SaveSettings()
 end)
 
@@ -11048,7 +11049,7 @@ coroutine.wrap(function()
 		if ac and ac.equipped then
 			if _G.FastAttack2 then
 				AttackFunction()
-					if tick() - cooldownfastattack > inf then
+					if tick() - cooldownfastattack > math.huge then
 						wait(0.1)
 						cooldownfastattack = tick()
 					end
@@ -11069,27 +11070,74 @@ coroutine.wrap(function()
 		end
 	end
 end)()
-print("Framework Ok")
------------------------------------------------------------------------
-
-print("require")
-
-
+local CombatFrameworkCHATGPT = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
+local Camera = require(game.ReplicatedStorage.Util.CameraShaker)
+if Camera then
+    Camera:Stop()
+end
+local function AttackFunction()
+    local ac = CombatFramework.activeController
+    if ac and ac.equipped then
+        ac:attack()
+    end
+end
 
 coroutine.wrap(function()
-	while task.wait() do --.1
+    game:GetService("RunService").Stepped:Connect(function()
+        local activeControllerCHATGPT = getupvalue(CombatFrameworkCHATGPT, 2)['activeController']
+        if _G.FastAttack3 and activeControllerCHATGPT and activeControllerCHATGPT.timeToNextAttack then
+            activeControllerCHATGPT.timeToNextAttack = 0
+            activeControllerCHATGPT.hitboxMagnitude = 50
+            activeControllerCHATGPT:attack()
+			AttackFunction()  -- เรียกใช้ AttackFunction() ใน coroutine
+        end
+    end)
+end)()
+
+local CombatFrameworkkkkkkkkkkkkkkkkkkkk = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
+local function UpdateAttackSettings(controllerrrrrrrrrrrrrrrrrrrrr)
+    controllerrrrrrrrrrrrrrrrrrrrr.timeToNextAttack = -(math.huge^math.huge^math.huge)
+    controllerrrrrrrrrrrrrrrrrrrrr.attacking = false
+    controllerrrrrrrrrrrrrrrrrrrrr.increment = 4
+    controllerrrrrrrrrrrrrrrrrrrrr.blocking = false
+    controllerrrrrrrrrrrrrrrrrrrrr.hitboxMagnitude = 74
+    controllerrrrrrrrrrrrrrrrrrrrr.humanoid.AutoRotate = true
+    controllerrrrrrrrrrrrrrrrrrrrr.focusStart = 0
+    controllerrrrrrrrrrrrrrrrrrrrr.currentAttackTrack = 0
+    sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRaxNerous", math.huge)
+end
+local function EnableFastAttack()
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if _G.FastAttack3 then
+            local controllerrrrrrrrrrrrrrrrrrrrr = CombatFrameworkkkkkkkkkkkkkkkkkkkk.activeController
+            if controllerrrrrrrrrrrrrrrrrrrrr then
+                UpdateAttackSettings(controllerrrrrrrrrrrrrrrrrrrrr)
+            end
+        end
+    end)
+end
+
+coroutine.wrap(EnableFastAttack)()
+
+coroutine.wrap(function()
+	while task.wait() do
 		local ac = CombatFrameworkR.activeController
-		if _G.FastAttack1 and ac and ac.equipped then
-			--if _G.FastAttack then
+		if ac and ac.equipped then
+			if _G.FastAttack1 then
 				AttackFunction()
-				--if _G.Settings.Configs["Fast Attack Type"] == "Normal" then
-					if tick() - cooldownfastattack > .9 then wait() cooldownfastattack = tick() end
-				--elseif _G.Settings.Configs["Fast Attack Type"] == "Fast" then
-					--if tick() - cooldownfastattack > 1.5 then wait(.01) cooldownfastattack = tick() end
-				--elseif _G.Settings.Configs["Fast Attack Type"] == "Slow" then
-					--if tick() - cooldownfastattack > .3 then wait(.7) cooldownfastattack = tick() end
-				--end
-			--end
+				if tick() - cooldownfastattack > math.huge then
+					wait(0.1)
+					cooldownfastattack = tick()
+				end
+				if tick() - cooldownfastattack > 1.5 then
+					wait(0.01)
+					cooldownfastattack = tick()
+				end
+			else
+				if ac.hitboxMagnitude ~= 55 then
+					ac.hitboxMagnitude = 55
+				end
+			end
 		end
 	end
 end)()
@@ -11135,7 +11183,7 @@ end
 spawn(function()
     while wait(0) do
         if _G.FastAttack2 then
-            if b - tick() > 0.01 then
+            if b - tick() > 0.50 then
                 b = tick()
             end
             pcall(function()
@@ -11143,9 +11191,10 @@ spawn(function()
                 if ac and ac.equipped then
                     ac:Attack()
                     cdnormal = tick()
+				else
                     Animation.AnimationId = ac.anims.basic[2]
-                    ac.humanoid:LoadAnimation(Animation):Play(1, 1)  -- แก้เป็น (1,1) เพื่อให้เล่นอนิเมชันแบบเต็มรูปแบบ
-                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 3, "") -- ส่งสัญญาณโดยให้มีการเรียกใช้ฟังก์ชันที่มีความสมดุลกัน
+                    ac.humanoid:LoadAnimation(Animation):Play(0.01, 0.01)  -- แก้เป็น (1,1) เพื่อให้เล่นอนิเมชันแบบเต็มรูปแบบ
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 2, "") -- ส่งสัญญาณโดยให้มีการเรียกใช้ฟังก์ชันที่มีความสมดุลกัน
                 end
             end)
         end
@@ -11176,115 +11225,40 @@ Attack = function()
 	if not ac or not ac.equipped then
 		return
 	end
-	
-	task.spawn(function()
-		if tick() - cdnormal > 0 then
-			ac:attack()
-			cdnormal = tick()
-		else
-			Animation.AnimationId = ac.anims.basic[2]
-			ac.humanoid:LoadAnimation(Animation):Play(1, 1) -- แก้เป็น (1,1)
-			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getHits(120), 1, "")
+	if tick() - cdnormal > 0 then
+		ac:attack()
+		cdnormal = tick()
+	else
+		Animation.AnimationId = ac.anims.basic[2]
+		ac.humanoid:LoadAnimation(Animation):Play(1, 1) -- แก้เป็น (1,1)
+		game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getHits(120), 1, "")
 
-			if AttackRandom == 2 then
-				debug.setupvalue(ac.attack, 5, 55495)
-				debug.setupvalue(ac.attack, 6, 1892665)
-				debug.setupvalue(ac.attack, 4, 907772)
-				debug.setupvalue(ac.attack, 7, 14) wait(.1)
-			end
-			if AttackRandom == 1 or AttackRandom == 3 or AttackRandom == 4 then
-				wait(0.05) -- ลดเวลาที่ต้องรอลง
-			elseif AttackRandom == 2 then
-				wait(0.02) -- ลดเวลาที่ต้องรอลง
-			end
+		if AttackRandom == 2 then
+			debug.setupvalue(ac.attack, 5, 55495)
+			debug.setupvalue(ac.attack, 6, 1892665)
+			debug.setupvalue(ac.attack, 4, 907772)
+			debug.setupvalue(ac.attack, 7, 14) wait(.1)
 		end
-		
-		for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
-			for _, character in ipairs(workspace.Characters:GetChildren()) do
-				if character.Name == player.Name and character.Name ~= game.Players.LocalPlayer.Name then
-					if (character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
-						if #workspace.Characters:GetChildren() >= 1 then
-							wait(0.05) -- ลดเวลาที่ต้องรอลง
-						else
-							wait(0.1) -- ลดเวลาที่ต้องรอลง
-						end
-					end
-				end
-			end
-		end
-	end)
-end
-
-
-	b = tick()
-	spawn(function()
-		while task.wait() do task.wait()
-			if _G.FastAttack2 then
-				if b - tick() > 0.75 then
-					b = tick()
-				end
-				local ac = SeraphFrame.activeController
-				pcall(function()
-					for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-						if v.Humanoid.Health > 0 then
-							if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 50 then
-								Attack()
-								wait()
-								Boost()
-								if _G.SuperFastAttack then
-									AttackFunction()
-								end
-							end
-							for _,x in pairs(game:GetService("Players"):GetChildren()) do
-								for m,y in pairs(workspace.Characters:GetChildren()) do
-									if y.Name == x.Name and y.Name ~= game.Players.LocalPlayer.Name then
-										if (y.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
-											if m >= 3 then
-												Attack()
-												wait()
-												Boost()
-											else
-												Attack()
-												wait()
-												Boost()
-												if _G.SuperFastAttack then
-													AttackFunction()
-												end
-												wait(0.05)
-											end
-										end
-									end
-								end
-							end
-						end
-					end
-				end)
-			end
-		end
-	end)
-
-b = tick()
-spawn(function()
-	while wait(0) do
-		if  _G.FastAttack2 then
-			if b - tick() > 0.75 then
-				wait(.05)
-				b = tick()
-			end
-			pcall(function()
-				for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-					if v.Humanoid.Health > 0 then
-						if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
-							Attack()
-							wait(0.05)
-							Boost()
-						end
-					end
-				end
-			end)
+		if AttackRandom == 1 or AttackRandom == 3 or AttackRandom == 4 then
+			wait(0.05) -- ลดเวลาที่ต้องรอลง
+		elseif AttackRandom == 2 then
+			wait(0.02) -- ลดเวลาที่ต้องรอลง
 		end
 	end
-end)
+	for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
+		for _, character in ipairs(workspace.Characters:GetChildren()) do
+			if character.Name == player.Name and character.Name ~= game.Players.LocalPlayer.Name then
+				if (character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
+					if #workspace.Characters:GetChildren() >= 1 then
+						wait(0.05) -- ลดเวลาที่ต้องรอลง
+					else
+						wait(0.1) -- ลดเวลาที่ต้องรอลง
+					end
+				end
+			end
+		end
+	end
+end
 
 
 require(game.ReplicatedStorage.Util.CameraShaker):Stop()
@@ -11305,6 +11279,20 @@ task.spawn(function()
 					xShadowx.activeController.blocking = false
 					xShadowx.activeController.attacking = false
 					xShadowx.activeController.humanoid.AutoRotate = true
+				end)
+			end
+		end
+	end
+end)
+task.spawn(function()
+	while true do task.wait()
+		if _G.FastAttack1 then
+			if typeof(xShadowx) == "table" then
+				pcall(function()
+					if xShadowx.activeController then
+						game:GetService 'VirtualUser':CaptureController()
+						game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
+					end
 				end)
 			end
 		end
