@@ -10878,46 +10878,6 @@ coroutine.wrap(function()
     end
 end)()
 
-local CombatFrameworkkkkkkkkkkkkkkkkkkkk = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
-local function UpdateAttackSettings(controllerrrrrrrrrrrrrrrrrrrrr)
-    controllerrrrrrrrrrrrrrrrrrrrr.timeToNextAttack = -(math.huge^math.huge^math.huge)
-    controllerrrrrrrrrrrrrrrrrrrrr.attacking = false
-    controllerrrrrrrrrrrrrrrrrrrrr.increment = 4
-    controllerrrrrrrrrrrrrrrrrrrrr.blocking = false
-    controllerrrrrrrrrrrrrrrrrrrrr.hitboxMagnitude = 74
-    controllerrrrrrrrrrrrrrrrrrrrr.humanoid.AutoRotate = true
-    controllerrrrrrrrrrrrrrrrrrrrr.focusStart = 0
-    controllerrrrrrrrrrrrrrrrrrrrr.currentAttackTrack = 0
-    sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRaxNerous", math.huge)
-end
-	
-coroutine.wrap(function()
-	while task.wait() do
-		local ac = CombatFrameworkR.activeController
-		local controllerrrrrrrrrrrrrrrrrrrrr = CombatFrameworkkkkkkkkkkkkkkkkkkkk.activeController
-		if ac and ac.equipped then
-			if _G.FastAttack1 then
-				AttackFunction()
-				if tick() - cooldownfastattack > math.huge then
-					wait(0.1)
-					cooldownfastattack = tick()
-				end
-				if tick() - cooldownfastattack > 1.5 then
-					wait(0.01)
-					cooldownfastattack = tick()
-				end
-			else
-				if ac.hitboxMagnitude ~= 55 then
-					ac.hitboxMagnitude = 55
-				end
-			end
-		end
-		if _G.FastAttack3 and controllerrrrrrrrrrrrrrrrrrrrr then
-            UpdateAttackSettings(controllerrrrrrrrrrrrrrrrrrrrr)
-        end
-	end
-end)()
-
 
 print("End script")
 --loadstring(game:HttpGet("https://raw.githubusercontent.com/NaJaxHub/ser/main/OBF-Fast.lua"))() -- fast |  ตีเร็ว
@@ -10992,32 +10952,6 @@ function Boost()
 			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(CurrentWeapon()))
 		end
 	end)
-end
-for _, func in pairs(getreg()) do
-    if typeof(func) == "function" and getfenv(func).script == game.Players.LocalPlayer.PlayerScripts.CombatFramework then
-        for _, upvalue in pairs(debug.getupvalues(func)) do
-            if typeof(upvalue) == "table" then
-                spawn(function()
-                    game:GetService("RunService").RenderStepped:Connect(function()
-                        if _G.FastAttack1 or _G.FastAttack2 or _G.FastAttack3 then
-                            local controller = upvalue.activeController
-                            if controller then
-                                controller.increment = 3
-                                controller.timeToNextAttack = -math.huge
-                                controller.attacking = false
-                                controller.timeToNextBlock = 0
-                                controller.blocking = false
-                                controller.hitboxMagnitude = 50
-                                controller.humanoid.AutoRotate = true
-                                controller.focusStart = 0
-                                controller:attack()
-                            end
-                        end
-                    end)
-                end)
-            end
-        end
-    end
 end
 
 local cdnormal = 0
