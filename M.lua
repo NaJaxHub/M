@@ -79,6 +79,31 @@ if game:IsLoaded() then
 end 
 ]]
 
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local Module = require(Players.LocalPlayer.PlayerScripts.CombatFramework)
+local CombatFramework = debug.getupvalues(Module)[2]
+local CameraShakerR = require(ReplicatedStorage.Util.CameraShaker)
+
+task.spawn(function()
+    while true do
+        task.wait()
+        if _G.Auto_Farm_Mastery_Fruit or _G.FastAttack1 then
+            pcall(function()
+                CameraShakerR:Stop()
+                CombatFramework.activeController.attacking = false
+                CombatFramework.activeController.timeToNextAttack = 0
+                CombatFramework.activeController.increment = 4
+                CombatFramework.activeController.hitboxMagnitude = 80
+                CombatFramework.activeController.blocking = false
+                CombatFramework.activeController.timeToNextBlock = 0
+                CombatFramework.activeController.focusStart = 0
+                CombatFramework.activeController.humanoid.AutoRotate = true
+            end)
+        end
+    end
+end)
 _G.Settings = {
 	SelectTeam = "Pirate",
 	Auto_Farm_Level = false,
@@ -344,6 +369,33 @@ end
 function AttackFunction()
 	local ac = CombatFrameworkR.activeController
 	if ac and ac.equipped then
+		local bladehit = getAllBladeHits(60)
+		if #bladehit > 0 then
+			local AcAttack8, AcAttack9, AcAttack7, AcAttack10 = debug.getupvalue(ac.attack, 5), debug.getupvalue(ac.attack, 6), debug.getupvalue(ac.attack, 4), debug.getupvalue(ac.attack, 7)
+			local NumberAc12 = (AcAttack8 * 798405 + AcAttack7 * 727595) % AcAttack9
+			local NumberAc13 = AcAttack7 * 798405
+			NumberAc12 = (NumberAc12 * AcAttack9 + NumberAc13) % 1099511627776
+			AcAttack8, AcAttack7 = math.floor(NumberAc12 / AcAttack9), NumberAc12 - AcAttack8 * AcAttack9
+			AcAttack10 = (AcAttack10 or 0) + 1
+			debug.setupvalue(ac.attack, 5, AcAttack8)
+			debug.setupvalue(ac.attack, 6, AcAttack9)
+			debug.setupvalue(ac.attack, 4, AcAttack7)
+			debug.setupvalue(ac.attack, 7, AcAttack10)
+			for _, v in pairs(ac.animator.anims.basic) do
+				v:Play(0.01, 0.01, 0.01)
+			end
+			if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] then 
+				game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", tostring(CurrentWeapon()))
+				game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(NumberAc12 / 1099511627776 * 16777215), AcAttack10)
+				game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "") 
+			end
+		end
+	end
+end
+
+--[[function AttackFunction()
+	local ac = CombatFrameworkR.activeController
+	if ac and ac.equipped then
 		for indexincrement = 1, 1 do
 			local bladehit = getAllBladeHits(60)
 			if #bladehit > 0 then
@@ -368,13 +420,14 @@ function AttackFunction()
 				end                 
 				if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] then 
 					game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(CurrentWeapon()))
-					game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(NumberAc12 / 1099511627776 * 16777215), AcAttack10)
+					game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(NumberAc12 / 18446744065119617040), AcAttack10) --1099511627776 * 16777215
 					game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "") 
 				end
 			end
 		end
 	end
-end
+end]]
+
 
 if game.PlaceId == 2753915549 then
 	W1 = true
@@ -11016,8 +11069,8 @@ coroutine.wrap(function()
 		if ac and ac.equipped then
 			if _G.FastAttack2 then
 				AttackFunction()
-					if tick() - cooldownfastattack > 1.75 then
-						task.wait(0.01)
+					if tick() - cooldownfastattack > inf then
+						wait(0.1)
 						cooldownfastattack = tick()
 					end
 				--if _G.Settings.Configs["Fast Attack Type"] == "Normal" then
@@ -11101,7 +11154,7 @@ end
 spawn(function()
 	while wait(0) do
 		if _G.FastAttack2 then
-			if b - tick() > 0.75 then
+			if b - tick() > 0.01 then
 				b = tick()
 			end
 			pcall(function()
@@ -11114,7 +11167,7 @@ spawn(function()
 								cdnormal = tick()
 								Animation.AnimationId = ac.anims.basic[2]
 								ac.humanoid:LoadAnimation(Animation):Play(0.01, 0.01)
-								game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 2, "") --3
+								game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 3, "") --3
 							end
 						end
 					end
@@ -11159,8 +11212,6 @@ Attack = function()
 				AttackFunction()
 			elseif AttackRandom == 2 then
 				Attack()
-				wait(0)
-				Boost()
 				if _G.SuperFastAttack then
 					AttackFunction()
 				end
@@ -11201,27 +11252,12 @@ task.spawn(function()
 				if i then
 					b.play = function()
 					end
-					d:Play(0.1,0.1,0.1)
+					d:Play(1.3,2.2,3.1)
 					h(i)
 					b.play = shared.cpc
 					wait(0.1)
 					d:Stop()
 				end
-			end
-		end)
-	end
-end)
-
-task.spawn(function()
-	while task.wait() do
-		pcall(function()
-			if _G.FastAttack2 then
-				SeraphFrame.activeController.timeToNextAttack = -(math.huge^math.huge^math.huge)
-				SeraphFrame.activeController.timeToNextAttack = 0
-				SeraphFrame.activeController.focusStart = 0
-				SeraphFrame.activeController.hitboxMagnitude = 80
-				SeraphFrame.activeController.humanoid.AutoRotate = true
-				SeraphFrame.activeController.increment = 4
 			end
 		end)
 	end
@@ -11296,27 +11332,7 @@ spawn(function()
 		end
 	end
 end)
-local Module = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
-local CombatFramework = debug.getupvalues(Module)[2]
-local CameraShakerR = require(game.ReplicatedStorage.Util.CameraShaker)
 
-task.spawn(function()
-	while true do task.wait()
-		if _G.Auto_Farm_Mastery_Fruit or _G.FastAttack1 or _G.FastAttack2 then
-			pcall(function()
-				CameraShakerR:Stop()
-				CombatFramework.activeController.attacking = false
-				CombatFramework.activeController.timeToNextAttack = 0
-				CombatFramework.activeController.increment = 4
-				CombatFramework.activeController.hitboxMagnitude = 80
-				CombatFramework.activeController.blocking = false
-				CombatFramework.activeController.timeToNextBlock = 0
-				CombatFramework.activeController.focusStart = 0
-				CombatFramework.activeController.humanoid.AutoRotate = true
-			end)
-		end
-	end
-end)
 
 require(game.ReplicatedStorage.Util.CameraShaker):Stop()
 xShadowFastAttackx = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
@@ -11341,15 +11357,16 @@ task.spawn(function()
 		end
 	end
 end)
+
 spawn(function()
-      while wait() do
-      if _G.FastAttack2 or _G.FastAttack1 then
-        for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
-            if v.Name == "CurvedRing" or v.Name == "SlashHit" or v.Name == "SwordSlash" or v.Name == "SlashTail" or v.Name == "Sounds" then
-                v:Destroy() 
-            end
-        end
-    end
+    while wait() do
+		if _G.FastAttack2 or _G.FastAttack1 then
+			for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
+				if v.Name == "CurvedRing" or v.Name == "SlashHit" or v.Name == "SwordSlash" or v.Name == "SlashTail" or v.Name == "Sounds" then
+					v:Destroy() 
+				end
+			end
+		end
     end
 end)
 
