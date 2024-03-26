@@ -68,25 +68,6 @@ print("library..Set")
 if game:GetService("ReplicatedStorage").Effect.Container:FindFirstChild("Death") then
 	game:GetService("ReplicatedStorage").Effect.Container.Death:Destroy()
 end
-print("UI.Lo")
-----------------------------------------------------------------------------------------------------------------------------------------------
-local Window = library:NaJa()
-
-local A = Window:Tab("Main:Autofarm","6022668898")
-local B = Window:Tab("AutoFarm:Stats","11155827783")
-local C = Window:Tab("Teleport : PvP","11162889532")
-local D = Window:Tab("Raid : Fruit","11155842453")
-local E = Window:Tab("Shop : L_22_","11156322986")
-
-local Main = A:Section("Main","Right")
-local Settings = A:Section("Other Auto Farm","Left")
-local L_15_ = B:Section("Automatics","Left")
-local L_17_ = B:Section("Stats","Right")
-local L_18_ = C:Section("Teleport","Left")
-local Combat = C:Section("PvP","Right")
-local L_20_ = D:Section("Raid","Left")
-local LLLL = D:Section("Fruit","Right")
-local L_22_ = E:Section("L_22_","Right")
 
 --[[
 if game:IsLoaded() then
@@ -1756,6 +1737,25 @@ function Check_Sword(Sword_Name)
 	end
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------
+print("UI.Lo")
+----------------------------------------------------------------------------------------------------------------------------------------------
+local Window = library:NaJa()
+
+local A = Window:Tab("Main:Autofarm","6022668898")
+local B = Window:Tab("AutoFarm:Stats","11155827783")
+local C = Window:Tab("Teleport : PvP","11162889532")
+local D = Window:Tab("Raid : Fruit","11155842453")
+local E = Window:Tab("Shop : L_22_","11156322986")
+
+local Main = A:Section("Main","Right")
+local Settings = A:Section("Other Auto Farm","Left")
+local L_15_ = B:Section("Automatics","Left")
+local L_17_ = B:Section("Stats","Right")
+local L_18_ = C:Section("Teleport","Left")
+local Combat = C:Section("PvP","Right")
+local L_20_ = D:Section("Raid","Left")
+local LLLL = D:Section("Fruit","Right")
+local L_22_ = E:Section("L_22_","Right")
 
 L_22_:Label("Server")
 
