@@ -367,105 +367,6 @@ function getAllBladeHits(Sizes)
 end
 
 function AttackFunction()
-    local ac = CombatFrameworkR.activeController
-    if not ac or not ac.equipped then return end
-
-    local bladehit = getAllBladeHits(60)
-    if #bladehit == 0 then return end
-
-    local AcAttack8, AcAttack9, AcAttack7, AcAttack10 = debug.getupvalue(ac.attack, 5), debug.getupvalue(ac.attack, 6), debug.getupvalue(ac.attack, 4), debug.getupvalue(ac.attack, 7)
-    local NumberAc12 = (AcAttack8 * 798405 + AcAttack7 * 727595) % AcAttack9
-    local NumberAc13 = AcAttack7 * 798405
-    NumberAc12 = (NumberAc12 * AcAttack9 + NumberAc13) % 1099511627776
-    AcAttack8, AcAttack7 = math.floor(NumberAc12 / AcAttack9), NumberAc12 - AcAttack8 * AcAttack9
-    AcAttack10 = (AcAttack10 or 0) + 1
-    debug.setupvalue(ac.attack, 4, AcAttack7)
-    debug.setupvalue(ac.attack, 5, AcAttack8)
-    debug.setupvalue(ac.attack, 6, AcAttack9)
-    debug.setupvalue(ac.attack, 7, AcAttack10)
-    local character = game.Players.LocalPlayer.Character
-    if character and character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] then 
-        local weaponName = tostring(CurrentWeapon())
-        game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", weaponName)
-        local validatorValue = math.floor(NumberAc12 / 1099511627776 * 16777215) % 16777215
-        game.ReplicatedStorage.Remotes.Validator:FireServer(validatorValue, AcAttack10)
-        game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "") 
-    end
-end
-
-local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts:WaitForChild("CombatFramework"))
-local CombatFrameworkR = getupvalues(CombatFramework)[2]
-
-function CurrentWeapon()
-	local ac = CombatFrameworkR.activeController
-	local ret = ac.blades[1]
-	if not ret then return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name end
-	pcall(function()
-		while ret.Parent~=game.Players.LocalPlayer.Character do ret=ret.Parent end
-	end)
-	if not ret then return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name end
-	return ret
-end
-
-function getAllBladeHits(Sizes)
-	local Hits = {}
-	local Client = game.Players.LocalPlayer
-	local Enemies = game:GetService("Workspace").Enemies:GetChildren()
-	for i=1,#Enemies do local v = Enemies[i]
-		local Human = v:FindFirstChildOfClass("Humanoid")
-		if Human and Human.RootPart and Human.Health > 0 and Client:DistanceFromCharacter(Human.RootPart.Position) < Sizes+5 then
-			table.insert(Hits,Human.RootPart)
-		end
-	end
-	return Hits
-end
-
-function AttackFunctionnChatGPT()
-    local ac = CombatFrameworkR.activeController
-    if not ac or not ac.equipped then return end
-
-    local bladehit = getAllBladeHits(60)
-    if #bladehit == 0 then return end
-
-    local AcAttack8, AcAttack9, AcAttack7, AcAttack10 = debug.getupvalue(ac.attack, 5), debug.getupvalue(ac.attack, 6), debug.getupvalue(ac.attack, 4), debug.getupvalue(ac.attack, 7)
-    local NumberAc12 = (AcAttack8 * 798405 + AcAttack7 * 727595) % AcAttack9
-    local NumberAc13 = AcAttack7 * 798405
-    NumberAc12 = (NumberAc12 * AcAttack9 + NumberAc13) % 1099511627776
-    AcAttack8, AcAttack7 = math.floor(NumberAc12 / AcAttack9), NumberAc12 - AcAttack8 * AcAttack9
-    AcAttack10 = (AcAttack10 or 0) + 1
-    debug.setupvalue(ac.attack, 4, AcAttack7)
-    debug.setupvalue(ac.attack, 5, AcAttack8)
-    debug.setupvalue(ac.attack, 6, AcAttack9)
-    debug.setupvalue(ac.attack, 7, AcAttack10)
-
-    for _, v in pairs(ac.animator.anims.basic) do
-        v:Play(1, 1, 1)
-    end
-
-    local weaponName = tostring(CurrentWeapon())
-    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", weaponName)
-    
-    -- ส่งค่าเลือดและความแรงของการโจมตีไปยังเซิร์ฟเวอร์
-    local monsterHealth = 100 -- จำลองค่าเลือดของมอนเตอร์
-    local attackPower = 50 -- จำลองความแรงของการโจมตี
-    game.ReplicatedStorage.Remotes.Validator:FireServer(monsterHealth, AcAttack10, attackPower)
-    
-    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "") 
-end
-
--- เริ่มต้นโจมตีอัตโนมัติ
-
--- ลูปตรวจสอบและเรียกใช้งานฟังก์ชัน AttackFunction() เพื่อโจมตีเรื่อย ๆ
-coroutine.wrap(function()
-    while true do
-        wait(0.05) -- ปรับความเร็วตามต้องการ 0.05 หมายถึงทุก 0.05 วินาที
-        if isAutoAttackEnabled then
-            AttackFunctionnChatGPT()
-        end
-    end
-end)()
-
---[[function AttackFunction()
 	local ac = CombatFrameworkR.activeController
 	if ac and ac.equipped then
 		for indexincrement = 1, 1 do
@@ -498,7 +399,7 @@ end)()
 			end
 		end
 	end
-end]]
+end
 
 
 if game.PlaceId == 2753915549 then
@@ -7585,47 +7486,8 @@ Settings:Toggle("Fast Attack[2] [Bug]\nโจมตีเร็วสอง บ�
 end)
 Settings:Toggle("Fast Attack[3] [Bug]\nโจมตีเร็วสาม บัครออัพเดพ",_G.Settings.FastAttack3,function(value)
 	_G.Settings.FastAttack3 = value
-	isAttackEnabled = value
-	isAutoAttackEnabled = value
 	SaveSettings()
 end)
-
-game:GetService("RunService").Stepped:Connect(function()
-    if isAttackEnabled then  -- ตรวจสอบว่าการโจมตีถูกเปิดหรือไม่
-        AttackFunctionHackByChatGPT()  -- เรียกใช้ฟังก์ชันโจมตี
-    end
-end)
-
-function AttackFunctionHackByChatGPT()
-    if not isAttackEnabled then
-        print("Attack function is currently disabled")
-        return  -- ถ้าการโจมตีถูกปิดให้หยุดการทำงานของฟังก์ชันทันที
-    end
-    local ac = CombatFrameworkR.activeController
-    if ac and ac.equipped then
-        local bladehit = getAllBladeHits(60)
-        if #bladehit > 0 then
-            local AcAttack8, AcAttack9, AcAttack7, AcAttack10 = debug.getupvalue(ac.attack, 5), debug.getupvalue(ac.attack, 6), debug.getupvalue(ac.attack, 4), debug.getupvalue(ac.attack, 7)
-            local NumberAc12 = (AcAttack8 * 798405 + AcAttack7 * 727595) % AcAttack9
-            local NumberAc13 = AcAttack7 * 798405
-            NumberAc12 = (NumberAc12 * AcAttack9 + NumberAc13) % 1099511627776
-            AcAttack8, AcAttack7 = math.floor(NumberAc12 / AcAttack9), NumberAc12 - AcAttack8 * AcAttack9
-            AcAttack10 = (AcAttack10 or 0) + 1
-            debug.setupvalue(ac.attack, 5, AcAttack8)
-            debug.setupvalue(ac.attack, 6, AcAttack9)
-            debug.setupvalue(ac.attack, 4, AcAttack7)
-            debug.setupvalue(ac.attack, 7, AcAttack10)
-            for _, v in pairs(ac.animator.anims.basic) do
-                v:Play(0.01, 0.01, 0.01)
-            end
-            if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] then 
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange", tostring(CurrentWeapon()))
-                game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(NumberAc12 / 1099511627776 * 16777215), AcAttack10)
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, 2, "") 
-            end
-        end
-    end
-end
 
 local FastAttack3s = {
     "Level1\nระดับที่หนึ่ง",
@@ -7727,29 +7589,37 @@ task.spawn(function()
 	while task.wait() do
 		pcall(function()
 			if BringMobFarm then
-				for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if v.Name == QuestCheck()[3] and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 234 then
-							v.HumanoidRootPart.CFrame = PosMon
-							v.Humanoid.JumpPower = 0
-							v.Humanoid.WalkSpeed = 0
-							v.Humanoid.NameDisplayDistance = 0
-							v.HumanoidRootPart.Size = Vector3.new(77, 77, 77)
-							v.HumanoidRootPart.CanCollide = false
-							v.Head.CanCollide = false
-							if v.Humanoid:FindFirstChild("Animator") then
-								v.Humanoid.Animator:Destroy()
-							end
-							sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
-							sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius", math.huge)
-							v.Humanoid:ChangeState(12) --12
-						--end
-                    end
+				local questTarget = QuestCheck()[3]
+				for _, mob in pairs(game.Workspace.Enemies:GetChildren()) do
+					if mob.Name == questTarget and (mob.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 234 then
+						-- ตั้ง CFrame ของมอนเตอร์ให้ตรงกับตำแหน่งที่กำหนด
+						mob.HumanoidRootPart.CFrame = PosMon
+						
+						-- ปรับแต่งคุณสมบัติของมอนเตอร์
+						mob.Humanoid.JumpPower = 0
+						mob.Humanoid.WalkSpeed = 0
+						mob.Humanoid.NameDisplayDistance = 0
+						mob.HumanoidRootPart.Size = Vector3.new(77, 77, 77)
+						mob.HumanoidRootPart.CanCollide = false
+						mob.Head.CanCollide = false
+						
+						-- ลบ Animator ออกหากมีอยู่
+						if mob.Humanoid:FindFirstChild("Animator") then
+							mob.Humanoid.Animator:Destroy()
+						end
+						
+						-- ปรับขอบเขตการจำลองของผู้เล่นให้มากพอสมควร
+						sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+						sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius", math.huge)
+						
+						-- เปลี่ยนสถานะของ Humanoid เป็น Ragdoll
+						mob.Humanoid:ChangeState(12)
+					end
 				end
 			end
 		end)
 	end
 end)
-
 
 
 --[[spawn(function() 
@@ -11224,17 +11094,6 @@ coroutine.wrap(function()
 	end
 end)()
 
-function ContinuousAttack()
-    while true do
-        if _G.FastAttack2 or _G.FastAttack1 then
-            AttackFunctionHackByChatGPT()
-        end
-        task.wait(0.1) -- รอเวลา 0.1 วินาที ก่อนที่จะโจมตีใหม่อีกครั้ง
-    end
-end
-
-coroutine.wrap(ContinuousAttack)()
-
 print("End script")
 --loadstring(game:HttpGet("https://raw.githubusercontent.com/NaJaxHub/ser/main/OBF-Fast.lua"))() -- fast |  ตีเร็ว
 
@@ -11254,47 +11113,45 @@ local RigController = require(game.Players.LocalPlayer.PlayerScripts.CombatFrame
 local RigControllerR = getupvalues(RigController)[2]
 local realbhit = require(game.ReplicatedStorage.CombatFramework.RigLib)
 
-local cdnormal = 9e9
+local cdnormal = 0
 local Animation = Instance.new("Animation")
-local CooldownFastAttack = 9e9
+
 Attack = function()
     local ac = SeraphFrame.activeController
-    if ac and ac.equipped then
-		if tick() - cdnormal > 9e9 then
-			ac:Attack()
-			cdnormal = tick()
-		else
-			Animation.AnimationId = ac.anims.basic[2]
-			ac.humanoid:LoadAnimation(Animation):Play(0.01, 0.01)
-			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 3, "") --3
-		end
+    if not ac or not ac.equipped then
+        return
+    end
+    
+    if tick() - cdnormal > 0.1 then  -- ปรับเวลาคูลดาวน์ลงมาเหมาะสม
+        ac:Attack()
+        cdnormal = tick()
+    else
+        Animation.AnimationId = ac.anims.basic[2]
+        ac.humanoid:LoadAnimation(Animation):Play(1, 1)  -- แก้เป็น (1,1) เพื่อให้เล่นอนิเมชันแบบเต็มรูปแบบ
+        game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 3, "") -- ส่งสัญญาณโดยให้มีการเรียกใช้ฟังก์ชันที่มีความสมดุลกัน
     end
 end
+
 spawn(function()
-	while wait(0) do
-		if _G.FastAttack2 then
-			if b - tick() > 0.01 then
-				b = tick()
-			end
-			pcall(function()
-				for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
-					if v.Humanoid.Health > 0 then
-						if (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
-							local ac = SeraphFrame.activeController
-							if ac and ac.equipped then
-								ac:Attack()
-								cdnormal = tick()
-								Animation.AnimationId = ac.anims.basic[2]
-								ac.humanoid:LoadAnimation(Animation):Play(0.01, 0.01)
-								game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 3, "") --3
-							end
-						end
-					end
-				end
-			end)
-		end
-	end
+    while wait(0) do
+        if _G.FastAttack2 then
+            if b - tick() > 0.01 then
+                b = tick()
+            end
+            pcall(function()
+                local ac = SeraphFrame.activeController
+                if ac and ac.equipped then
+                    ac:Attack()
+                    cdnormal = tick()
+                    Animation.AnimationId = ac.anims.basic[2]
+                    ac.humanoid:LoadAnimation(Animation):Play(1, 1)  -- แก้เป็น (1,1) เพื่อให้เล่นอนิเมชันแบบเต็มรูปแบบ
+                    game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(77), 3, "") -- ส่งสัญญาณโดยให้มีการเรียกใช้ฟังก์ชันที่มีความสมดุลกัน
+                end
+            end)
+        end
+    end
 end)
+
 local Time = 1
 local AttackRandom = 2
 spawn(function()
@@ -11311,76 +11168,53 @@ function Boost()
 	end)
 end
 
+local cdnormal = 0
+local Animation = Instance.new("Animation")
+local CooldownFastAttack = 0.000001 -- ลดค่าเวลาคูลดาวน์ลง
 Attack = function()
 	local ac = SeraphFrame.activeController
-	if ac and ac.equipped then
-		if tick() - cdnormal > 9e9 then
+	if not ac or not ac.equipped then
+		return
+	end
+	
+	task.spawn(function()
+		if tick() - cdnormal > 0 then
 			ac:attack()
 			cdnormal = tick()
 		else
 			Animation.AnimationId = ac.anims.basic[2]
-			ac.humanoid:LoadAnimation(Animation):Play(0.01, 0.01) --ท่าไม่ทำงานแก้เป็น (1,1)
-			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getAllBladeHits(60), 2, "")
+			ac.humanoid:LoadAnimation(Animation):Play(1, 1) -- แก้เป็น (1,1)
+			game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", getHits(120), 1, "")
+
 			if AttackRandom == 2 then
 				debug.setupvalue(ac.attack, 5, 55495)
 				debug.setupvalue(ac.attack, 6, 1892665)
 				debug.setupvalue(ac.attack, 4, 907772)
-				debug.setupvalue(ac.attack, 7, 14)
+				debug.setupvalue(ac.attack, 7, 14) wait(.1)
 			end
 			if AttackRandom == 1 or AttackRandom == 3 or AttackRandom == 4 then
-				AttackFunction()
+				wait(0.05) -- ลดเวลาที่ต้องรอลง
 			elseif AttackRandom == 2 then
-				Attack()
-				if _G.SuperFastAttack then
-					AttackFunction()
-				end
+				wait(0.02) -- ลดเวลาที่ต้องรอลง
 			end
 		end
-		for _,x in pairs(game:GetService("Players"):GetChildren()) do
-			for m,y in pairs(workspace.Characters:GetChildren()) do
-				if y.Name == x.Name and y.Name ~= game.Players.LocalPlayer.Name then
-					if (y.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
-						if m >= 1 then
-							AttackFunction()
+		
+		for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
+			for _, character in ipairs(workspace.Characters:GetChildren()) do
+				if character.Name == player.Name and character.Name ~= game.Players.LocalPlayer.Name then
+					if (character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 60 then
+						if #workspace.Characters:GetChildren() >= 1 then
+							wait(0.05) -- ลดเวลาที่ต้องรอลง
 						else
-							Attack()
-							wait(0)
-							Boost()
+							wait(0.1) -- ลดเวลาที่ต้องรอลง
 						end
 					end
 				end
 			end
 		end
-	end
+	end)
 end
 
-task.spawn(function()
-	local a = game.Players.LocalPlayer
-	local b = require(a.PlayerScripts.CombatFramework.Particle)
-	local c = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
-	if not shared.orl then
-		shared.orl = c.wrapAttackAnimationAsync
-	end
-	if not shared.cpc then
-		shared.cpc = b.play
-	end
-	if _G.FastAttack2 then
-		pcall(function()
-			c.wrapAttackAnimationAsync = function(d, e, f, g, h)
-				local i = c.getBladeHits(e, f, g)
-				if i then
-					b.play = function()
-					end
-					d:Play(1.3,2.2,3.1)
-					h(i)
-					b.play = shared.cpc
-					wait(0.1)
-					d:Stop()
-				end
-			end
-		end)
-	end
-end)
 
 	b = tick()
 	spawn(function()
