@@ -5698,13 +5698,6 @@ if W1 then
 									end
 								end
 								PosMon = v.HumanoidRootPart.CFrame
-                                if v.Name == "God's Guard" and (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 280 then
-                                    v.HumanoidRootPart.Size = Vector3.new(77,77,77)
-                                    v.Humanoid:ChangeState(14)
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.Head.CanCollide = false
-                                    v.HumanoidRootPart.CFrame = PosMon
-                                end
 								v.HumanoidRootPart.Size = Vector3.new(77,77,77)
 								v.HumanoidRootPart.Transparency = 1
 								Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 28, 0) * CFrame.Angles(math.rad(90), 0, 0))
@@ -5776,53 +5769,32 @@ if W1 then
 			end
 		end)
 	end
-
-    spawn(function()
-        while task.wait() do
-            pcall(function()
-                if _G.Fast_Farm_Level then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if StartMagnetFast_Farm_Lv then
-                            if (v.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 280 and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                v.HumanoidRootPart.Size = Vector3.new(123,123,123)
-                                v.Humanoid:ChangeState(12)
-                                v.Humanoid:ChangeState(14)
-                                v.HumanoidRootPart.CanCollide = false
-                                v.Head.CanCollide = false
-                                v.HumanoidRootPart.CFrame = PosMon
-                                if v.Humanoid:FindFirstChild("Animator") then
-                                    v.Humanoid.Animator:Destroy()
-                                end
-                            end
-                        end
-                    end
-                end
-            end)
-        end
-    end)
-
-task.spawn(function()
-	while task.wait() do
+spawn(function()
+	while wait() do
 		pcall(function()
-			if _G.Fast_Farm_Level then
-				if StartMagnetFast_Farm_Lv then
-					if QuestC.Visible == true then
-						for i,v in pairs(game:GetService("Workspace").Enemies()) do
-							if v.Name == Name and (v.HumanoidRootPart.Position-PosMon.Position).Magnitude <= 350 then
-								v.Humanoid:ChangeState(12)
-								v.Humanoid.JumpPower = 0
-								v.Humanoid.WalkSpeed = 0
-								v.HumanoidRootPart.CanCollide = false
-								v.HumanoidRootPart.Size = Vector3.new(80,80,80)
-								v.HumanoidRootPart.CFrame = PosMon
-							end
+			if _G.Fast_Farm_Level and StartMagnetFast_Farm_Lv then
+				for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+					if v.Name ==  "God's Guard" and (v.HumanoidRootPart.Position - PosMon.Position).magnitude <= 250 then
+						v.HumanoidRootPart.CFrame = PosMon
+						v.Humanoid.JumpPower = 0
+						v.Humanoid.WalkSpeed = 0
+						v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+						v.HumanoidRootPart.Transparency = 1
+						v.HumanoidRootPart.CanCollide = false
+						v.Head.CanCollide = false
+						if v.Humanoid:FindFirstChild("Animator") then
+							v.Humanoid.Animator:Destroy()
 						end
+						v.Humanoid:ChangeState(11)
+						v.Humanoid:ChangeState(14)
+						sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius",  math.huge)
 					end
 				end
 			end
 		end)
 	end
 end)
+
 end
 Main:Label(" [ Mastery ] ")
 
@@ -12821,82 +12793,89 @@ end)
 			if _G.Auto_Farm_Level then 
 				pcall(function()
 					QuestCheck()
-					if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-						if game:GetService("Workspace").Enemies:FindFirstChild(MobName) then EquipWeapon(_G.Select_Weapon)
-							for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-								if v.Name == MobName then
-									if v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-										repeat task.wait()
-											local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
-											if not string.find(QuestTitle, MobName) then
-												game:GetService("ReplicatedStorage").Remotes.CommF:InvokeServer("AbandonQuest")
-											else
-												EquipWeapon(_G.Select_Weapon)
-												--_G.PosMonFarmLv = false
-												if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
-													game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
-												end
-												PosMon = v.HumanoidRootPart.CFrame
-												if (v.HumanoidRootPart.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
-													Attack()
-													if v.Humanoid.Health <= 0 then
-														v:Destroy()
-													end
-													game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,30,0) _G.SuperFastAttack = false
+					local MyLevel = game.Players.LocalPlayer.Data.Level.Value
+					local QuestC = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest
+					if _G.Fast_Farm_Level and W1 and (MyLevel >= 15 and MyLevel <= 210) then
+						Fast_Farm_Lv()
+						return
+					else
+						if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+							if game:GetService("Workspace").Enemies:FindFirstChild(MobName) then EquipWeapon(_G.Select_Weapon)
+								for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+									if v.Name == MobName then
+										if v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+											repeat task.wait()
+												local QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
+												if not string.find(QuestTitle, MobName) then
+													game:GetService("ReplicatedStorage").Remotes.CommF:InvokeServer("AbandonQuest")
 												else
-													Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+													EquipWeapon(_G.Select_Weapon)
+													--_G.PosMonFarmLv = false
+													if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
+														game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+													end
+													PosMon = v.HumanoidRootPart.CFrame
+													if (v.HumanoidRootPart.CFrame.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
+														Attack()
+														if v.Humanoid.Health <= 0 then
+															v:Destroy()
+														end
+														game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,30,0) _G.SuperFastAttack = false
+													else
+														Tween(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
+														game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
+													end
 													game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
+													BringMobFarm = true
+		v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide = false v.HumanoidRootPart.Size = Vector3.new(80,80,80)
+													if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
+														game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
+													end
 												end
-												game:GetService 'VirtualUser':CaptureController() game:GetService 'VirtualUser':Button1Down(Vector2.new(1280, 672))
-												BringMobFarm = true
-	v.Head.CanCollide = false v.Humanoid.WalkSpeed = 0 v.HumanoidRootPart.CanCollide = false v.HumanoidRootPart.Size = Vector3.new(80,80,80)
-												if game.Players.LocalPlayer.Character:FindFirstChild("Black Leg") and game.Players.LocalPlayer.Character:FindFirstChild("Black Leg").Level.Value >= 150 then
-													game:service("VirtualInputManager"):SendKeyEvent(true, "V", false, game) game:service("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
-												end
-											end
-										until not _G.Auto_Farm_Level or v.Humanoid.Health <= 0 or QuestC.Visible == false
+											until not _G.Auto_Farm_Level or v.Humanoid.Health <= 0 or QuestC.Visible == false
+										end
 									end
+								end
+							else
+								--_G.PosMonFarmLv = true
+								Tween(PosMonLv)
+								UnEquipWeapon(_G.Select_Weapon)
+								if World1 and (Name == "Fishman Commando" or Name == "Fishman Warrior") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 50000 then
+									if Modstween then Modstween:Stop() end wait(.5)
+									game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
+								elseif World1 and not (Name == "Fishman Commando" or Name == "Fishman Warrior") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 50000 then
+									if Modstween then Modstween:Stop() end wait(.5)
+									game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(3864.8515625, 6.6796875, -1926.7841796875))
+								elseif World1 and (Name == "God's Guard" or Name == "Sky Bandit" or Name == "Dark Master") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 3000 then
+									if Modstween then Modstween:Stop() end wait(.5)
+									game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance", Vector3.new(-4607.8227539063, 872.54248046875, -1667.5568847656))
+								elseif World1 and (Name == "Shanda" or Name == "Royal Squad"or Name == "Royal Soldier") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 5000 then
+									if Modstween then Modstween:Stop() end wait(.5)
+									game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance", Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
+								elseif World2 and string.find(Name, "Ship") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 30000 then
+									if Modstween then Modstween:Stop() end
+									game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+								elseif World2 and not string.find(Name, "Ship") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 30000 then
+									if Modstween then Modstween:Stop() end
+									game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-6508.5581054688, 89.034996032715, -132.83953857422))
+								--elseif (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 150 then
+									--if Modstween then Modstween:Stop() end wait(.5)
+									--game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
 								end
 							end
 						else
-							--_G.PosMonFarmLv = true
-							Tween(PosMonLv)
-							UnEquipWeapon(_G.Select_Weapon)
-							if World1 and (Name == "Fishman Commando" or Name == "Fishman Warrior") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 50000 then
-								if Modstween then Modstween:Stop() end wait(.5)
-								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
-							elseif World1 and not (Name == "Fishman Commando" or Name == "Fishman Warrior") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 50000 then
-								if Modstween then Modstween:Stop() end wait(.5)
-								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(3864.8515625, 6.6796875, -1926.7841796875))
-							elseif World1 and (Name == "God's Guard" or Name == "Sky Bandit" or Name == "Dark Master") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 3000 then
-								if Modstween then Modstween:Stop() end wait(.5)
-								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance", Vector3.new(-4607.8227539063, 872.54248046875, -1667.5568847656))
-							elseif World1 and (Name == "Shanda" or Name == "Royal Squad"or Name == "Royal Soldier") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 5000 then
-								if Modstween then Modstween:Stop() end wait(.5)
-								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance", Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
-							elseif World2 and string.find(Name, "Ship") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 30000 then
-								if Modstween then Modstween:Stop() end
-								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
-							elseif World2 and not string.find(Name, "Ship") and (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).magnitude > 30000 then
-								if Modstween then Modstween:Stop() end
-								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-6508.5581054688, 89.034996032715, -132.83953857422))
-							--elseif (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 150 then
-								--if Modstween then Modstween:Stop() end wait(.5)
-								--game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
+							if _G.TweentoQuest then
+								Tween(QuestCheck()[2])
+								if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
+									BringMobFarm = false
+									wait(0.2)
+									game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5) 
+									Tween(QuestCheck()[7][1] * CFrame.new(0,28,8))
+								end
+							else
+								game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestName, QuestLevel)
+								Tween(PosMonLv)
 							end
-						end
-					else
-						if _G.TweentoQuest then
-							Tween(QuestCheck()[2])
-							if (QuestCheck()[2].Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 1 then
-								BringMobFarm = false
-								wait(0.2)
-								game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestCheck()[4], QuestCheck()[1]) wait(0.5) 
-								Tween(QuestCheck()[7][1] * CFrame.new(0,28,8))
-							end
-						else
-							game:GetService('ReplicatedStorage').Remotes.CommF_:InvokeServer("StartQuest", QuestName, QuestLevel)
-							Tween(PosMonLv)
 						end
 					end
 				end)
