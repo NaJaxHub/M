@@ -541,7 +541,7 @@ local function QuestCheck()
 			QuestLevel = 1
 			NPCPosition = CFrame.new(1059.99731, 16.9222069, 1549.28162, -0.95466274, 7.29721794e-09, 0.297689587, 1.05190106e-08, 1, 9.22064114e-09, -0.297689587, 1.19340022e-08, -0.95466274)
 		end
-        if Lvl == 190 or Lvl <= 209 then -- Dark Master
+        --[[if Lvl == 190 or Lvl <= 209 then -- Dark Master
 			Mon = "Prisoner"
 			QuestName = "PrisonerQuest"
 			QuestLevel = 1
@@ -555,7 +555,7 @@ local function QuestCheck()
 			MobName = "Dangerous Prisoner"
 			NPCPosition = CFrame.new(5411, 96, 690)
 			MobCFrame = CFrame.new(5308, 2, 474)
-        end
+        end]]
 		return {
 			[1] = QuestLevel,
 			[2] = NPCPosition,
